@@ -1,4 +1,6 @@
-﻿namespace Mobile
+﻿using Mobile.Views;
+
+namespace Mobile
 {
     public partial class App : Application
     {
