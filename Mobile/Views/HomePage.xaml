@@ -4,63 +4,86 @@
              x:Class="Mobile.Views.HomePage"
              BackgroundColor="#ECECF6"
              Shell.NavBarIsVisible="False"
-             x:Name="HomaPage"
+             x:Name="PaiPage"
              Title="HomePage">
-
-    <ContentPage.Resources>
-        <Style TargetType="Label" x:Key="TItleCard">
-            <Setter Property="TextColor" Value="White"/>
-            <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="FontSize" Value="12"/>
-        </Style>
-    </ContentPage.Resources>
-
+    
     <ScrollView>
         <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto">
-            <CollectionView Grid.Row="0" ItemsSource="{Binding Movies}" HorizontalOptions="CenterAndExpand" Margin="20">
+            <!--<Border
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,0,10,5"
+                BackgroundColor="#ECECF6" 
+                WidthRequest="60" 
+                HeightRequest="60" 
+                StrokeShape="RoundRectangle 30">
+                <Button
+                    Command="{Binding AddCard}"
+                    CommandParameter="Movie"
+                    Text="+"
+                    TextColor="Black"
+                    FontSize="40"
+                    FontAttributes="Bold"
+                    BackgroundColor="#D9D9ED"/>
+            </Border>-->
+
+            <Label
+                Grid.Row="0"
+                Text="Livros com maior nota"
+                Style="{StaticResource Title}"/>
+            <CollectionView Grid.Row="1" 
+                            ItemsSource="{Binding Movies}" 
+                            HorizontalOptions="StartAndExpand">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="4" VerticalItemSpacing="10"/>
+                    <GridItemsLayout Orientation="Vertical" Span="4" VerticalItemSpacing="20"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate >
                         <Border 
-                            StrokeShape="RoundRectangle 20" 
-                            StrokeThickness="0"
-                            WidthRequest="225" 
-                            Margin="0,0,0,10" 
-                            BackgroundColor="Black">
-                            <Grid RowDefinitions="*,Auto" RowSpacing="0">
-                                <Image 
+                            Style="{StaticResource BorderCard}">
+                            <Grid RowDefinitions="253,*" ColumnDefinitions="*,Auto" RowSpacing="0">
+                                <Image
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
                                     Source="{Binding Image}" 
-                                    Aspect="AspectFill" 
-                                    WidthRequest="225" 
-                                    HeightRequest="253"/>
+                                    Style="{StaticResource ImageCard}"/>
 
                                 <Border
-                                    HorizontalOptions="End"
-                                    VerticalOptions="Start"
-                                    WidthRequest="40" 
-                                    HeightRequest="45"
-                                    BackgroundColor="#F83030" 
-                                    StrokeShape="RoundRectangle 0 20 20 0" 
-                                    Stroke="Transparent" 
-                                    StrokeThickness="0">
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Style="{StaticResource BorderDeleteCard}">
                                     <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding DeleteCommand}" CommandParameter="{Binding Id}"/>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.DeleteCommand,Source={x:Reference PaiPage}}" 
+                                                              CommandParameter="{Binding Id}"/>
                                     </Border.GestureRecognizers>
                                     <Image
                                         Source="icon_delete.png"
-                                        Aspect="AspectFill"
-                                        WidthRequest="16"
-                                        HeightRequest="16"
-                                        BackgroundColor="#F83030">
+                                        Style="{StaticResource ImageIconDeleteCard}">
                                     </Image>
                                 </Border>
-                                <VerticalStackLayout Grid.Row="1" Margin="10,5,0,5">
+                                <VerticalStackLayout Grid.Row="1" Margin="10,7,0,5">
                                     <Label Text="{Binding Assessment,StringFormat='Nota: {0}'}" Style="{StaticResource TItleCard}"/>
                                     <Label Text="{Binding Duration,StringFormat='Duração: {0}'}" Style="{StaticResource TItleCard}"/>
                                     <Label Text="{Binding Concluded,StringFormat='Cocluido: {0}'}" Style="{StaticResource TItleCard}"/>
                                 </VerticalStackLayout>
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
+                                    <Border
+                                        Style="{StaticResource BorderDetalhesCard}">
+                                        <Image
+                                            Source="icon_detalhes.png"
+                                            Style="{StaticResource ImageIconDetalhesCard}">
+                                        </Image>
+
+                                    </Border>
+                                    <Border
+                                        Style="{StaticResource BorderEditCard}">
+                                        <Image
+                                            Source="icon_edit.png"
+                                            Style="{StaticResource ImageIconEditCard}"/>
+                                    </Border>
+                                </HorizontalStackLayout>
                             </Grid>
                         </Border>
                     </DataTemplate>

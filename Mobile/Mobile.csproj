@@ -58,6 +58,8 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\icon_delete.png" />
+	  <None Remove="Resources\Images\icon_detalhes.png" />
+	  <None Remove="Resources\Images\icon_edit.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -68,6 +70,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Styles\CardItem.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

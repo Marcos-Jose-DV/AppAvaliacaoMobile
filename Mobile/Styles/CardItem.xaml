@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobile.Styles.CardItem">
+
+    <Style TargetType="Label" x:Key="Title">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="26"/>
+        <Setter Property="Margin" Value="20"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="TItleCard">
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+    </Style>
+
+
+    <Style TargetType="Border" x:Key="BorderCard">
+        <Setter Property="StrokeShape" Value="RoundRectangle 20"/>
+        <Setter Property="StrokeThickness" Value="0"/>
+        <Setter Property="WidthRequest" Value="225"/>
+        <Setter Property="Margin" Value="0,0,0,10"/>
+        <Setter Property="BackgroundColor" Value="Black"/>
+    </Style>
+
+    <Style TargetType="Image" x:Key="ImageCard">
+        <Setter Property="Aspect" Value="AspectFill"/>
+        <Setter Property="WidthRequest" Value="225"/>
+        <Setter Property="HeightRequest" Value="253"/>
+    </Style>
+
+    <Style TargetType="Border" x:Key="BorderDeleteCard">
+        <Setter Property="HorizontalOptions" Value="End"/>
+        <Setter Property="VerticalOptions" Value="Start"/>
+        <Setter Property="WidthRequest" Value="40"/>
+        <Setter Property="HeightRequest" Value="45"/>
+        <Setter Property="BackgroundColor" Value="#F83030"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 0 20 20 0"/>
+        <Setter Property="Stroke" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="0"/>
+    </Style>
+
+
+    <Style TargetType="Image" x:Key="ImageIconDeleteCard">
+        <Setter Property="Aspect" Value="AspectFill"/>
+        <Setter Property="WidthRequest" Value="16"/>
+        <Setter Property="HeightRequest" Value="16"/>
+        <Setter Property="BackgroundColor" Value="#F83030"/>
+    </Style>
+
+
+
+    <Style TargetType="Border" x:Key="BorderDetalhesCard">
+        <Setter Property="Margin" Value="-2,0 ,0,-1"/>
+        <Setter Property="WidthRequest" Value="50"/>
+        <Setter Property="HeightRequest" Value="67"/>
+        <Setter Property="BackgroundColor" Value="#71E149"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 0 20 20 0"/>
+        <Setter Property="Stroke" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="0"/>
+    </Style>
+
+    <Style TargetType="Image" x:Key="ImageIconDetalhesCard">
+        <Setter Property="Aspect" Value="AspectFill"/>
+        <Setter Property="WidthRequest" Value="16"/>
+        <Setter Property="HeightRequest" Value="16"/>
+        <Setter Property="BackgroundColor" Value="#71E149"/>
+    </Style>
+
+
+    <Style TargetType="Border" x:Key="BorderEditCard">
+        <Setter Property="Margin" Value="-2,0 ,-1,-1"/>
+        <Setter Property="WidthRequest" Value="50"/>
+        <Setter Property="HeightRequest" Value="67"/>
+        <Setter Property="BackgroundColor" Value="#3068F8"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 20 0 0 0"/>
+        <Setter Property="Stroke" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="0"/>
+    </Style>
+
+
+    <Style TargetType="Image" x:Key="ImageIconEditCard">
+        <Setter Property="Aspect" Value="AspectFill"/>
+        <Setter Property="WidthRequest" Value="16"/>
+        <Setter Property="HeightRequest" Value="16"/>
+        <Setter Property="BackgroundColor" Value="#3068F8"/>
+    </Style>
+</ResourceDictionary>

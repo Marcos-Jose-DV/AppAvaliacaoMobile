@@ -54,8 +54,24 @@ public class MovieService : IMovieService
     {
         throw new NotImplementedException();
     }
-    public Task<Movie> DeleteMovie(int id)
+    public async Task<Movie> DeleteMovie(int id)
     {
-        throw new NotImplementedException();
+       Movie? movie = null;
+        try
+        {
+            var response = await _client.DeleteAsync($"{Configurations.Url}/movie/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                movie = await JsonSerializer.DeserializeAsync<Movie>(responseStream, _jsonOptions);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            ex.ToString();
+        }
+
+        return movie;
     }
 }

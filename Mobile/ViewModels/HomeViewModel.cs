@@ -22,18 +22,23 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     async void Load()
     {
-        Movies = await _movieService.GetMovies();
+        LoadMovie();
     }
 
     [RelayCommand]
-    void Delete(int id)
+    async void Delete(int id)
     {
-        _movieService.DeleteMovie(id);
+        var result = await App.Current.MainPage.DisplayAlert("Remove", "Remover essa avaliação?", "Sim", "Não");
+        if (result)
+        {
+            await _movieService.DeleteMovie(id);
+            LoadMovie();
+        }
     }
     private async void LoadMovie()
     {
         var movies = await _movieService.GetMovies();
-        Movies = movies;
+        Movies = movies.OrderByDescending(movie => movie.Assessment).Take(4);
     }
 
 }
