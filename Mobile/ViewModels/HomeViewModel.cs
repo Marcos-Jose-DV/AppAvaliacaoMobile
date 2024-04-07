@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
+using Mobile.Views;
 using System;
 using System.Windows.Input;
 namespace Mobile.ViewModels;
@@ -23,6 +24,24 @@ public partial class HomeViewModel : ObservableObject
     async void Load()
     {
         LoadMovie();
+    }
+
+    [RelayCommand]
+    async void Detail(Movie movie)
+    {
+        var parameter = new ShellNavigationQueryParameters
+        {
+            { "Data", movie }
+        };
+      
+        try
+        {
+            await Shell.Current.GoToAsync($"DetailsPage", parameter);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
+        }
     }
 
     [RelayCommand]

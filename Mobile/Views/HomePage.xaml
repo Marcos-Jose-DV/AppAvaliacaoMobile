@@ -71,6 +71,11 @@
                                 <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
                                     <Border
                                         Style="{StaticResource BorderDetalhesCard}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer 
+                                                Command="{Binding BindingContext.DetailCommand,Source={x:Reference PaiPage}}" 
+                                                CommandParameter="{Binding .}"/>
+                                        </Border.GestureRecognizers>
                                         <Image
                                             Source="icon_detalhes.png"
                                             Style="{StaticResource ImageIconDetalhesCard}">

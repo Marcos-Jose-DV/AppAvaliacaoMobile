@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobile.Views.DetailsPage"
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled"
+             Title="DetailsPage">
+    <ScrollView>
+        <Grid ColumnDefinitions="*,*">
+            <VerticalStackLayout Grid.Column="0">
+                <Frame Style="{StaticResource FrameDetalhes}">
+                    <Label 
+                    Text="{Binding Movie.MovieName, StringFormat='Nome: {0}'}"
+                     Style="{StaticResource TitleDetalhes}"/>
+                </Frame>
+                <Frame Style="{StaticResource FrameDetalhes}">
+                    <Label 
+                    Text="{Binding Movie.Assessment, StringFormat='Nota: {0}'}"
+                     Style="{StaticResource TitleDetalhes}"/>
+                </Frame>
+                <Frame Style="{StaticResource FrameDetalhes}">
+                    <Label 
+                     Text="{Binding Movie.Gender, StringFormat='Genero: {0}'}"
+                      Style="{StaticResource TitleDetalhes}"/>
+                </Frame>
+                <Frame Style="{StaticResource FrameDetalhes}">
+                    <Label 
+                     Text="{Binding Movie.Duration, StringFormat='Duração: {0}'}"
+                      Style="{StaticResource TitleDetalhes}"/>
+                </Frame>
+                <Frame Style="{StaticResource FrameDetalhes}">
+                    <Label 
+                         Text="{Binding Movie.Concluded, StringFormat='Terminado: {0}'}"
+                         Style="{StaticResource TitleDetalhes}"/>
+                </Frame>
+                <Frame Style="{StaticResource FrameDetalhes}">
+                    <Label 
+                        Text="{Binding Movie.Director, StringFormat='Diretor/Autor: {0}'}"
+                        Style="{StaticResource TitleDetalhes}"/>
+                </Frame>
+
+                <Frame Style="{StaticResource FrameDetalhes}">
+                    <Label 
+                    Text="{Binding Movie.Comments, StringFormat='Comentarios: {0}'}"
+                    Style="{StaticResource TitleDetalhes}"/>
+                </Frame>
+            </VerticalStackLayout>
+            <Image
+            Grid.Column="1"
+            Source="{Binding Movie.Image}"
+            Aspect="AspectFill"/>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

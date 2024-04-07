@@ -23,7 +23,7 @@
     </Shell.FlyoutHeader>
   
     <FlyoutItem Title="Inicio">
-        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="HomePage"/>
 
     </FlyoutItem>
     <FlyoutItem Title="Livros">

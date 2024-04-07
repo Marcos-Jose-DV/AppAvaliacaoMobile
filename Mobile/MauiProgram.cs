@@ -22,10 +22,18 @@ namespace Mobile
 
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<HomeViewModel>();
+            builder.Services.AddSingleton<DetailsPage>();
+            builder.Services.AddSingleton<DetailsViewModel>();
             builder.Services.AddScoped<IMovieService, MovieService>();
 
+
+            Routing.RegisterRoute(nameof(DetailsPage), typeof(DetailsPage));
+
+
+
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

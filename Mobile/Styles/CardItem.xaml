@@ -56,7 +56,7 @@
         <Setter Property="Margin" Value="-2,0 ,0,-1"/>
         <Setter Property="WidthRequest" Value="50"/>
         <Setter Property="HeightRequest" Value="67"/>
-        <Setter Property="BackgroundColor" Value="#71E149"/>
+        <Setter Property="BackgroundColor" Value="#3068F8"/>
         <Setter Property="StrokeShape" Value="RoundRectangle 0 20 20 0"/>
         <Setter Property="Stroke" Value="Transparent"/>
         <Setter Property="StrokeThickness" Value="0"/>
@@ -66,7 +66,7 @@
         <Setter Property="Aspect" Value="AspectFill"/>
         <Setter Property="WidthRequest" Value="16"/>
         <Setter Property="HeightRequest" Value="16"/>
-        <Setter Property="BackgroundColor" Value="#71E149"/>
+        <Setter Property="BackgroundColor" Value="#3068F8"/>
     </Style>
 
 
@@ -74,7 +74,7 @@
         <Setter Property="Margin" Value="-2,0 ,-1,-1"/>
         <Setter Property="WidthRequest" Value="50"/>
         <Setter Property="HeightRequest" Value="67"/>
-        <Setter Property="BackgroundColor" Value="#3068F8"/>
+        <Setter Property="BackgroundColor" Value="#71E149"/>
         <Setter Property="StrokeShape" Value="RoundRectangle 20 0 0 0"/>
         <Setter Property="Stroke" Value="Transparent"/>
         <Setter Property="StrokeThickness" Value="0"/>
@@ -85,6 +85,21 @@
         <Setter Property="Aspect" Value="AspectFill"/>
         <Setter Property="WidthRequest" Value="16"/>
         <Setter Property="HeightRequest" Value="16"/>
+        <Setter Property="BackgroundColor" Value="#71E149"/>
+    </Style>
+
+
+    <Style TargetType="Frame" x:Key="FrameDetalhes">
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="HasShadow" Value="True"/>
         <Setter Property="BackgroundColor" Value="#3068F8"/>
     </Style>
+
+    <Style TargetType="Label" x:Key="TitleDetalhes">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="TextColor" Value="White"/>
+    </Style>
+
+
 </ResourceDictionary>
