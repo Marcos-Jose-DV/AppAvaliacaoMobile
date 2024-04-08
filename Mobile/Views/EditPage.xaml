@@ -19,28 +19,28 @@
                 <Label Margin="10,10,0,-10" Text="Name: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}" Padding="0">
                     <Entry 
-                        Text="{Binding Movie.MovieName}"
+                        Text="{Binding Data.MovieName}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Nota: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Entry 
-                        Text="{Binding Movie.Assessment}"
+                        Text="{Binding Data.Assessment}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Genero: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Entry 
-                        Text="{Binding Movie.Gender}"
+                        Text="{Binding Data.Gender}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Duração: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Entry 
-                        Text="{Binding Movie.Duration}"
+                        Text="{Binding Data.Duration}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
@@ -48,31 +48,31 @@
                 <Frame Style="{StaticResource FrameEdit}">
                     <Grid>
                         <Entry 
-                            Text="{Binding Movie.Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter}}"
+                            Text="{Binding Data.Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter}}"
                             Style="{StaticResource TitleDetalhes}"/>
 
-                        <CheckBox HorizontalOptions="EndAndExpand" IsChecked="{Binding Movie.Concluded}" Color="Black" />
+                        <CheckBox HorizontalOptions="EndAndExpand" IsChecked="{Binding Data.Concluded}" Color="Black" />
                     </Grid>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Diretor: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Entry 
-                     Text="{Binding Movie.Director}"
+                     Text="{Binding Data.Director}"
                      Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Categoria: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Entry 
-                          Text="{Binding Movie.Category}"
+                          Text="{Binding Data.Category}"
                           Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Comentario: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Editor 
-                         Text="{Binding Movie.Comments}"
+                         Text="{Binding Data.Comments}"
                          Style="{StaticResource TitleDetalhes}"
                          MinimumHeightRequest="200"/>
                 </Frame>

@@ -10,11 +10,10 @@
 
     <ContentPage.Resources>
         <converters:ConcludedIsTrueOrFalseConverter x:Key="ConcludedIsTrueOrFalseConverter"/>
-
     </ContentPage.Resources>
 
     <ScrollView>
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+        <Grid RowDefinitions="*,*,*,*,*">
             <!--<Border
                 HorizontalOptions="End"
                 VerticalOptions="End"
@@ -37,9 +36,89 @@
                 Grid.Row="0"
                 Text="Livros com maior nota"
                 Style="{StaticResource Title}"/>
-            <CollectionView Grid.Row="1" 
+
+
+            <CollectionView 
+                        Grid.Row="1"
+                        ZIndex="1"
+                        ItemsSource="{Binding Books}" 
+                        HorizontalOptions="StartAndExpand"
+                        MinimumWidthRequest="1000"> 
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="4" VerticalItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        
+                        <Border 
+                            Style="{StaticResource BorderCard}">
+                            <Grid RowDefinitions="253,*" ColumnDefinitions="*,Auto" RowSpacing="0">
+                                <Image
+                                     Grid.Row="0"
+                                     Grid.Column="0"
+                                     Grid.ColumnSpan="2"
+                                     Source="{Binding Image}" 
+                                     Style="{StaticResource ImageCard}"/> 
+
+                                <Border
+                                     Grid.Row="0"
+                                     Grid.Column="0"
+                                     Grid.ColumnSpan="2"
+                                     Style="{StaticResource BorderDeleteCard}"> 
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.DeleteCommand,Source={x:Reference PaiPage}}" 
+                                                   CommandParameter="{Binding Id}"/>
+                                    </Border.GestureRecognizers>
+                                    <Image
+                                         Source="icon_delete.png"
+                                         Style="{StaticResource ImageIconDeleteCard}"> 
+                                    </Image>
+                                </Border>
+                                <VerticalStackLayout Grid.Row="1" Margin="10,7,0,5">
+                                    <Label Text="{Binding Assessment,StringFormat='Nota: {0}'}" Style="{StaticResource TItleCard}"/>
+                                    <Label Text="{Binding Pages,StringFormat='Paginas: {0}'}" Style="{StaticResource TItleCard}"/>
+                                    <Label Text="{Binding Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter},StringFormat='Cocluido: {0}'}" Style="{StaticResource TItleCard}"/>
+                                </VerticalStackLayout>
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
+                                    <Border
+                                            Style="{StaticResource BorderDetalhesCard}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer 
+                                                 Command="{Binding BindingContext.DetailCommand,Source={x:Reference PaiPage}}" 
+                                                 CommandParameter="{Binding .}"/> 
+                                        </Border.GestureRecognizers>
+                                        <Image
+                                             Source="icon_detalhes.png"
+                                             Style="{StaticResource ImageIconDetalhesCard}"> 
+                                        </Image>
+
+                                    </Border>
+                                    <Border
+                                        Style="{StaticResource BorderEditCard}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer 
+                                                 Command="{Binding BindingContext.EditCommand,Source={x:Reference PaiPage}}" 
+                                                 CommandParameter="{Binding .}"/>
+                                        </Border.GestureRecognizers>
+                                        <Image
+                                             Source="icon_edit.png"
+                                             Style="{StaticResource ImageIconEditCard}"/>
+                                    </Border>
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label
+                  Grid.Row="2"
+                  Text="Series com maior nota"
+                  Style="{StaticResource Title}"/>
+            <CollectionView Grid.Row="3" 
                             ItemsSource="{Binding Movies}" 
-                            HorizontalOptions="StartAndExpand">
+                            HorizontalOptions="StartAndExpand"
+                            >
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="4" VerticalItemSpacing="20"/>
                 </CollectionView.ItemsLayout>

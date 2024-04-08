@@ -9,16 +9,16 @@
 
     <ContentPage.Resources>
         <converters:ConcludedIsTrueOrFalseConverter x:Key="ConcludedIsTrueOrFalseConverter"/>
-      
+
     </ContentPage.Resources>
     <ScrollView>
-        <Grid ColumnDefinitions="*,*">
-            <VerticalStackLayout Grid.Column="0">
+        <Grid ColumnDefinitions="*,*" RowDefinitions="{OnPlatform Android='*,Auto'}">
+            <VerticalStackLayout Grid.Column="0" Grid.Row="{OnPlatform Android=1}">
 
                 <Label Margin="10,10,0,-10" Text="Name: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                        Text="{Binding Data.MovieName}"
+                        Text="{Binding Name}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
@@ -26,42 +26,42 @@
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
                         Text="{Binding Data.Assessment}"
-                        Style="{StaticResource TitleDetalhes}"/> 
+                        Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Genero: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
                         Text="{Binding Data.Gender}"
-                        Style="{StaticResource TitleDetalhes}"/> 
+                        Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
-                <Label Margin="10,10,0,-10" Text="Duração: " FontSize="16" FontAttributes="Bold"/>
+                <Label Margin="10,10,0,-10" Text="{Binding PageOrDurationTitle} " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                        Text="{Binding Data.Duration}"
-                        Style="{StaticResource TitleDetalhes}"/> 
+                        Text="{Binding PageOrDuration}"
+                        Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Terminado: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
                         Text="{Binding Data.Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter}}"
-                        Style="{StaticResource TitleDetalhes}"/> 
+                        Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
-                <Label Margin="10,10,0,-10" Text="Diretor: " FontSize="16" FontAttributes="Bold"/>
+                <Label Margin="10,10,0,-10" Text="{Binding AuthorOrDirectoTilte}" FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                     Text="{Binding Data.Director}"
-                     Style="{StaticResource TitleDetalhes}"/> 
+                     Text="{Binding AuthorOrDirecto}"
+                     Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Categoria: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
                       Text="{Binding Data.Category}"
-                      Style="{StaticResource TitleDetalhes}"/> 
+                      Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Comentario: " FontSize="16" FontAttributes="Bold"/>
@@ -70,28 +70,14 @@
                          Text="{Binding Data.Comments}"
                          Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
-
-                <Button
-         Grid.Column="0"
-         HorizontalOptions="Center"
-         VerticalOptions="End"
-         Margin="10"
-         Command="{Binding EditCommand}"
-         Text="+"
-         TextColor="Black"
-         FontAttributes="Bold"
-         FontSize="35"
-         WidthRequest="70" 
-         HeightRequest="70" 
-         ZIndex="1"
-         CornerRadius="50"
-         BorderWidth="2"
-         BackgroundColor="Transparent"/>
             </VerticalStackLayout>
             <Image
-             Grid.Column="1"
-             Source="{Binding Data.Image}"
-             Aspect="AspectFill"/>
+                 Grid.Row="{OnPlatform Android=0}"
+                 Grid.Column="1"
+                 Source="{Binding Data.Image}"
+                 Aspect="AspectFill"
+                 WidthRequest="{OnIdiom Phone=200, Default=672}"
+                 HeightRequest="{OnIdiom Phone=200, Default=672}"/>
 
         </Grid>
     </ScrollView>

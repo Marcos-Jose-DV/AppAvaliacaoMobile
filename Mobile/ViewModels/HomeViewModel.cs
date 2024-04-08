@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Models;
+using Mobile.Services;
 using Mobile.Services.Interfaces;
 using Mobile.Views;
 using System;
@@ -11,12 +12,17 @@ namespace Mobile.ViewModels;
 public partial class HomeViewModel : ObservableObject
 {
     private readonly IMovieService _movieService;
+    private readonly IBookService _bookService;
 
     [ObservableProperty]
     public IEnumerable<Movie> _movies;
 
-    public HomeViewModel(IMovieService movieService)
+    [ObservableProperty]
+    public IEnumerable<Book> _books;
+
+    public HomeViewModel(IMovieService movieService, IBookService bookService)
     {
+        _bookService = bookService;
         _movieService = movieService;
         LoadMovie();
 
@@ -43,7 +49,7 @@ public partial class HomeViewModel : ObservableObject
         {
             { "Data", data }
         };
-      
+
         try
         {
             await Shell.Current.GoToAsync($"DetailsPage", parameter);
@@ -86,6 +92,8 @@ public partial class HomeViewModel : ObservableObject
     {
         var movies = await _movieService.GetMovies();
         Movies = movies.OrderByDescending(movie => movie.Assessment).Take(4);
-    }
 
+        var books = await _bookService.GetBook();
+        Books = books;
+    }
 }

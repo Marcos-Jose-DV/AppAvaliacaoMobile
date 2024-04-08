@@ -19,8 +19,10 @@ public partial class EditViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IMovieService _movieService;
 
+
+
     [ObservableProperty]
-    Movie _Movie;
+    object _data;
 
 
     [ObservableProperty]
@@ -37,10 +39,26 @@ public partial class EditViewModel : ObservableObject, IQueryAttributable
     {
         var data = query["Data"];
 
-        if (data is Movie movie)
+        DataIs(data);
+
+    }
+
+    private void DataIs(object data)
+    {
+        switch (data)
         {
-            Movie = movie;
-            Image.Source = ImageSource.FromUri(new Uri(Movie.Image));
+            case Book book:
+                Data = book;
+                Image.Source = ImageSource.FromUri(new Uri(book.Image));
+                break;
+
+            case Movie movie:
+                Data = movie;
+                Image.Source = ImageSource.FromUri(new Uri(movie.Image));
+                break;
+
+            default:
+                break;
         }
     }
     [RelayCommand]
@@ -51,10 +69,10 @@ public partial class EditViewModel : ObservableObject, IQueryAttributable
         
         if (result)
         {
-            if (Movie != null && Movie is Movie movie)
+            if (Data != null && Data is Movie movie)
             {
                 await _movieService.PutMovie(movie.Id, movie);
-                Movie = null;
+                Data = null;
             }
 
             WeakReferenceMessenger.Default.Send<string>(new string("Load"));
@@ -77,7 +95,17 @@ public partial class EditViewModel : ObservableObject, IQueryAttributable
         var image = await result.OpenReadAsync();
 
         Image.Source = ImageSource.FromStream(()=> stream);
-        Movie.Image = await ConvertImageToBase64String(image);
+
+        if (Data is Book book)
+        {
+            book.Image = await ConvertImageToBase64String(image);
+            Data = book;
+        }
+        else if(Data is Movie movie)
+        {
+            movie.Image = await ConvertImageToBase64String(image);
+            Data = movie;
+        }
     }
 
     private async Task<string> ConvertImageToBase64String(Stream stream)
