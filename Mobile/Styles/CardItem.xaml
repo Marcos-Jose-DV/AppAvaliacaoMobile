@@ -88,11 +88,19 @@
         <Setter Property="BackgroundColor" Value="#71E149"/>
     </Style>
 
-
     <Style TargetType="Frame" x:Key="FrameDetalhes">
         <Setter Property="Margin" Value="10"/>
+        <Setter Property="Padding" Value="10"/>
         <Setter Property="HasShadow" Value="True"/>
         <Setter Property="BackgroundColor" Value="#3068F8"/>
+    </Style>
+
+    <Style TargetType="Frame" x:Key="FrameEdit">
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HasShadow" Value="True"/>
+        <Setter Property="BackgroundColor" Value="#71E149"/>
+        <Setter Property="BorderColor" Value="Blue"/>
     </Style>
 
     <Style TargetType="Label" x:Key="TitleDetalhes">

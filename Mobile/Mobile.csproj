@@ -60,6 +60,7 @@
 	  <None Remove="Resources\Images\icon_delete.png" />
 	  <None Remove="Resources\Images\icon_detalhes.png" />
 	  <None Remove="Resources\Images\icon_edit.png" />
+	  <None Remove="Resources\Images\Icon_load_image.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -74,6 +75,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\DetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EditPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\HomePage.xaml">

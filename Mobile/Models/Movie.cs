@@ -11,4 +11,5 @@ public class Movie
     public double Duration { get; set; }
     public bool Concluded { get; set; }
     public string Comments { get; set; } = string.Empty;
+    public string Category { get; set; } = string.Empty;
 }

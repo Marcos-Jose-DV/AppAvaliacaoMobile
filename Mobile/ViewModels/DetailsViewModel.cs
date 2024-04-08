@@ -6,7 +6,7 @@ namespace Mobile.ViewModels;
 public partial class DetailsViewModel : ObservableObject, IQueryAttributable
 {
     [ObservableProperty]
-    Movie _movie;
+    Movie _Data;
 
     public DetailsViewModel()
     {
@@ -15,6 +15,6 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         Movie movie = (Movie)query["Data"];
-        Movie = movie;
+        Data = movie;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
 using Mobile.Views;
@@ -18,6 +19,15 @@ public partial class HomeViewModel : ObservableObject
     {
         _movieService = movieService;
         LoadMovie();
+
+
+        WeakReferenceMessenger.Default.Register<string>(this, (e, msg) =>
+        {
+            if (msg.Equals("Load"))
+            {
+                Load();
+            }
+        });
     }
 
     [RelayCommand]
@@ -27,16 +37,34 @@ public partial class HomeViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async void Detail(Movie movie)
+    async void Detail(object data)
     {
         var parameter = new ShellNavigationQueryParameters
         {
-            { "Data", movie }
+            { "Data", data }
         };
       
         try
         {
             await Shell.Current.GoToAsync($"DetailsPage", parameter);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
+        }
+    }
+
+    [RelayCommand]
+    async void Edit(object data)
+    {
+        var parameter = new ShellNavigationQueryParameters
+        {
+            { "Data", data }
+        };
+
+        try
+        {
+            await Shell.Current.GoToAsync($"EditPage", parameter);
         }
         catch (Exception ex)
         {

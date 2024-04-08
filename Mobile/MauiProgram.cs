@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Mobile.Models;
 using Mobile.Services;
 using Mobile.Services.Interfaces;
 using Mobile.ViewModels;
@@ -24,13 +25,13 @@ namespace Mobile
             builder.Services.AddSingleton<HomeViewModel>();
             builder.Services.AddSingleton<DetailsPage>();
             builder.Services.AddSingleton<DetailsViewModel>();
+            builder.Services.AddSingleton<EditPage>();
+            builder.Services.AddSingleton<EditViewModel>();
             builder.Services.AddScoped<IMovieService, MovieService>();
 
 
             Routing.RegisterRoute(nameof(DetailsPage), typeof(DetailsPage));
-
-
-
+            Routing.RegisterRoute(nameof(EditPage), typeof(EditPage));
 
 #if DEBUG
             builder.Logging.AddDebug();

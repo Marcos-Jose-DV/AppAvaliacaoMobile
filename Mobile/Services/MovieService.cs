@@ -1,6 +1,7 @@
 ﻿using Mobile.Constans;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
+using System.Text;
 using System.Text.Json;
 
 namespace Mobile.Services;
@@ -50,13 +51,34 @@ public class MovieService : IMovieService
         throw new NotImplementedException();
     }
 
-    public Task<Movie> PutMovie(int id, Movie movie)
+    public async Task<Movie> PutMovie(int id, Movie obj)
     {
-        throw new NotImplementedException();
+        Movie? movieUpdate = null;
+        try
+        {
+
+            string jsonRespponse = JsonSerializer.Serialize<object>(obj, _jsonOptions);
+
+            StringContent content = new StringContent(jsonRespponse, Encoding.UTF8, "application/json");
+
+            var response = await _client.PutAsync($"{Configurations.Url}/movie/{id}", content);
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                movieUpdate = await JsonSerializer.DeserializeAsync<Movie>(responseStream, _jsonOptions);
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.ToString();
+        }
+
+        return movieUpdate;
+
     }
     public async Task<Movie> DeleteMovie(int id)
     {
-       Movie? movie = null;
+        Movie? movie = null;
         try
         {
             var response = await _client.DeleteAsync($"{Configurations.Url}/movie/{id}");
