@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Mobile.Models;
-using System;
 namespace Mobile.ViewModels;
 
 public partial class DetailsViewModel : ObservableObject, IQueryAttributable
 {
     [ObservableProperty]
-    object _Data;
+    Assessments _assessment;
 
 
     [ObservableProperty]
@@ -17,26 +16,26 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     }
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        var data = query["Data"];
+        var data = (Assessments)query["Data"];
+        Assessment = data;
+        if (Assessment.Category == "Book")
+        {
+            LoadDetails(Assessment, Assessment.Name, Assessment.Duration.ToString(), "Paginas: ", Assessment.Director, "Autor");
+            return;
+        }
 
-        if (data is Book book)
-        {
-            LoadDetails(book, book.BookName, book.Pages.ToString(), "Paginas: ", book.Autor, "Autor");
-        }
-        else if (data is Movie movie)
-        {
-            LoadDetails(movie, movie.MovieName, movie.Duration.ToString(), "Duração: ", movie.Director, "Diretor");
-        }
+        LoadDetails(Assessment, Assessment.Name, Assessment.Duration.ToString(), "Duração: ", Assessment.Director, "Diretor");
+
     }
     private void LoadDetails(
-        object data,
+        Assessments assessment,
         string name,
         string pageOrDuration,
         string pageOrDurationTitle,
         string authorOrDirecto,
         string authorOrDirectoTilte)
     {
-        Data = data;
+        Assessment = assessment;
         Name = name;
         PageOrDuration = pageOrDuration;
         PageOrDurationTitle = pageOrDurationTitle;

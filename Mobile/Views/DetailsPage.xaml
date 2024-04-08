@@ -18,21 +18,21 @@
                 <Label Margin="10,10,0,-10" Text="Name: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                        Text="{Binding Name}"
+                        Text="{Binding Assessment.Name}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Nota: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                        Text="{Binding Data.Assessment}"
+                        Text="{Binding Assessment.Assessment}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Genero: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                        Text="{Binding Data.Gender}"
+                        Text="{Binding Assessment.Gender}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
@@ -46,7 +46,7 @@
                 <Label Margin="10,10,0,-10" Text="Terminado: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                        Text="{Binding Data.Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter}}"
+                        Text="{Binding Assessment.Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter}}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
@@ -60,21 +60,21 @@
                 <Label Margin="10,10,0,-10" Text="Categoria: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                      Text="{Binding Data.Category}"
+                      Text="{Binding Assessment.Category}"
                       Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Comentario: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                         Text="{Binding Data.Comments}"
+                         Text="{Binding Assessment.Comments}"
                          Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
             </VerticalStackLayout>
             <Image
                  Grid.Row="{OnPlatform Android=0}"
                  Grid.Column="1"
-                 Source="{Binding Data.Image}"
+                 Source="{Binding Assessment.Image}"
                  Aspect="AspectFill"
                  WidthRequest="{OnIdiom Phone=200, Default=672}"
                  HeightRequest="{OnIdiom Phone=200, Default=672}"/>

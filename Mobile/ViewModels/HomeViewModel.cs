@@ -2,28 +2,30 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Models;
-using Mobile.Services;
 using Mobile.Services.Interfaces;
-using Mobile.Views;
-using System;
+using System.Security.Cryptography;
 using System.Windows.Input;
+
 namespace Mobile.ViewModels;
 
 public partial class HomeViewModel : ObservableObject
 {
-    private readonly IMovieService _movieService;
-    private readonly IBookService _bookService;
+    private readonly IAssessmentService _assessmentService;
+
 
     [ObservableProperty]
-    public IEnumerable<Movie> _movies;
+    public IEnumerable<Assessments> _assessments;
 
     [ObservableProperty]
-    public IEnumerable<Book> _books;
+    bool _showPrevie;
 
-    public HomeViewModel(IMovieService movieService, IBookService bookService)
+    [ObservableProperty]
+    string _priveiTitle;
+    public HomeViewModel(IAssessmentService assessmentService)
     {
-        _bookService = bookService;
-        _movieService = movieService;
+        _assessmentService = assessmentService;
+        ShowPrevie = false;
+        PriveiTitle = "👁️";
         LoadMovie();
 
 
@@ -40,6 +42,20 @@ public partial class HomeViewModel : ObservableObject
     async void Load()
     {
         LoadMovie();
+    }
+
+    [RelayCommand]
+    async void Previe()
+    {
+        ShowPrevie = !ShowPrevie;
+
+        if (ShowPrevie)
+        {
+            PriveiTitle = "👁️‍🗨️";
+            return;
+        }
+
+        PriveiTitle = "👁️";
     }
 
     [RelayCommand]
@@ -84,16 +100,16 @@ public partial class HomeViewModel : ObservableObject
         var result = await App.Current.MainPage.DisplayAlert("Remove", "Remover essa avaliação?", "Sim", "Não");
         if (result)
         {
-            await _movieService.DeleteMovie(id);
+            await _assessmentService.DeleteAssessment(id);
             LoadMovie();
         }
     }
     private async void LoadMovie()
     {
-        var movies = await _movieService.GetMovies();
-        Movies = movies.OrderByDescending(movie => movie.Assessment).Take(4);
-
-        var books = await _bookService.GetBook();
-        Books = books;
+        var assessments = await _assessmentService.GetAssessments();
+        Assessments = assessments
+                    .GroupBy(a => a.Category)
+                    .SelectMany(group => group.OrderByDescending(a => a.Id).Take(4))
+                    .ToList();
     }
 }

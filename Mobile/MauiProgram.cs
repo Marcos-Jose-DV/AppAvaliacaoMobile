@@ -27,8 +27,7 @@ namespace Mobile
             builder.Services.AddSingleton<DetailsViewModel>();
             builder.Services.AddSingleton<EditPage>();
             builder.Services.AddSingleton<EditViewModel>();
-            builder.Services.AddScoped<IMovieService, MovieService>();
-            builder.Services.AddScoped<IBookService, BookService>();
+            builder.Services.AddScoped<IAssessmentService, AssessmentService>();
 
 
             Routing.RegisterRoute(nameof(DetailsPage), typeof(DetailsPage));

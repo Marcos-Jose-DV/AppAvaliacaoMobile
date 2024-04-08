@@ -19,16 +19,18 @@
 
     <Style TargetType="Border" x:Key="BorderCard">
         <Setter Property="StrokeShape" Value="RoundRectangle 20"/>
+        <Setter Property="Stroke" Value="Transparent"/>
         <Setter Property="StrokeThickness" Value="0"/>
-        <Setter Property="WidthRequest" Value="225"/>
-        <Setter Property="Margin" Value="0,0,0,10"/>
-        <Setter Property="BackgroundColor" Value="Black"/>
+        <Setter Property="WidthRequest" Value="200"/>
+        <Setter Property="HeightRequest" Value="300"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
 
     <Style TargetType="Image" x:Key="ImageCard">
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
         <Setter Property="Aspect" Value="AspectFill"/>
-        <Setter Property="WidthRequest" Value="225"/>
-        <Setter Property="HeightRequest" Value="253"/>
+        <Setter Property="WidthRequest" Value="200"/>
+        <Setter Property="HeightRequest" Value="300"/>
     </Style>
 
     <Style TargetType="Border" x:Key="BorderDeleteCard">
@@ -50,12 +52,32 @@
         <Setter Property="BackgroundColor" Value="#F83030"/>
     </Style>
 
+    <Style TargetType="Border" x:Key="BorderPrevieCard">
+        <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+        <Setter Property="VerticalOptions" Value="Start"/>
+        <Setter Property="WidthRequest" Value="40"/>
+        <Setter Property="HeightRequest" Value="45"/>
+        <Setter Property="BackgroundColor" Value="Lavender"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 20 0 0 20"/>
+        <Setter Property="Stroke" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="0"/>
+    </Style>
+
+
+    <Style TargetType="Image" x:Key="ImagePrevieCard">
+        <Setter Property="Aspect" Value="AspectFill"/>
+        <Setter Property="WidthRequest" Value="16"/>
+        <Setter Property="HeightRequest" Value="16"/>
+        <Setter Property="BackgroundColor" Value="#F83030"/>
+    </Style>
+
 
 
     <Style TargetType="Border" x:Key="BorderDetalhesCard">
-        <Setter Property="Margin" Value="-2,0 ,0,-1"/>
-        <Setter Property="WidthRequest" Value="50"/>
-        <Setter Property="HeightRequest" Value="67"/>
+        <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+        <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+        <Setter Property="WidthRequest" Value="40"/>
+        <Setter Property="HeightRequest" Value="45"/>
         <Setter Property="BackgroundColor" Value="#3068F8"/>
         <Setter Property="StrokeShape" Value="RoundRectangle 0 20 20 0"/>
         <Setter Property="Stroke" Value="Transparent"/>
@@ -71,11 +93,12 @@
 
 
     <Style TargetType="Border" x:Key="BorderEditCard">
-        <Setter Property="Margin" Value="-2,0 ,-1,-1"/>
-        <Setter Property="WidthRequest" Value="50"/>
-        <Setter Property="HeightRequest" Value="67"/>
+        <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
+        <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+        <Setter Property="WidthRequest" Value="40"/>
+        <Setter Property="HeightRequest" Value="45"/>
         <Setter Property="BackgroundColor" Value="#71E149"/>
-        <Setter Property="StrokeShape" Value="RoundRectangle 20 0 0 0"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 20 0 0 20 "/>
         <Setter Property="Stroke" Value="Transparent"/>
         <Setter Property="StrokeThickness" Value="0"/>
     </Style>

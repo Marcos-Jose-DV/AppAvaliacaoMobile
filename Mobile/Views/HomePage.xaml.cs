@@ -10,4 +10,8 @@ public partial class HomePage : ContentPage
 
 		BindingContext = vm;
 	}
+    private void OnSwiped(object sender, SwipedEventArgs e)
+    {
+        var teste = e;
+    }
 }
