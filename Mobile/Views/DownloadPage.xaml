@@ -15,7 +15,7 @@
 
             <Button Command="{Binding SaveFileCommand}"
                     CommandParameter="assessments.xlsx"
-                    Text="Download.xlxs" 
+                    Text="Excel" 
                     FontAttributes="Bold"
                     BackgroundColor="Green"/>
         </Frame>
@@ -26,9 +26,31 @@
 
             <Button Command="{Binding SaveFileCommand}"
                     CommandParameter="assessments.txt"
-                    Text="Download.txt" 
+                    Text="Texto" 
                     FontAttributes="Bold"
                     BackgroundColor="Gray"/>
+        </Frame>
+        <Frame Padding="0"
+               HasShadow="True"
+               WidthRequest="150"
+               HeightRequest="150">
+
+            <Button Command="{Binding SaveFileCommand}"
+                    CommandParameter="assessments.pdf"
+                    Text="PDF" 
+                    FontAttributes="Bold"
+                    BackgroundColor="Red"/> 
+        </Frame>
+        <Frame Padding="0"
+               HasShadow="True"
+               WidthRequest="150"
+               HeightRequest="150">
+
+            <Button Command="{Binding SaveFileCommand}"
+                    CommandParameter="assessments.docx"
+                    Text="Word" 
+                    FontAttributes="Bold"
+                    BackgroundColor="Blue"/>
         </Frame>
     </HorizontalStackLayout>
 </ContentPage>

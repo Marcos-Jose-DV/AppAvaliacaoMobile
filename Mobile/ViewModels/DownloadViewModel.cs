@@ -3,9 +3,11 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using iTextSharp.text.pdf;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
-using System.IO;
+using Xceed.Words.NET;
+using Document = iTextSharp.text.Document;
 
 namespace Mobile.ViewModels;
 
@@ -29,35 +31,83 @@ public partial class DownloadViewModel : ObservableObject
         {
             var assessments = await _assessmentService.GetAssessments();
             Stream stream = null;
+
             if (fileName.Equals("assessments.txt"))
             {
                 stream = WriteTxt(assessments);
             }
-            else
+            else if (fileName.Equals("assessments.pdf"))
+            {
+                stream = WritePDF(assessments);
+            }
+            else if (fileName.Equals("assessments.xlsx"))
             {
                 stream = WriteExcel(assessments);
+            }
+            else
+            {
+                stream = WriteDoxc(assessments);
             }
 
             var fileLocationResult = await _fileSaver.SaveAsync(fileName, stream, cancellationToken);
             fileLocationResult.EnsureSuccess();
             await stream.DisposeAsync();
-            await Toast.Make($"File is saved: {fileLocationResult.FilePath}").Show(cancellationToken);
+            await Toast.Make($"Arquivo salvo em: {fileLocationResult.FilePath}").Show(cancellationToken);
         }
         catch (Exception ex)
         {
-            await Toast.Make($"File is not saved, {ex.Message}").Show(cancellationToken);
+            await Toast.Make($"O arquivo não foi salvo: {ex.Message}").Show(cancellationToken);
         }
+    }
+
+    private Stream? WriteDoxc(IEnumerable<Assessments> assessments)
+    {
+        using MemoryStream stream = new();
+        using DocX docx = DocX.Create(stream);
+        Xceed.Document.NET.Paragraph paragraph = docx.InsertParagraph();
+
+        foreach (var assessment in assessments)
+        {
+
+            paragraph.Append($"Id: {assessment.Id}, Title: {assessment.Name}, Assessment: {assessment.Assessment}, Director: {assessment.Director}, Image: {assessment.Image}, Gender: {assessment.Gender}, Duration: {assessment.Duration}, Concluded: {assessment.Concluded}, Comments: {assessment.Comments}, Category: {assessment.Category}, Created: {assessment.Created}");
+
+            paragraph.AppendLine();
+        }
+        docx.Save();
+        var array = new MemoryStream(stream.ToArray());
+        return array;
     }
 
     private Stream WriteTxt(IEnumerable<Assessments> assessments)
     {
         using MemoryStream stream = new();
-        using StreamWriter writer = new(stream, leaveOpen: true);
-        foreach (var movie in assessments)
+        using StreamWriter writer = new(stream);
+        foreach (var assessment in assessments)
         {
-            writer.WriteLine($"Id: {movie.Id}, Title: {movie.Name}, Assessment: {movie.Assessment}, Director: {movie.Director}, Image: {movie.Image}, Gender: {movie.Gender}, Duration: {movie.Duration}, Concluded: {movie.Concluded}, Comments: {movie.Comments}, Category: {movie.Category}, Created: {movie.Created}");
+            writer.WriteLine($"Id: {assessment.Id}, Title: {assessment.Name}, Assessment: {assessment.Assessment}, Director: {assessment.Director}, Image: {assessment.Image}, Gender: {assessment.Gender}, Duration: {assessment.Duration}, Concluded: {assessment.Concluded}, Comments: {assessment.Comments}, Category: {assessment.Category}, Created: {assessment.Created}");
         }
 
+        var array = new MemoryStream(stream.ToArray());
+        return array;
+    }
+
+    private Stream WritePDF(IEnumerable<Assessments> assessments)
+    {
+        using MemoryStream stream = new();
+        Document doc = new();
+        PdfWriter.GetInstance(doc, stream);
+
+
+        doc.Open();
+
+        foreach (var assessment in assessments)
+        {
+            iTextSharp.text.Paragraph paragraph = new($"Id: {assessment.Id}, Title: {assessment.Name}, Assessment: {assessment.Assessment}, Director: {assessment.Director}, Image: {assessment.Image}, Gender: {assessment.Gender}, Duration: {assessment.Duration}, Concluded: {assessment.Concluded}, Comments: {assessment.Comments}, Category: {assessment.Category}, Created: {assessment.Created}");
+
+            doc.Add(paragraph);
+        }
+
+        doc.Close();
         var array = new MemoryStream(stream.ToArray());
         return array;
     }
