@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobile.Views.DownloadPage"
+             Title="Baixar avaliações">
+    <HorizontalStackLayout 
+        HorizontalOptions="StartAndExpand" 
+        VerticalOptions="Start" 
+        Spacing="20" 
+        Margin="20">
+        <Frame Padding="0"
+               HasShadow="True"
+               WidthRequest="150"
+               HeightRequest="150">
+
+            <Button Command="{Binding SaveFileCommand}"
+                    CommandParameter="assessments.xlsx"
+                    Text="Download.xlxs" 
+                    FontAttributes="Bold"
+                    BackgroundColor="Green"/>
+        </Frame>
+        <Frame Padding="0"
+               HasShadow="True"
+               WidthRequest="150"
+               HeightRequest="150">
+
+            <Button Command="{Binding SaveFileCommand}"
+                    CommandParameter="assessments.txt"
+                    Text="Download.txt" 
+                    FontAttributes="Bold"
+                    BackgroundColor="Gray"/>
+        </Frame>
+    </HorizontalStackLayout>
+</ContentPage>

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
+using System.IO;
 
 namespace Mobile.ViewModels;
 
@@ -30,6 +31,7 @@ public partial class EditViewModel : ObservableObject, IQueryAttributable
     {
         var data = (Assessments)query["Data"];
         Assessment = data;
+        Image.Source = ImageSource.FromUri(new Uri(Assessment.Image));
     }
 
     [RelayCommand]

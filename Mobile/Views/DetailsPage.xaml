@@ -9,7 +9,8 @@
 
     <ContentPage.Resources>
         <converters:ConcludedIsTrueOrFalseConverter x:Key="ConcludedIsTrueOrFalseConverter"/>
-
+        <converters:TitleValueConverter x:Key="TitleValueConverter"/>
+        <converters:AuthorValueConverter x:Key="AuthorValueConverter"/>
     </ContentPage.Resources>
     <ScrollView>
         <Grid ColumnDefinitions="*,*" RowDefinitions="{OnPlatform Android='*,Auto'}">
@@ -36,10 +37,10 @@
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
-                <Label Margin="10,10,0,-10" Text="{Binding PageOrDurationTitle} " FontSize="16" FontAttributes="Bold"/>
+                <Label Margin="10,10,0,-10" Text="{Binding Assessment.Category, Converter={converters:TitleValueConverter}} " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                        Text="{Binding PageOrDuration}"
+                        Text="{Binding Assessment.Duration}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
@@ -50,10 +51,10 @@
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
-                <Label Margin="10,10,0,-10" Text="{Binding AuthorOrDirectoTilte}" FontSize="16" FontAttributes="Bold"/>
+                <Label Margin="10,10,0,-10" Text="{Binding Assessment.Category, Converter={converters:AuthorValueConverter}}" FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameDetalhes}">
                     <Label 
-                     Text="{Binding AuthorOrDirecto}"
+                     Text="{Binding Assessment.Director}"
                      Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 

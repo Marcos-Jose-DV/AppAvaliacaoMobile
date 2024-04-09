@@ -9,7 +9,8 @@
 
     <ContentPage.Resources>
         <converters:ConcludedIsTrueOrFalseConverter x:Key="ConcludedIsTrueOrFalseConverter"/>
-
+        <converters:TitleValueConverter x:Key="TitleValueConverter"/>
+        <converters:AuthorValueConverter x:Key="AuthorValueConverter"/>
     </ContentPage.Resources>
     <ScrollView>
         <Grid ColumnDefinitions="*,*">
@@ -19,28 +20,28 @@
                 <Label Margin="10,10,0,-10" Text="Name: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}" Padding="0">
                     <Entry 
-                        Text="{Binding Data.MovieName}"
+                        Text="{Binding Assessment.Name}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Nota: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Entry 
-                        Text="{Binding Data.Assessment}"
+                        Text="{Binding Assessment.Assessment}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Genero: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Entry 
-                        Text="{Binding Data.Gender}"
+                        Text="{Binding Assessment.Gender}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
-                <Label Margin="10,10,0,-10" Text="Duração: " FontSize="16" FontAttributes="Bold"/>
+                <Label Margin="10,10,0,-10" Text="{Binding Assessment.Category, Converter={converters:TitleValueConverter}}" FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Entry 
-                        Text="{Binding Data.Duration}"
+                        Text="{Binding Assessment.Duration}"
                         Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
@@ -48,31 +49,31 @@
                 <Frame Style="{StaticResource FrameEdit}">
                     <Grid>
                         <Entry 
-                            Text="{Binding Data.Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter}}"
+                            Text="{Binding Assessment.Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter}}"
                             Style="{StaticResource TitleDetalhes}"/>
 
-                        <CheckBox HorizontalOptions="EndAndExpand" IsChecked="{Binding Data.Concluded}" Color="Black" />
+                        <CheckBox HorizontalOptions="EndAndExpand" IsChecked="{Binding Assessment.Concluded}" Color="Black" />
                     </Grid>
                 </Frame>
 
-                <Label Margin="10,10,0,-10" Text="Diretor: " FontSize="16" FontAttributes="Bold"/>
+                <Label Margin="10,10,0,-10" Text="{Binding Assessment.Category, Converter={converters:AuthorValueConverter}}" FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Entry 
-                     Text="{Binding Data.Director}"
+                     Text="{Binding Assessment.Director}"
                      Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Categoria: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Entry 
-                          Text="{Binding Data.Category}"
+                          Text="{Binding Assessment.Category}"
                           Style="{StaticResource TitleDetalhes}"/>
                 </Frame>
 
                 <Label Margin="10,10,0,-10" Text="Comentario: " FontSize="16" FontAttributes="Bold"/>
                 <Frame Style="{StaticResource FrameEdit}">
                     <Editor 
-                         Text="{Binding Data.Comments}"
+                         Text="{Binding Assessment.Comments}"
                          Style="{StaticResource TitleDetalhes}"
                          MinimumHeightRequest="200"/>
                 </Frame>
@@ -107,7 +108,7 @@
                 HeightRequest="60"
                 BackgroundColor="#71E149">
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding FileUploadCommand}" CommandParameter="{Binding Movie.Image>}"/>
+                    <TapGestureRecognizer Command="{Binding FileUploadCommand}" CommandParameter="{Binding Assessment.Image>}"/>
                 </Border.GestureRecognizers>
                 <Image 
                     Source="icon_load_image.png"

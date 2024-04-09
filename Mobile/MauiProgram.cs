@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using Mobile.Models;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Storage;
+using Microsoft.Extensions.Logging;
 using Mobile.Services;
 using Mobile.Services.Interfaces;
 using Mobile.ViewModels;
@@ -14,6 +15,7 @@ namespace Mobile
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -27,7 +29,11 @@ namespace Mobile
             builder.Services.AddSingleton<DetailsViewModel>();
             builder.Services.AddSingleton<EditPage>();
             builder.Services.AddSingleton<EditViewModel>();
+            builder.Services.AddSingleton<DownloadPage>();
+            builder.Services.AddSingleton<DownloadViewModel>();
+
             builder.Services.AddScoped<IAssessmentService, AssessmentService>();
+            builder.Services.AddSingleton<IFileSaver>(FileSaver.Default);
 
 
             Routing.RegisterRoute(nameof(DetailsPage), typeof(DetailsPage));

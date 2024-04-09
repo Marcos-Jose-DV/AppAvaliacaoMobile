@@ -42,8 +42,8 @@
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 
     </FlyoutItem>
-    <ShellContent Title="About"
+    <ShellContent Title="Baixar Dados"
                   Icon="info.png"
-                  ContentTemplate="{DataTemplate views:HomePage}" />
+                  ContentTemplate="{DataTemplate views:DownloadPage}" />
 
 </Shell>
