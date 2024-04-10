@@ -1,11 +1,8 @@
-﻿using ClosedXML.Excel;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
-using System.Security.Cryptography;
-using System.Windows.Input;
 
 namespace Mobile.ViewModels;
 
@@ -15,7 +12,10 @@ public partial class HomeViewModel : ObservableObject
 
 
     [ObservableProperty]
-    public IEnumerable<Assessments> _assessments;
+    public IEnumerable<Assessments> _assessments, _assessmentsBooks;
+
+    [ObservableProperty]
+    public List<Assessments> _assessmentsAll;
 
     [ObservableProperty]
     bool _showPrevie;
@@ -25,25 +25,19 @@ public partial class HomeViewModel : ObservableObject
     public HomeViewModel(IAssessmentService assessmentService)
     {
         _assessmentService = assessmentService;
-        ShowPrevie = false;
-        PriveiTitle = "👁️";
-        LoadMovie();
 
-
-        WeakReferenceMessenger.Default.Register<string>(this, (e, msg) =>
+        WeakReferenceMessenger.Default.Register<Assessments>(this, (e, msg) =>
         {
-            if (msg.Equals("Load"))
+            var update = AssessmentsAll.FindIndex(item => item.Id == msg.Id);
+
+            if (update != -1)
             {
-                Load();
+                AssessmentsAll[update] = msg;
+                FilterAssessments();
             }
         });
     }
 
-    [RelayCommand]
-    async void Load()
-    {
-        LoadMovie();
-    }
 
     [RelayCommand]
     async void Previe()
@@ -102,63 +96,55 @@ public partial class HomeViewModel : ObservableObject
         if (result)
         {
             await _assessmentService.DeleteAssessment(id);
-            LoadMovie();
+            Load();
         }
     }
-    private async void LoadMovie()
+    public async void Load()
     {
-        var assessments = await _assessmentService.GetAssessments();
-        Assessments = assessments
-                    .GroupBy(a => a.Category)
-                    .SelectMany(group => group.OrderByDescending(a => a.Id).Take(4))
-                    .ToList();
+        ShowPrevie = false;
+        PriveiTitle = "👁️";
 
-        // Escreva os dados em um arquivo de texto
-        //using (StreamWriter writer = new StreamWriter("C:\\Users\\marco\\Downloads\\movies.txt"))
-        //{
-        //    foreach (var movie in Assessments)
-        //    {
-        //        writer.WriteLine($"Id: {movie.Id}, Title: {movie.Name}, Director: {movie.Director}");
-        //    }
-        //}
+        if (AssessmentsAll is null)
+            AssessmentsAll = (List<Assessments>?)await _assessmentService.GetAssessments();
 
-
-        //using (var workbook = new XLWorkbook())
-        //{
-        //    var worksheet = workbook.Worksheets.Add("Assessments");
-
-        //    // Escreve os cabeçalhos das colunas
-        //    worksheet.Cell(1, 1).Value = "Id";
-        //    worksheet.Cell(1, 2).Value = "Category";
-        //    worksheet.Cell(1, 3).Value = "Title";
-        //    worksheet.Cell(1, 4).Value = "Director";
-        //    worksheet.Cell(1, 5).Value = "ImageUrl";
-        //    worksheet.Cell(1, 6).Value = "Gender";
-        //    worksheet.Cell(1, 7).Value = "Duration";
-        //    worksheet.Cell(1, 8).Value = "Concluded";
-        //    worksheet.Cell(1, 9).Value = "Comments";
-        //    worksheet.Cell(1, 10).Value = "Created";
-
-        //    // Escreve os dados
-        //    int row = 2;
-        //    foreach (var assessment in Assessments)
-        //    {
-        //        worksheet.Cell(row, 1).Value = assessment.Id;
-        //        worksheet.Cell(row, 2).Value = assessment.Category;
-        //        worksheet.Cell(row, 3).Value = assessment.Name;
-        //        worksheet.Cell(row, 4).Value = assessment.Director;
-        //        worksheet.Cell(row, 5).Value = assessment.Image;
-        //        worksheet.Cell(row, 6).Value = assessment.Gender;
-        //        worksheet.Cell(row, 7).Value = assessment.Duration;
-        //        worksheet.Cell(row, 8).Value = assessment.Concluded;
-        //        worksheet.Cell(row, 9).Value = assessment.Comments;
-        //        worksheet.Cell(row, 10).Value = assessment.Created;
-        //        row++;
-        //    }
-
-        //    // Salva o arquivo Excel
-        //    string filePath = "C:\\Users\\marco\\Downloads\\movies.xlsx";
-        //    workbook.SaveAs(filePath);
-        //}
+        FilterAssessments();
+    }
+    void FilterAssessments()
+    {
+        var main = Shell.Current.CurrentItem.Title;
+        switch (main)
+        {
+            case "Inicio":
+                Assessments = AssessmentsAll
+                          .GroupBy(a => a.Category)
+                          .SelectMany(group => group.OrderByDescending(a => a.Id).Take(4))
+                          .ToList();
+                break;
+            case "Livros":
+                AssessmentsBooks = AssessmentsAll
+                        .Where(book => book.Category == "Book")
+                        .OrderBy(x => x.Created)
+                        .ToList();
+                break;
+            case "Series":
+                AssessmentsAll
+                        .Where(book => book.Category == "Series")
+                        .OrderBy(x => x.Created)
+                        .ToList();
+                break;
+            case "Filme":
+                AssessmentsAll
+                        .Where(book => book.Category == "Movie")
+                        .OrderBy(x => x.Created)
+                        .ToList();
+                break;
+            default:
+                AssessmentsAll
+                        .Where(book => book.Category == "Music")
+                        .OrderBy(x => x.Created)
+                        .ToList();
+                break;
+        };
     }
 }
+

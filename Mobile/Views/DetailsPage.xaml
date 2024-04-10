@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Mobile.Views.DetailsPage"
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="True"
              Shell.FlyoutBehavior="Disabled"
              xmlns:converters="clr-namespace:Mobile.Converters"
-             Title="DetailsPage">
+             Title="{Binding Assessment.Category}">
 
     <ContentPage.Resources>
         <converters:ConcludedIsTrueOrFalseConverter x:Key="ConcludedIsTrueOrFalseConverter"/>
@@ -13,73 +13,202 @@
         <converters:AuthorValueConverter x:Key="AuthorValueConverter"/>
     </ContentPage.Resources>
     <ScrollView>
-        <Grid ColumnDefinitions="*,*" RowDefinitions="{OnPlatform Android='*,Auto'}">
-            <VerticalStackLayout Grid.Column="0" Grid.Row="{OnPlatform Android=1}">
+        <Grid ColumnDefinitions="*"
+              Margin="50">
 
-                <Label Margin="10,10,0,-10" Text="Name: " FontSize="16" FontAttributes="Bold"/>
-                <Frame Style="{StaticResource FrameDetalhes}">
-                    <Label 
-                        Text="{Binding Assessment.Name}"
+ 
+            
+            <Grid IsVisible="{Binding DetailsIsVisible}"
+                  ColumnDefinitions="200,Auto,*" 
+                  RowDefinitions="300,*"
+                  ColumnSpacing="20"
+                  RowSpacing="20">
+
+                <Frame Grid.Row="{OnPlatform Android=0}"
+                       Grid.Column="0"
+                       VerticalOptions="Start"
+                       Padding="0"
+                       HasShadow="True"
+                       BorderColor="LightGray"
+                       CornerRadius="0"
+                       WidthRequest="200"
+                       HeightRequest="300">
+
+                    <Image Source="{Binding Assessment.Image}"
+                           Aspect="AspectFill"
+                           WidthRequest="200"
+                           HeightRequest="300"/>
+                </Frame>
+                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                    <Label Text="{Binding Assessment.Name}"
+                           TextColor="#136CB2"
+                           FontSize="18" 
+                           Style="{StaticResource TitleDetalhes}"/>
+
+                    <HorizontalStackLayout Spacing="5">
+                        <Label Text="{Binding Assessment.Duration}"
+                               TextColor="#666"
+                               FontAttributes="None"/>
+                        <Label Text="{Binding Assessment.Category,
+                               Converter={converters:TitleValueConverter}}"                 
+                               TextColor="#666"
+                               FontAttributes="None"
+                               Style="{StaticResource TitleDetalhes}"/>
+                        <Label Text="-"/>
+                        <Label Text="{Binding Assessment.Gender}"
+                               FontAttributes="None"
+                               TextColor="#666"
+                               Style="{StaticResource TitleDetalhes}"/>
+                    </HorizontalStackLayout>
+
+                    <Label Text="{Binding Assessment.Assessment, StringFormat='Nota:  {0}'}"
+                           FontAttributes="None"
+                           TextColor="#666"
+                           Style="{StaticResource TitleDetalhes}"/>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Terminado:"
+                               TextColor="#666"
+                               FontAttributes="None"
+                               Style="{StaticResource TitleDetalhes}"/>
+                        <Label Text="{Binding Assessment.Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter}}"
+                               TextColor="#666"
+                               FontAttributes="None"
+                               Style="{StaticResource TitleDetalhes}"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="{Binding Assessment.Category, 
+                        Converter={converters:AuthorValueConverter}}"
+                               TextColor="#666"
+                               FontSize="14" 
+                               FontAttributes="None"/>
+
+                        <Label Text="{Binding Assessment.Director}"
+                               TextColor="#136CB2"
+                               FontAttributes="None"
+                               FontSize="14" 
+                               Style="{StaticResource TitleDetalhes}"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+
+                <Button Grid.Column="1"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="EndAndExpand"
+                        Margin="0,0,0,0"
+                        Command="{Binding EditCommand}"
+                        Text="Editar"
+                        BackgroundColor="#71E149"
+                        WidthRequest="132"
+                        HeightRequest="44"/>
+                <Label Grid.Row="1"
+                       Grid.ColumnSpan="3"
+                       Text="{Binding Assessment.Comments}"
+                       TextColor="#333333"
+                       FontFamily="OpenSansRegular"
+                       FontAttributes="None"
+                       Style="{StaticResource TitleDetalhes}"/>
+            </Grid>
+
+            <Grid IsVisible="{Binding EditIsVisible}"
+                  Grid.Column="0" 
+                  ColumnDefinitions="200,Auto,*" 
+                  RowDefinitions="300,*"
+                  ColumnSpacing="20"
+                  RowSpacing="20">
+
+
+                <Border ZIndex="2"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        BackgroundColor="Transparent"
+                        WidthRequest="66" 
+                        HeightRequest="66"
+                        StrokeThickness="0"> 
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FileUploadCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="🔄️"
+                       FontSize="26"/>
+                </Border>
+
+                <Frame Grid.Row="{OnPlatform Android=0}"
+                       Grid.Column="0"
+                       VerticalOptions="Start"
+                       Padding="0"
+                       HasShadow="True"
+                       BorderColor="LightGray"
+                       CornerRadius="0"
+                       WidthRequest="200"
+                       HeightRequest="300">
+
+                    <Image Source="{Binding Image.Source}"
+                           Aspect="AspectFill"
+                           WidthRequest="200"
+                           HeightRequest="300"/> 
+                </Frame>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                    <Entry Text="{Binding Assessment.Name}"
+                           TextColor="#136CB2"
+                           FontSize="18" 
+                           Style="{StaticResource TitleDetalhes}"/> 
+
+                    <HorizontalStackLayout>
+                        <Entry Text="{Binding Assessment.Duration}"
+                               TextColor="#666"
+                               FontAttributes="None"/> 
+
+
+                        <Entry Text="{Binding Assessment.Gender}"
+                               FontAttributes="None"
+                               TextColor="#666"
+                               Style="{StaticResource TitleDetalhes}"/> 
+                    </HorizontalStackLayout>
+
+                    <Entry Text="{Binding Assessment.Assessment}"
+                           FontAttributes="None"
+                           TextColor="#666"
+                           Style="{StaticResource TitleDetalhes}"/> 
+
+                    <CheckBox IsChecked="{Binding  Assessment.Concluded}" />
+                    <HorizontalStackLayout Spacing="10">
+                        <Entry Text="{Binding Assessment.Director}"
+                               TextColor="#136CB2"
+                               FontAttributes="None"
+                               FontSize="14" 
+                               Style="{StaticResource TitleDetalhes}"/> 
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+
+                <HorizontalStackLayout Grid.Column="1"
+                                       HorizontalOptions="EndAndExpand"
+                                       VerticalOptions="EndAndExpand"
+                                       Spacing="20">
+
+                    <Button Grid.Column="1"
+                            Command="{Binding SaveCommand}"
+                            Text="Salvar"
+                            BackgroundColor="#3068F8"
+                            WidthRequest="100"
+                            HeightRequest="44"/>
+                    <Button Grid.Column="1"
+                            Command="{Binding EditCommand}"
+                            Text="Cancelar"
+                            BackgroundColor="#F83030"
+                            WidthRequest="132"
+                            HeightRequest="44"/>
+                </HorizontalStackLayout>
+                <Editor Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        Text="{Binding Assessment.Comments}"
+                        TextColor="#333333"
+                        FontFamily="OpenSansRegular"
+                        FontAttributes="None"
                         Style="{StaticResource TitleDetalhes}"/>
-                </Frame>
-
-                <Label Margin="10,10,0,-10" Text="Nota: " FontSize="16" FontAttributes="Bold"/>
-                <Frame Style="{StaticResource FrameDetalhes}">
-                    <Label 
-                        Text="{Binding Assessment.Assessment}"
-                        Style="{StaticResource TitleDetalhes}"/>
-                </Frame>
-
-                <Label Margin="10,10,0,-10" Text="Genero: " FontSize="16" FontAttributes="Bold"/>
-                <Frame Style="{StaticResource FrameDetalhes}">
-                    <Label 
-                        Text="{Binding Assessment.Gender}"
-                        Style="{StaticResource TitleDetalhes}"/>
-                </Frame>
-
-                <Label Margin="10,10,0,-10" Text="{Binding Assessment.Category, Converter={converters:TitleValueConverter}} " FontSize="16" FontAttributes="Bold"/>
-                <Frame Style="{StaticResource FrameDetalhes}">
-                    <Label 
-                        Text="{Binding Assessment.Duration}"
-                        Style="{StaticResource TitleDetalhes}"/>
-                </Frame>
-
-                <Label Margin="10,10,0,-10" Text="Terminado: " FontSize="16" FontAttributes="Bold"/>
-                <Frame Style="{StaticResource FrameDetalhes}">
-                    <Label 
-                        Text="{Binding Assessment.Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter}}"
-                        Style="{StaticResource TitleDetalhes}"/>
-                </Frame>
-
-                <Label Margin="10,10,0,-10" Text="{Binding Assessment.Category, Converter={converters:AuthorValueConverter}}" FontSize="16" FontAttributes="Bold"/>
-                <Frame Style="{StaticResource FrameDetalhes}">
-                    <Label 
-                     Text="{Binding Assessment.Director}"
-                     Style="{StaticResource TitleDetalhes}"/>
-                </Frame>
-
-                <Label Margin="10,10,0,-10" Text="Categoria: " FontSize="16" FontAttributes="Bold"/>
-                <Frame Style="{StaticResource FrameDetalhes}">
-                    <Label 
-                      Text="{Binding Assessment.Category}"
-                      Style="{StaticResource TitleDetalhes}"/>
-                </Frame>
-
-                <Label Margin="10,10,0,-10" Text="Comentario: " FontSize="16" FontAttributes="Bold"/>
-                <Frame Style="{StaticResource FrameDetalhes}">
-                    <Label 
-                         Text="{Binding Assessment.Comments}"
-                         Style="{StaticResource TitleDetalhes}"/>
-                </Frame>
-            </VerticalStackLayout>
-            <Image
-                 Grid.Row="{OnPlatform Android=0}"
-                 Grid.Column="1"
-                 Source="{Binding Assessment.Image}"
-                 Aspect="AspectFill"
-                 WidthRequest="{OnIdiom Phone=200, Default=672}"
-                 HeightRequest="{OnIdiom Phone=200, Default=672}"/>
-
+            </Grid>
         </Grid>
     </ScrollView>
 </ContentPage>

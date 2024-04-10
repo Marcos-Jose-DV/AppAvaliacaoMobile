@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mobile.Views.HomePage"
+             x:Class="Mobile.Views.BookPage"
              xmlns:converters="clr-namespace:Mobile.Converters"
              BackgroundColor="#ECECF6"
              Shell.NavBarIsVisible="False"
              x:Name="PaiPage"
-             Title="HomePage">
-
+             Title="BookPage">
     <ContentPage.Resources>
         <converters:ConcludedIsTrueOrFalseConverter x:Key="ConcludedIsTrueOrFalseConverter"/>
         <converters:TitleCardValueConverter x:Key="TitleCardValueConverter"/>
@@ -15,64 +14,55 @@
 
     <ScrollView>
         <Grid>
-            <Label Text="Mais Recentes"
-                   FontAttributes="Bold"
-                   FontSize="26"
-                   Margin="20"/>
             <Border ZIndex="2"
-                   HorizontalOptions="End"
-                   VerticalOptions="End"
-                   Margin="10"
-                   BackgroundColor="#ECECF6" 
-                   WidthRequest="60" 
-                   HeightRequest="60"  
-                   StrokeShape="RoundRectangle 40">
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Margin="10"
+                    BackgroundColor="#ECECF6" 
+                    WidthRequest="60" 
+                    HeightRequest="60"  
+                    StrokeShape="RoundRectangle 40">
                 <Button Command="{Binding PrevieCommand}"
-                       CommandParameter="Movie"
-                       Text="{Binding PriveiTitle}"
-                       TextColor="Black"
-                       FontSize="23"
-                       FontAttributes="Bold"
-                       BackgroundColor="#D9D9ED"/>
+                        CommandParameter="Movie"
+                        Text="{Binding PriveiTitle}"
+                        TextColor="Black"
+                        FontSize="23"
+                        FontAttributes="Bold"
+                        BackgroundColor="#D9D9ED"/>
             </Border>
             <Border HorizontalOptions="End"
-                   VerticalOptions="End"
-                   Margin="0,0,90,10"
-                   BackgroundColor="#ECECF6" 
-                   WidthRequest="60" 
-                   HeightRequest="60" 
-                   StrokeShape="RoundRectangle 30">
+                    VerticalOptions="End"
+                    Margin="0,0,90,10"
+                    BackgroundColor="#ECECF6" 
+                    WidthRequest="60" 
+                    HeightRequest="60" 
+                    StrokeShape="RoundRectangle 30">
                 <Button Command="{Binding AddCard}"
-                       CommandParameter="Movie"
-                       Text="+"
-                       TextColor="Black"
-                       FontSize="30"
-                       FontAttributes="Bold"
-                       BackgroundColor="#D9D9ED"/>
+                        CommandParameter="Movie"
+                        Text="+"
+                        TextColor="Black"
+                        FontSize="30"
+                        FontAttributes="Bold"
+                        BackgroundColor="#D9D9ED"/>
             </Border>
-            <CollectionView 
-                        Grid.Row="1"
-                        ZIndex="1"
-                        ItemsSource="{Binding Assessments}" 
-                        HorizontalOptions="StartAndExpand"
-                        MinimumWidthRequest="1000"
-                        Margin="0,50,0,0">
+            <CollectionView Grid.Row="1"
+                            ZIndex="1"
+                            ItemsSource="{Binding AssessmentsBooks}" 
+                            HorizontalOptions="StartAndExpand"
+                            MinimumWidthRequest="1000">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="4" VerticalItemSpacing="20"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid RowDefinitions="300,*" ColumnDefinitions="100,100" RowSpacing="0" HorizontalOptions="Center">
-                            <Border 
-                                    ZIndex="0"
+                            <Border ZIndex="0"
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2" 
                                     Style="{StaticResource BorderCard}">
 
-                                <Image
-                                        Source="{Binding Image}"
-                                        Style="{StaticResource ImageCard}">
+                                <Image Source="{Binding Image}" Style="{StaticResource ImageCard}">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding BindingContext.ShowDisplay,Source={x:Reference PaiPage}}" 
                                                               CommandParameter="{Binding Id}"/>
@@ -80,15 +70,13 @@
                                 </Image>
                             </Border>
 
-                            <Grid
-                                IsVisible="{Binding BindingContext.ShowPrevie,Source={x:Reference PaiPage}}"
-                                ZIndex="1"
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2">
+                            <Grid IsVisible="{Binding BindingContext.ShowPrevie,Source={x:Reference PaiPage}}"
+                                  ZIndex="1"
+                                  Grid.Row="0"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="2">
 
-                                <Border 
-                                        BackgroundColor="Black"
+                                <Border BackgroundColor="Black"
                                         Opacity="0.8"
                                         Style="{StaticResource BorderCard}">
                                 </Border>
@@ -101,31 +89,33 @@
                             </Grid>
 
                             <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                                <Border 
-                                        Style="{StaticResource BorderDeleteCard}">
+                                <Border Style="{StaticResource BorderDeleteCard}">
                                     <Border.GestureRecognizers>
-                                        <TapGestureRecognizer 
-                                                    Command="{Binding BindingContext.DeleteCommand,Source={x:Reference PaiPage}}" 
-                                                    CommandParameter="{Binding Id}"/>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.DeleteCommand,Source={x:Reference PaiPage}}" 
+                                                              CommandParameter="{Binding Id}"/>
                                     </Border.GestureRecognizers>
-                                    <Image
-                                            Source="icon_delete.png"
-                                            Style="{StaticResource ImageIconDeleteCard}">
+                                    <Image Source="icon_delete.png"
+                                           Style="{StaticResource ImageIconDeleteCard}">
                                     </Image>
                                 </Border>
 
-                                <Border
-                                        Style="{StaticResource BorderDetalhesCard}">
+                                <Border Style="{StaticResource BorderDetalhesCard}">
                                     <Border.GestureRecognizers>
-                                        <TapGestureRecognizer 
-                                                 Command="{Binding BindingContext.DetailCommand,Source={x:Reference PaiPage}}" 
-                                                 CommandParameter="{Binding .}"/>
+                                        <TapGestureRecognizer  Command="{Binding BindingContext.DetailCommand,Source={x:Reference PaiPage}}" 
+                                                               CommandParameter="{Binding .}"/>
                                     </Border.GestureRecognizers>
-                                    <Image
-                                        Source="icon_detalhes.png"
-                                        Style="{StaticResource ImageIconDetalhesCard}">
+                                    <Image Source="icon_detalhes.png"
+                                           Style="{StaticResource ImageIconDetalhesCard}">
                                     </Image>
 
+                                </Border>
+                                <Border Style="{StaticResource BorderEditCard}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.EditCommand,Source={x:Reference PaiPage}}" 
+                                                              CommandParameter="{Binding .}"/>
+                                    </Border.GestureRecognizers>
+                                    <Image Source="icon_edit.png"
+                                           Style="{StaticResource ImageIconEditCard}"/>
                                 </Border>
                             </Grid>
                         </Grid>
@@ -134,5 +124,4 @@
             </CollectionView>
         </Grid>
     </ScrollView>
-
 </ContentPage>

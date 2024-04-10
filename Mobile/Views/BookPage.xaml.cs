@@ -2,9 +2,10 @@ using Mobile.ViewModels;
 
 namespace Mobile.Views;
 
-public partial class HomePage : ContentPage
+public partial class BookPage : ContentPage
 {
-	public HomePage(HomeViewModel vm)
+
+	public BookPage(HomeViewModel vm)
 	{
 		InitializeComponent();
 

@@ -13,9 +13,9 @@ internal class TitleValueConverter : IValueConverter
 
         return category switch
         {
-            "Book" => $"Paginas: ",
-            "Série" => $"Temporadas: ",
-            _ => $"Duração: ",
+            "Book" => $"paginas",
+            "Série" => $"temporadas",
+            _ => $"min",
         };
     }
 
