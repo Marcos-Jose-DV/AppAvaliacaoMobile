@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Models;
@@ -19,7 +20,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     Image _image = new();
 
     [ObservableProperty]
-    Stream _filePath, _stringBase64;
+    Stream _stringBase64;
 
     public DetailsViewModel(IAssessmentService service)
     {
@@ -27,14 +28,9 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         EditIsVisible = false;
         _service = service;
     }
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        StringBase64 = null;
-        Assessment = null;
-        Image.Source = null;
-
-        if(FilePath is not null)
-            FilePath.Dispose();
+        DisposeAsyncMemory();
 
         var data = (Assessments)query["Data"];
         Assessment = data;
@@ -44,47 +40,55 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         EditIsVisible = false;
     }
     [RelayCommand]
-    async void Edit()
+    void Edit()
     {
         DetailsIsVisible = !DetailsIsVisible;
         EditIsVisible = !EditIsVisible;
     }
     [RelayCommand]
-    async void Save()
+    async Task Save()
     {
-
-        var result = await App.Current.MainPage.DisplayAlert("Editar", "Confimar alterações", "Sim", "Não");
+        bool result = await App.Current.MainPage.DisplayAlert("Editar", "Confimar alterações", "Sim", "Não");
 
         if (result)
         {
             Assessment.Image = await ConvertImageToBase64String(StringBase64);
             var assessment = await _service.PutAssessment(Assessment.Id, Assessment);
             WeakReferenceMessenger.Default.Send<Assessments>(assessment);
-
-            Assessment = null;
-            Image.Source = null;
-            await StringBase64.DisposeAsync();
-            await FilePath.DisposeAsync();
-
+            DisposeAsyncMemory();
             await Shell.Current.GoToAsync("..");
         }
     }
 
     [RelayCommand]
-    async void FileUpload()
+    async Task FileUpload(CancellationToken cancellationToken)
     {
-        var result = await FilePicker.PickAsync(new PickOptions
+        try
         {
-            PickerTitle = "Selecione o imagem",
-            FileTypes = FilePickerFileType.Images
-        });
+            DisposeAsyncMemory();
+            var result = await FilePicker.PickAsync(new PickOptions
+            {
+                PickerTitle = "Selecione o imagem",
+                FileTypes = FilePickerFileType.Images
+            });
 
-        if (result is null) return;
-        FilePath = await result.OpenReadAsync();
-        StringBase64 = await result.OpenReadAsync();
+            if (result is null) return;
 
+            StringBase64 = await result.OpenReadAsync();
+            Image.Source = ImageSource.FromFile(result.FullPath);
+        }
+        catch (Exception ex)
+        {
+            await Toast.Make($"Ocorreu um erro ao selecionado o arquivo.").Show(cancellationToken);
+        }
+    }
 
-        Image.Source = ImageSource.FromStream(() => FilePath);
+    async void DisposeAsyncMemory()
+    {
+        if (StringBase64 is not null)
+        {
+            await StringBase64.DisposeAsync();
+        }
     }
 
     private async Task<string> ConvertImageToBase64String(Stream stream)

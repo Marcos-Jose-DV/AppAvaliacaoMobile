@@ -12,7 +12,7 @@ public partial class HomeViewModel : ObservableObject
 
 
     [ObservableProperty]
-    public IEnumerable<Assessments> _assessments, _assessmentsBooks;
+    public IEnumerable<Assessments> _assessments, _assessmentsBooks, _assessmentsSeries;
 
     [ObservableProperty]
     public List<Assessments> _assessmentsAll;
@@ -103,6 +103,8 @@ public partial class HomeViewModel : ObservableObject
     {
         ShowPrevie = false;
         PriveiTitle = "👁️";
+        Assessments = null;
+
 
         if (AssessmentsAll is null)
             AssessmentsAll = (List<Assessments>?)await _assessmentService.GetAssessments();
@@ -121,25 +123,25 @@ public partial class HomeViewModel : ObservableObject
                           .ToList();
                 break;
             case "Livros":
-                AssessmentsBooks = AssessmentsAll
+                Assessments = AssessmentsAll
                         .Where(book => book.Category == "Book")
                         .OrderBy(x => x.Created)
                         .ToList();
                 break;
-            case "Series":
-                AssessmentsAll
-                        .Where(book => book.Category == "Series")
+            case "Série":
+                Assessments = AssessmentsAll
+                        .Where(book => book.Category == "Série")
                         .OrderBy(x => x.Created)
                         .ToList();
                 break;
-            case "Filme":
-                AssessmentsAll
+            case "Filmes":
+                Assessments = AssessmentsAll
                         .Where(book => book.Category == "Movie")
                         .OrderBy(x => x.Created)
                         .ToList();
                 break;
             default:
-                AssessmentsAll
+                Assessments = AssessmentsAll
                         .Where(book => book.Category == "Music")
                         .OrderBy(x => x.Created)
                         .ToList();

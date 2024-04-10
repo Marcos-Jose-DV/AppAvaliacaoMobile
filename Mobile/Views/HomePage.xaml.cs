@@ -4,11 +4,19 @@ namespace Mobile.Views;
 
 public partial class HomePage : ContentPage
 {
-	public HomePage(HomeViewModel vm)
+
+    HomeViewModel ViewModel;
+    public HomePage(HomeViewModel vm)
 	{
 		InitializeComponent();
 
 		BindingContext = vm;
-        vm.Load();
+        ViewModel = vm;        
+    }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        ViewModel.Load();
     }
 }

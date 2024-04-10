@@ -9,7 +9,7 @@
     Title="Mobile">
 
     <Shell.FlyoutHeader>
-        <Label Margin="{OnPlatform Default='0,0,0,12',
+        <Label Margin="{OnPlatform Default='20,0,0,12',
                                iOS='0',
                                MacCatalyst='0'}"
            Padding="{OnPlatform Default='4,0',
@@ -18,32 +18,33 @@
            FontSize="24"
            HorizontalTextAlignment="Start"
            Text="Menu"
+           FontAttributes="Bold"
            VerticalTextAlignment="Center" />
 
     </Shell.FlyoutHeader>
   
-    <FlyoutItem Title="Inicio">
+    <FlyoutItem Title="Inicio" Icon="icon_home.png">
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}"/>
 
     </FlyoutItem>
-    <FlyoutItem Title="Livros">
-        <ShellContent ContentTemplate="{DataTemplate views:BookPage}" />
-
-    </FlyoutItem>
-    <FlyoutItem Title="Seriés">
+    <FlyoutItem Title="Livros" Icon="icon_book.png">
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 
     </FlyoutItem>
-    <FlyoutItem Title="Filmes">
+    <FlyoutItem Title="Série" Icon="icon_serie.png">
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 
     </FlyoutItem>
-    <FlyoutItem Title="Músicas">
+    <FlyoutItem Title="Filmes" Icon="icon_movie.png">
+        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+
+    </FlyoutItem>
+    <FlyoutItem Title="Músicas" Icon="icon_music.png">
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 
     </FlyoutItem>
     <ShellContent Title="Baixar Dados"
-                  Icon="info.png"
+                  Icon="icon_data.png"
                   ContentTemplate="{DataTemplate views:DownloadPage}" />
 
 </Shell>
