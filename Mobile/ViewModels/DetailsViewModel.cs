@@ -23,10 +23,14 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     [ObservableProperty]
     Stream _stringBase64;
 
+    [ObservableProperty]
+    string[] _categories;
+
     public DetailsViewModel(IAssessmentService service)
     {
         DetailsIsVisible = true;
         EditIsVisible = false;
+        Categories = ["Book", "Série", "Movie", "Music"];
         _service = service;
     }
     public async void ApplyQueryAttributes(IDictionary<string, object> query)

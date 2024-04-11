@@ -5,6 +5,8 @@
              Shell.NavBarIsVisible="True"
              Shell.FlyoutBehavior="Disabled"
              xmlns:converters="clr-namespace:Mobile.Converters"
+             BackgroundColor="#ECECF6"
+             Shell.BackgroundColor="#ECECF6"
              Title="{Binding Assessment.Category}">
 
     <ContentPage.Resources>
@@ -13,11 +15,8 @@
         <converters:AuthorValueConverter x:Key="AuthorValueConverter"/>
     </ContentPage.Resources>
     <ScrollView>
-        <Grid ColumnDefinitions="*"
+        <Grid 
               Margin="50">
-
- 
-            
             <Grid IsVisible="{Binding DetailsIsVisible}"
                   ColumnDefinitions="200,Auto,*" 
                   RowDefinitions="300,*"
@@ -113,11 +112,10 @@
 
             <Grid IsVisible="{Binding EditIsVisible}"
                   Grid.Column="0" 
-                  ColumnDefinitions="200,Auto,*" 
-                  RowDefinitions="300,*"
+                  ColumnDefinitions="250,*" 
+                  RowDefinitions="350,*"
                   ColumnSpacing="20"
                   RowSpacing="20">
-
 
                 <Border ZIndex="2"
                         HorizontalOptions="StartAndExpand"
@@ -125,12 +123,12 @@
                         BackgroundColor="Transparent"
                         WidthRequest="66" 
                         HeightRequest="66"
-                        StrokeThickness="0"> 
+                        StrokeThickness="0">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding FileUploadCommand}"/>
                     </Border.GestureRecognizers>
                     <Label Text="🔄️"
-                       FontSize="26"/>
+                          FontSize="26"/>
                 </Border>
 
                 <Frame Grid.Row="{OnPlatform Android=0}"
@@ -140,48 +138,78 @@
                        HasShadow="True"
                        BorderColor="LightGray"
                        CornerRadius="0"
-                       WidthRequest="200"
-                       HeightRequest="300">
+                       WidthRequest="250"
+                       HeightRequest="350">
 
                     <Image Source="{Binding Image.Source}"
-                           Aspect="AspectFill"
-                           WidthRequest="200"
-                           HeightRequest="300"/> 
+                           Aspect="AspectFill"/>
                 </Frame>
 
-                <VerticalStackLayout Grid.Column="1" Spacing="5">
-                    <Entry Text="{Binding Assessment.Name}"
+                <Grid Grid.Column="1" 
+                      Grid.Row="0" 
+                      Grid.RowSpan="2" 
+                      ColumnDefinitions="*,*" 
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+                      RowSpacing="10"
+                      ColumnSpacing="10">
+                    <Entry Grid.Row="0"
+                           Grid.ColumnSpan="2"
+                           Text="{Binding Assessment.Name}"
                            TextColor="#136CB2"
                            FontSize="18" 
-                           Style="{StaticResource TitleDetalhes}"/> 
+                           Style="{StaticResource TitleDetalhes}"/>
 
-                    <HorizontalStackLayout>
-                        <Entry Text="{Binding Assessment.Duration}"
-                               TextColor="#666"
-                               FontAttributes="None"/> 
+                    <Entry Grid.Column="0"
+                           Grid.Row="1"
+                           Text="{Binding Assessment.Duration}"
+                           TextColor="#666"
+                           FontAttributes="None"/>
 
-
-                        <Entry Text="{Binding Assessment.Gender}"
-                               FontAttributes="None"
-                               TextColor="#666"
-                               Style="{StaticResource TitleDetalhes}"/> 
-                    </HorizontalStackLayout>
-
-                    <Entry Text="{Binding Assessment.Assessment}"
+                    <Entry Grid.Column="1"
+                           Grid.Row="1"
+                           Text="{Binding Assessment.Gender}"
                            FontAttributes="None"
                            TextColor="#666"
-                           Style="{StaticResource TitleDetalhes}"/> 
+                           Style="{StaticResource TitleDetalhes}"/>
 
-                    <CheckBox IsChecked="{Binding  Assessment.Concluded}" />
-                    <HorizontalStackLayout Spacing="10">
-                        <Entry Text="{Binding Assessment.Director}"
-                               TextColor="#136CB2"
+                    <Entry Grid.Row="2"
+                           Grid.ColumnSpan="2"
+                           Text="{Binding Assessment.Assessment}"
+                           FontAttributes="None"
+                           TextColor="#666"
+                           Style="{StaticResource TitleDetalhes}"/>
+
+                    <HorizontalStackLayout Grid.Row="3" Spacing="5">
+                        <Label Text="Terminado" 
+                               HorizontalTextAlignment="Center" 
+                               VerticalTextAlignment="Center"
                                FontAttributes="None"
-                               FontSize="14" 
-                               Style="{StaticResource TitleDetalhes}"/> 
+                               TextColor="#666"
+                               FontSize="16"
+                               Opacity=".6"/>
+                        <CheckBox IsChecked="{Binding  Assessment.Concluded}"  Color="#136CB2"/>
                     </HorizontalStackLayout>
-                </VerticalStackLayout>
 
+                    <Entry Grid.Row="4"
+                           Grid.ColumnSpan="2"
+                           Text="{Binding Assessment.Director}"
+                           TextColor="#136CB2"
+                           FontAttributes="None"
+                           FontSize="14" 
+                           Style="{StaticResource TitleDetalhes}"/>
+
+                    <HorizontalStackLayout Grid.Row="5" Spacing="10">
+                        <Label Text="Categoria"
+                               VerticalTextAlignment="Center"
+                               HorizontalOptions="Center"
+                               TextColor="#666"
+                               FontAttributes="None"
+                               FontSize="16"
+                               Opacity=".6"/> 
+                        <Picker ItemsSource="{Binding Categories}"
+                                SelectedItem="{Binding Assessment.Category}"/>
+                    </HorizontalStackLayout>
+                </Grid>
 
                 <HorizontalStackLayout Grid.Column="1"
                                        HorizontalOptions="EndAndExpand"
@@ -200,9 +228,15 @@
                             BackgroundColor="#F83030"
                             WidthRequest="132"
                             HeightRequest="44"/>
+                    <Button Grid.Column="1"
+                            Command="{Binding CleanCommand}"
+                            Text="Limpar"
+                            BackgroundColor="LightGray"
+                            WidthRequest="132"
+                            HeightRequest="44"/>
                 </HorizontalStackLayout>
                 <Editor Grid.Row="1"
-                        Grid.ColumnSpan="3"
+                        Grid.ColumnSpan="2"
                         Text="{Binding Assessment.Comments}"
                         TextColor="#333333"
                         FontFamily="OpenSansRegular"

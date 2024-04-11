@@ -6,6 +6,10 @@
     xmlns:local="clr-namespace:Mobile"
     xmlns:views="clr-namespace:Mobile.Views"
     Shell.FlyoutBehavior="Locked"
+    Shell.FlyoutWidth="180"
+    Shell.FlyoutBackdrop="Blue"
+
+    
     Title="Mobile">
 
     <Shell.FlyoutHeader>
@@ -24,7 +28,7 @@
     </Shell.FlyoutHeader>
   
     <FlyoutItem Title="Inicio" Icon="icon_home.png">
-        <ShellContent ContentTemplate="{DataTemplate views:HomePage}"/>
+        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 
     </FlyoutItem>
     <FlyoutItem Title="Livros" Icon="icon_book.png">
