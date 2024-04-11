@@ -31,7 +31,7 @@
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 
     </FlyoutItem>
-    <FlyoutItem Title="Série" Icon="icon_serie.png">
+    <FlyoutItem Title="Séries" Icon="icon_serie.png">
         <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 
     </FlyoutItem>

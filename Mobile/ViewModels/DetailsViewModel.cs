@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Mobile.Herpels;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
 namespace Mobile.ViewModels;
@@ -31,13 +32,21 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         DisposeAsyncMemory();
+        DetailsIsVisible = true;
+        EditIsVisible = false;
 
         var data = (Assessments)query["Data"];
         Assessment = data;
+
+
+        if (string.IsNullOrEmpty(Assessment.Image))
+        {
+            Image.Source = ImageSource.FromResource("dotnet_bot.png");
+            return;
+        }
+
         Image.Source = ImageSource.FromUri(new Uri(Assessment.Image));
 
-        DetailsIsVisible = true;
-        EditIsVisible = false;
     }
     [RelayCommand]
     void Edit()
@@ -52,7 +61,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
 
         if (result)
         {
-            Assessment.Image = await ConvertImageToBase64String(StringBase64);
+            Assessment.Image = await ConverterImage.ConvertImageToBase64String(StringBase64);
             var assessment = await _service.PutAssessment(Assessment.Id, Assessment);
             WeakReferenceMessenger.Default.Send<Assessments>(assessment);
             DisposeAsyncMemory();
@@ -89,18 +98,5 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         {
             await StringBase64.DisposeAsync();
         }
-    }
-
-    private async Task<string> ConvertImageToBase64String(Stream stream)
-    {
-        byte[] bytes;
-        using (MemoryStream ms = new MemoryStream())
-        {
-            await stream.CopyToAsync(ms);
-            bytes = ms.ToArray();
-        }
-
-        var base64Image = Convert.ToBase64String(bytes);
-        return base64Image;
     }
 }

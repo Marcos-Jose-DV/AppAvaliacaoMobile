@@ -28,27 +28,27 @@
                    HeightRequest="60"  
                    StrokeShape="RoundRectangle 40">
                 <Button Command="{Binding PrevieCommand}"
-                       CommandParameter="Movie"
-                       Text="{Binding PriveiTitle}"
-                       TextColor="Black"
-                       FontSize="23"
-                       FontAttributes="Bold"
-                       BackgroundColor="#D9D9ED"/>
+                        CommandParameter="Movie"
+                        Text="{Binding PriveiTitle}"
+                        TextColor="Black"
+                        FontSize="23"
+                        FontAttributes="Bold"
+                        BackgroundColor="#D9D9ED"/>
             </Border>
-            <Border HorizontalOptions="End"
-                   VerticalOptions="End"
-                   Margin="0,0,90,10"
-                   BackgroundColor="#ECECF6" 
-                   WidthRequest="60" 
-                   HeightRequest="60" 
-                   StrokeShape="RoundRectangle 30">
-                <Button Command="{Binding AddCard}"
-                       CommandParameter="Movie"
-                       Text="+"
-                       TextColor="Black"
-                       FontSize="30"
-                       FontAttributes="Bold"
-                       BackgroundColor="#D9D9ED"/>
+            <Border ZIndex="2" 
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Margin="0,0,90,10"
+                    BackgroundColor="#ECECF6" 
+                    WidthRequest="60" 
+                    HeightRequest="60" 
+                    StrokeShape="RoundRectangle 30">
+                <Button Command="{Binding AddCardCommand}"
+                        Text="+"
+                        TextColor="Black"
+                        FontSize="30"
+                        FontAttributes="Bold"
+                        BackgroundColor="#D9D9ED"/>
             </Border>
             <CollectionView 
                         Grid.Row="1"

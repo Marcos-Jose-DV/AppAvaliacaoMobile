@@ -3,13 +3,13 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
+using Mobile.Views;
 
 namespace Mobile.ViewModels;
 
 public partial class HomeViewModel : ObservableObject
 {
     private readonly IAssessmentService _assessmentService;
-
 
     [ObservableProperty]
     public IEnumerable<Assessments> _assessments, _assessmentsBooks, _assessmentsSeries;
@@ -40,7 +40,7 @@ public partial class HomeViewModel : ObservableObject
 
 
     [RelayCommand]
-    async void Previe()
+    async Task Previe()
     {
         ShowPrevie = !ShowPrevie;
 
@@ -54,7 +54,13 @@ public partial class HomeViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async void Detail(object data)
+    async Task AddCard()
+    {
+        await Shell.Current.GoToAsync("AddCardPage");
+    }
+
+    [RelayCommand]
+    async Task Detail(object data)
     {
         var parameter = new ShellNavigationQueryParameters
         {
@@ -70,27 +76,8 @@ public partial class HomeViewModel : ObservableObject
             Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
         }
     }
-
     [RelayCommand]
-    async void Edit(object data)
-    {
-        var parameter = new ShellNavigationQueryParameters
-        {
-            { "Data", data }
-        };
-
-        try
-        {
-            await Shell.Current.GoToAsync($"EditPage", parameter);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
-        }
-    }
-
-    [RelayCommand]
-    async void Delete(int id)
+    async Task Delete(int id)
     {
         var result = await App.Current.MainPage.DisplayAlert("Remove", "Remover essa avaliação?", "Sim", "Não");
         if (result)
@@ -99,15 +86,21 @@ public partial class HomeViewModel : ObservableObject
             Load();
         }
     }
-    public async void Load()
+    public async Task Load()
     {
         ShowPrevie = false;
         PriveiTitle = "👁️";
         Assessments = null;
 
-
-        if (AssessmentsAll is null)
-            AssessmentsAll = (List<Assessments>?)await _assessmentService.GetAssessments();
+        try
+        {
+            if (AssessmentsAll is null)
+                AssessmentsAll = (List<Assessments>)await _assessmentService.GetAssessments();
+        }
+        catch (Exception ex)
+        {
+            ex.Message.ToString();
+        }
 
         FilterAssessments();
     }
@@ -128,7 +121,7 @@ public partial class HomeViewModel : ObservableObject
                         .OrderBy(x => x.Created)
                         .ToList();
                 break;
-            case "Série":
+            case "Séries":
                 Assessments = AssessmentsAll
                         .Where(book => book.Category == "Série")
                         .OrderBy(x => x.Created)

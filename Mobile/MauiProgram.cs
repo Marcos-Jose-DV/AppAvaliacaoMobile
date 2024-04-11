@@ -25,8 +25,13 @@ namespace Mobile
 
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<HomeViewModel>();
+
+            builder.Services.AddTransient<AddCardPage>();
+            builder.Services.AddSingleton<AddCardViewModel>();
+
             builder.Services.AddTransient<DetailsPage>();
             builder.Services.AddSingleton<DetailsViewModel>();
+            
             builder.Services.AddSingleton<DownloadPage>();
             builder.Services.AddSingleton<DownloadViewModel>();
             builder.Services.AddScoped<IAssessmentService, AssessmentService>();
@@ -34,6 +39,7 @@ namespace Mobile
 
 
             Routing.RegisterRoute(nameof(DetailsPage), typeof(DetailsPage));
+            Routing.RegisterRoute(nameof(AddCardPage), typeof(AddCardPage));
 
 #if DEBUG
             builder.Logging.AddDebug();

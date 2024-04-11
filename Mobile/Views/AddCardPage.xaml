@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobile.Views.AddCardPage"
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled"
+             BackgroundColor="#ECECF6"
+             Title="AddCardPage">
+    <Grid Grid.Column="0" 
+          ColumnDefinitions="250,Auto" 
+          RowDefinitions="350,*"
+          ColumnSpacing="20"
+          RowSpacing="20"
+          Margin="50">
+
+        <Border ZIndex="2"
+               HorizontalOptions="StartAndExpand"
+               VerticalOptions="StartAndExpand"
+               BackgroundColor="Transparent"
+               WidthRequest="66" 
+               HeightRequest="66"
+               StrokeThickness="0">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding FileUploadCommand}"/>
+            </Border.GestureRecognizers>
+            <Label Text="🔄️"
+              FontSize="26"/>
+        </Border>
+
+        <Frame Grid.Row="{OnPlatform Android=0}"
+              Grid.Column="0"
+              VerticalOptions="Start"
+              Padding="0"
+              HasShadow="True"
+              BorderColor="LightGray"
+              CornerRadius="0"
+              WidthRequest="250"
+              HeightRequest="350">
+
+            <Image Source="{Binding Image.Source}"
+                   Aspect="AspectFill"/>
+        </Frame>
+
+        <Grid Grid.Column="1" 
+              Grid.Row="0" 
+              Grid.RowSpan="2" 
+              ColumnDefinitions="*,*" 
+              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+              RowSpacing="5"
+              ColumnSpacing="10">
+            <Entry Grid.Row="0"
+                   Grid.ColumnSpan="2"
+                   Text="{Binding Assessment.Name}"
+                   Placeholder="Nome"
+                   FontAttributes="None"
+                   FontSize="16"/>
+
+            <Entry Grid.Column="0"
+                   Grid.Row="1"
+                   Text="{Binding Assessment.Duration}"
+                   Placeholder="Duração"
+                   TextColor="#666"
+                   FontSize="16" 
+                   FontAttributes="None"/>
+
+            <Entry Grid.Column="1"
+                   Grid.Row="1"
+                   Text="{Binding Assessment.Gender}"
+                   FontAttributes="None"
+                   Placeholder="Genero"
+                   FontSize="16" 
+                   TextColor="#666"/>
+
+            <Entry Grid.Row="2"
+                   Grid.ColumnSpan="2"
+                   Text="{Binding Assessment.Assessment}"
+                   Placeholder="Nota"
+                   FontAttributes="None"
+                   TextColor="#666"
+                   FontSize="16" />
+
+            <HorizontalStackLayout Grid.Row="3">
+                <Label Text="Assistir" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center"
+                       FontAttributes="None"
+                       TextColor="#666"
+                       FontSize="16"
+                       Opacity=".6"/>
+                <CheckBox IsChecked="{Binding  Assessment.Concluded}" />
+            </HorizontalStackLayout>
+
+            <Entry Grid.Row="4"
+                   Grid.ColumnSpan="2"
+                   Text="{Binding Assessment.Director}"
+                   Placeholder="Diretor/Autor"
+                   PlaceholderColor="#666"
+                   FontAttributes="None"
+                   FontSize="16"
+                   Opacity=".4"/>
+
+            <HorizontalStackLayout Grid.Row="5" Spacing="10">
+                <Label Text="Categoria"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="Center"
+                       TextColor="#666"
+                       FontAttributes="None"
+                       FontSize="16"
+                       Opacity=".6"/>
+                <Picker ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding Assessment.Category}"/>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <HorizontalStackLayout Grid.Column="1"
+                               HorizontalOptions="EndAndExpand"
+                               VerticalOptions="EndAndExpand"
+                               Spacing="20">
+
+            <Button Grid.Column="1"
+                    Command="{Binding SaveCommand}"
+                    Text="Salvar"
+                    BackgroundColor="#3068F8"
+                    WidthRequest="100"
+                    HeightRequest="44"/>
+            <Button Grid.Column="1"
+                    Command="{Binding BackCommand}"
+                    Text="Voltar"
+                    BackgroundColor="#F83030"
+                    WidthRequest="132"
+                    HeightRequest="44"/>
+            <Button Grid.Column="1"
+                    Command="{Binding CleanCommand}"
+                    Text="Limpar"
+                    BackgroundColor="LightGray"
+                    WidthRequest="132"
+                    HeightRequest="44"/>
+        </HorizontalStackLayout>
+        <Editor Grid.Row="1"
+                Grid.ColumnSpan="3"
+                Text="{Binding Assessment.Comments}"
+                TextColor="#333333"
+                FontFamily="OpenSansRegular"
+                FontAttributes="None"
+                Style="{StaticResource TitleDetalhes}"/>
+    </Grid>
+</ContentPage>
