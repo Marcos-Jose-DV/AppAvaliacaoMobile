@@ -144,7 +144,6 @@ public partial class HomeViewModel : ObservableObject
                       .GroupBy(a => a.Category)
                       .SelectMany(group => group
                       .OrderByDescending(a => a.Name)
-                      .Take(8)
                       .ToList());
             Assessments = new ObservableCollection<Assessments>(queryGoup);
             return;

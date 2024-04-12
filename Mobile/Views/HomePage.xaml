@@ -72,7 +72,7 @@
                             HorizontalOptions="CenterAndExpand"
                             Margin="0,80,0,0" >
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="8" VerticalItemSpacing="20" HorizontalItemSpacing="20" />
+                    <GridItemsLayout Orientation="Vertical" Span="6" VerticalItemSpacing="20" HorizontalItemSpacing="20" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
