@@ -91,16 +91,26 @@
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
 
+                <HorizontalStackLayout Grid.Column="1"
+                                       HorizontalOptions="StartAndExpand"
+                                       VerticalOptions="EndAndExpand"
+                                       Spacing="10">
 
-                <Button Grid.Column="1"
-                        HorizontalOptions="StartAndExpand"
-                        VerticalOptions="EndAndExpand"
+                    <Button 
                         Margin="0,0,0,0"
                         Command="{Binding EditCommand}"
                         Text="Editar"
                         BackgroundColor="#71E149"
                         WidthRequest="132"
                         HeightRequest="44"/>
+                    <Button Margin="0,0,0,0"
+                            Command="{Binding  PlayCommand}"
+                            CommandParameter="{Binding Assessment.Name}"
+                            Text="Play"
+                            BackgroundColor="Black"
+                            WidthRequest="132"
+                            HeightRequest="44"/> 
+                </HorizontalStackLayout>
                 <Label Grid.Row="1"
                        Grid.ColumnSpan="3"
                        Text="{Binding Assessment.Comments}"
@@ -205,7 +215,7 @@
                                TextColor="#666"
                                FontAttributes="None"
                                FontSize="16"
-                               Opacity=".6"/> 
+                               Opacity=".6"/>
                         <Picker ItemsSource="{Binding Categories}"
                                 SelectedItem="{Binding Assessment.Category}"/>
                     </HorizontalStackLayout>

@@ -1,4 +1,5 @@
-﻿using Mobile.Constans;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Mobile.Constans;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
 using System.Text;
@@ -20,9 +21,6 @@ public class AssessmentService : IAssessmentService
         };
     }
  
-   
-
-
     public async Task<IEnumerable<Assessments>> GetAssessments()
     {
         IEnumerable<Assessments>? assessments = null;
@@ -65,9 +63,29 @@ public class AssessmentService : IAssessmentService
         return assessments;
     }
 
-    public Task<Assessments> PostAssessment(Assessments movie)
+    public async Task<Assessments> PostAssessment(Assessments assessment)
     {
-        throw new NotImplementedException();
+        Assessments? assessmentUpdate = null;
+        try
+        {
+
+            string jsonRespponse = JsonSerializer.Serialize<object>(assessment, _jsonOptions);
+
+            StringContent content = new StringContent(jsonRespponse, Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync($"{Configurations.Url}/assessment", content);
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                assessmentUpdate = await JsonSerializer.DeserializeAsync<Assessments>(responseStream, _jsonOptions);
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.ToString();
+        }
+
+        return assessmentUpdate;
     }
 
     public async Task<Assessments> PutAssessment(int id, Assessments assessment)

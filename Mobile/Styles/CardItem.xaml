@@ -44,12 +44,29 @@
         <Setter Property="StrokeThickness" Value="0"/>
     </Style>
 
-
     <Style TargetType="Image" x:Key="ImageIconDeleteCard">
         <Setter Property="Aspect" Value="AspectFill"/>
         <Setter Property="WidthRequest" Value="16"/>
         <Setter Property="HeightRequest" Value="16"/>
         <Setter Property="BackgroundColor" Value="#F83030"/>
+    </Style>
+
+    <Style TargetType="Border" x:Key="BorderPlayCard">
+        <Setter Property="HorizontalOptions" Value="End"/>
+        <Setter Property="VerticalOptions" Value="Start"/>
+        <Setter Property="WidthRequest" Value="40"/>
+        <Setter Property="HeightRequest" Value="45"/>
+        <Setter Property="BackgroundColor" Value="#000"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 20 0 0 20"/>
+        <Setter Property="Stroke" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="0"/>
+    </Style>
+
+    <Style TargetType="Image" x:Key="ImageIconPlayCard">
+        <Setter Property="Aspect" Value="AspectFill"/>
+        <Setter Property="WidthRequest" Value="16"/>
+        <Setter Property="HeightRequest" Value="16"/>
+        <Setter Property="BackgroundColor" Value="#000"/>
     </Style>
 
     <Style TargetType="Border" x:Key="BorderPrevieCard">

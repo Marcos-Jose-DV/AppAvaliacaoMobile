@@ -28,21 +28,19 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
 
     public DetailsViewModel(IAssessmentService service)
     {
-        DetailsIsVisible = true;
-        EditIsVisible = false;
         Categories = ["Book", "Série", "Movie", "Music"];
         _service = service;
     }
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
+        if (query.Count == 0)
+            return;
+        var data = (Assessments)query["Data"];
+
         DisposeAsyncMemory();
         DetailsIsVisible = true;
         EditIsVisible = false;
-
-        var data = (Assessments)query["Data"];
         Assessment = data;
-
-
         if (string.IsNullOrEmpty(Assessment.Image))
         {
             Image.Source = ImageSource.FromResource("dotnet_bot.png");
@@ -65,11 +63,15 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
 
         if (result)
         {
-            Assessment.Image = await ConverterImage.ConvertImageToBase64String(StringBase64);
+            if (StringBase64 is not null)
+            {
+                Assessment.Image = await ConverterImage.ConvertImageToBase64String(StringBase64);
+            }
+
             var assessment = await _service.PutAssessment(Assessment.Id, Assessment);
             WeakReferenceMessenger.Default.Send<Assessments>(assessment);
-            DisposeAsyncMemory();
             await Shell.Current.GoToAsync("..");
+            DisposeAsyncMemory();
         }
     }
 
@@ -96,11 +98,19 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         }
     }
 
-    async void DisposeAsyncMemory()
+    public async void DisposeAsyncMemory()
     {
         if (StringBase64 is not null)
         {
             await StringBase64.DisposeAsync();
+            Image = null;
+            Assessment = null;
         }
+    }
+
+    [RelayCommand]
+    async Task Play(string name)
+    {
+        await Shell.Current.GoToAsync($"PlayPage?Data={name}");
     }
 }

@@ -1,9 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Irony.Parsing;
+using Microsoft.Maui.Graphics.Text;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
 using Mobile.Views;
+using System.Collections.ObjectModel;
 
 namespace Mobile.ViewModels;
 
@@ -12,10 +15,10 @@ public partial class HomeViewModel : ObservableObject
     private readonly IAssessmentService _assessmentService;
 
     [ObservableProperty]
-    public IEnumerable<Assessments> _assessments, _assessmentsBooks, _assessmentsSeries;
+    ObservableCollection<Assessments> _assessments;
 
     [ObservableProperty]
-    public List<Assessments> _assessmentsAll;
+    List<Assessments> _assessmentsAll;
 
     [ObservableProperty]
     bool _showPrevie;
@@ -30,11 +33,15 @@ public partial class HomeViewModel : ObservableObject
         {
             var update = AssessmentsAll.FindIndex(item => item.Id == msg.Id);
 
-            if (update != -1)
+            if (update != -1 && update != 0)
             {
                 AssessmentsAll[update] = msg;
-                FilterAssessments();
             }
+            else
+            {
+                AssessmentsAll.Add(msg);
+            }
+            FilterAssessments();
         });
     }
 
@@ -57,12 +64,13 @@ public partial class HomeViewModel : ObservableObject
     async Task AddCard()
     {
         await Shell.Current.GoToAsync("AddCardPage");
+        Assessments = null;
     }
 
     [RelayCommand]
     async Task Detail(object data)
     {
-        var parameter = new ShellNavigationQueryParameters
+        var parameter = new Dictionary<string, object>
         {
             { "Data", data }
         };
@@ -70,6 +78,21 @@ public partial class HomeViewModel : ObservableObject
         try
         {
             await Shell.Current.GoToAsync($"DetailsPage", parameter);
+            Assessments = null;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
+        }
+    }
+
+    [RelayCommand]
+    async Task PLay(string name)
+    {
+        try
+        {
+            await Shell.Current.GoToAsync($"PlayPage?Data={name}");
+            Assessments = null;
         }
         catch (Exception ex)
         {
@@ -91,7 +114,6 @@ public partial class HomeViewModel : ObservableObject
         ShowPrevie = false;
         PriveiTitle = "👁️";
         Assessments = null;
-
         try
         {
             if (AssessmentsAll is null)
@@ -107,39 +129,126 @@ public partial class HomeViewModel : ObservableObject
     void FilterAssessments()
     {
         var main = Shell.Current.CurrentItem.Title;
-        switch (main)
+
+        Dictionary<string, string> categories = new()
         {
-            case "Inicio":
-                Assessments = AssessmentsAll
-                          .GroupBy(a => a.Category)
-                          .SelectMany(group => group.OrderByDescending(a => a.Id).Take(4))
-                          .ToList();
-                break;
-            case "Livros":
-                Assessments = AssessmentsAll
-                        .Where(book => book.Category == "Book")
-                        .OrderBy(x => x.Created)
-                        .ToList();
-                break;
-            case "Séries":
-                Assessments = AssessmentsAll
-                        .Where(book => book.Category == "Série")
-                        .OrderBy(x => x.Created)
-                        .ToList();
-                break;
-            case "Filmes":
-                Assessments = AssessmentsAll
-                        .Where(book => book.Category == "Movie")
-                        .OrderBy(x => x.Created)
-                        .ToList();
-                break;
-            default:
-                Assessments = AssessmentsAll
-                        .Where(book => book.Category == "Music")
-                        .OrderBy(x => x.Created)
-                        .ToList();
-                break;
+            { "Livros", "Book" },
+            { "Séries", "Série" },
+            { "Filmes", "Movie" },
+            { "Músicas", "Music" },
         };
+
+        if (main.Equals("Inicio"))
+        {
+            var queryGoup = AssessmentsAll
+                      .GroupBy(a => a.Category)
+                      .SelectMany(group => group
+                      .OrderByDescending(a => a.Name)
+                      .Take(8)
+                      .ToList());
+            Assessments = new ObservableCollection<Assessments>(queryGoup);
+            return;
+        }
+
+        var query = AssessmentsAll
+                .Where(book => book.Category == categories[main])
+                .OrderByDescending(x => x.Created)
+                .ToList();
+        Assessments = new ObservableCollection<Assessments>(query);
+    }
+    [RelayCommand]
+    void Filter(string filter)
+    {
+        string title = Shell.Current.CurrentItem.Title;
+
+        if (title.Equals("Inicio"))
+        {
+            var queryGoup = AssessmentsAll
+                       .GroupBy(a => a.Category)
+                      .SelectMany(group => group
+                      .OrderByDescending(a => a.Created)
+                      .ToList());
+
+            Assessments = new ObservableCollection<Assessments>(queryGoup);
+            return;
+        }
+
+        Dictionary<string, string> categories = new()
+        {
+            { "Livros", "Book" },
+            { "Séries", "Série" },
+            { "Filmes", "Movie" },
+            { "Músicas", "Music" },
+        };
+
+        Dictionary<string, bool> concluid = new()
+        {
+            { "True", true},
+            { "False", false }
+        };
+
+        var query = AssessmentsAll.Where(x => x.Category == categories[title]);
+
+        if (filter.Equals("Mais"))
+        {
+            var filters = query
+                .OrderByDescending(x => x.Created)
+                .ToList();
+
+            Assessments = new ObservableCollection<Assessments>(filters);
+        }
+        else if (filter.Equals("Menos"))
+        {
+            var filters = query
+               .OrderBy(x => x.Created)
+                .ToList();
+
+            Assessments = new ObservableCollection<Assessments>(filters);
+        }
+        else if (filter.Equals("True") || filter.Equals("False"))
+        {
+            var filters = query
+                .Where(x => x.Concluded == concluid[filter])
+                .OrderByDescending(x => x.Created)
+                .ToList();
+
+            Assessments = new ObservableCollection<Assessments>(filters);
+        }
+        else if (filter.Equals("Maior"))
+        {
+            var filters = query
+                   .OrderByDescending(x => int.Parse(x.Assessment))
+                    .ToList();
+
+            Assessments = new ObservableCollection<Assessments>(filters);
+        }
+        else if (filter.Equals("Menor"))
+        {
+            var filters = query
+                .OrderBy(x => int.Parse(x.Assessment))
+                .ToList();
+
+            Assessments = new ObservableCollection<Assessments>(filters);
+        }
+        else
+        {
+            var filters = query
+               .OrderByDescending(x => x.Created)
+                .ToList();
+
+            Assessments = new ObservableCollection<Assessments>(filters);
+        }
+    }
+
+    [RelayCommand]
+    async Task Reload()
+    {
+        var queryGoup = AssessmentsAll
+                     .GroupBy(a => a.Category)
+                     .SelectMany(group => group
+                     .OrderByDescending(a => a.Name)
+                     .Take(8)
+                     .ToList());
+        Assessments = new ObservableCollection<Assessments>(queryGoup);
     }
 }
-

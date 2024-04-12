@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Herpels;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
@@ -44,8 +45,10 @@ public partial class AddCardViewModel : ObservableObject
                 Assessment.Image = await ConverterImage.ConvertImageToBase64String(StringBase64);
             }
 
-            await _service.PostAssessment(Assessment);
+            var assessment = await _service.PostAssessment(Assessment);
+            WeakReferenceMessenger.Default.Send<Assessments>(assessment);
             StringBase64.Dispose();
+            await Shell.Current.GoToAsync("..");
         }
     }
     [RelayCommand]

@@ -117,7 +117,6 @@ public partial class DownloadViewModel : ObservableObject
         using var workbook = new XLWorkbook();
         var worksheet = workbook.Worksheets.Add("Assessments");
 
-
         worksheet.Cell(1, 1).Value = "Id";
         worksheet.Cell(1, 2).Value = "Category";
         worksheet.Cell(1, 3).Value = "Title";
@@ -130,21 +129,19 @@ public partial class DownloadViewModel : ObservableObject
         worksheet.Cell(1, 10).Value = "Created";
 
         int row = 2;
-        int column = 1;
         foreach (var assessment in assessments)
         {
-            worksheet.Cell(row, column).Value = assessment.Id;
-            worksheet.Cell(row, column).Value = assessment.Category;
-            worksheet.Cell(row, column).Value = assessment.Name;
-            worksheet.Cell(row, column).Value = assessment.Director;
-            worksheet.Cell(row, column).Value = assessment.Image;
-            worksheet.Cell(row, column).Value = assessment.Gender;
-            worksheet.Cell(row, column).Value = assessment.Duration;
-            worksheet.Cell(row, column).Value = assessment.Concluded;
-            worksheet.Cell(row, column).Value = assessment.Comments;
-            worksheet.Cell(row, column).Value = assessment.Created;
+            worksheet.Cell(row, 1).Value = assessment.Id;
+            worksheet.Cell(row, 2).Value = assessment.Category;
+            worksheet.Cell(row, 3).Value = assessment.Name;
+            worksheet.Cell(row, 4).Value = assessment.Director;
+            worksheet.Cell(row, 5).Value = assessment.Image;
+            worksheet.Cell(row, 6).Value = assessment.Gender;
+            worksheet.Cell(row, 7).Value = assessment.Duration;
+            worksheet.Cell(row, 8).Value = assessment.Concluded;
+            worksheet.Cell(row, 9).Value = assessment.Comments;
+            worksheet.Cell(row, 10).Value = assessment.Created;
             row++;
-            column++;
         }
 
         using var stream = new MemoryStream();
