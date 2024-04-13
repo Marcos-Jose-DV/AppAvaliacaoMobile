@@ -40,7 +40,7 @@
 
     </FlyoutItem>
     <FlyoutItem Title="Filmes" Icon="icon_movie.png">
-        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+        <ShellContent ContentTemplate="{DataTemplate views:MoviePage}" />
 
     </FlyoutItem>
     <FlyoutItem Title="Músicas" Icon="icon_music.png">

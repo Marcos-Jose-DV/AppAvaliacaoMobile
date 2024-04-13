@@ -7,6 +7,8 @@ using Mobile.Models;
 using Mobile.Services.Interfaces;
 using Mobile.Views;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
 
 namespace Mobile.ViewModels;
 
@@ -15,10 +17,13 @@ public partial class HomeViewModel : ObservableObject
     private readonly IAssessmentService _assessmentService;
 
     [ObservableProperty]
-    ObservableCollection<Assessments> _assessments;
+    ObservableCollection<Assessments> _assessments = new();
 
     [ObservableProperty]
     List<Assessments> _assessmentsAll;
+
+    [ObservableProperty]
+    List<string> _searchResults;
 
     [ObservableProperty]
     bool _showPrevie;
@@ -31,20 +36,42 @@ public partial class HomeViewModel : ObservableObject
 
         WeakReferenceMessenger.Default.Register<Assessments>(this, (e, msg) =>
         {
-            var update = AssessmentsAll.FindIndex(item => item.Id == msg.Id);
+            var updateIndex = Assessments.ToList().FindIndex(item => item.Id == msg.Id);
 
-            if (update != -1 && update != 0)
+            if (updateIndex != -1)
             {
-                AssessmentsAll[update] = msg;
+                Assessments[updateIndex] = msg;
             }
             else
             {
-                AssessmentsAll.Add(msg);
+                Assessments.Add(msg);
             }
-            FilterAssessments();
+
+            Load();
         });
+
+        Load();
     }
 
+    [RelayCommand]
+    async Task PerformSearch(string query)
+    {
+        var data = await _assessmentService.GetAssessmentByName($"assessment/category?category=Movie&name={query}");
+
+        var parameter = new Dictionary<string, object>
+        {
+            { "Data", data }
+        };
+
+        try
+        {
+            await Shell.Current.GoToAsync($"DetailsPage", parameter);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
+        }
+    }
 
     [RelayCommand]
     async Task Previe()
@@ -64,97 +91,50 @@ public partial class HomeViewModel : ObservableObject
     async Task AddCard()
     {
         await Shell.Current.GoToAsync("AddCardPage");
-        Assessments = null;
     }
 
     [RelayCommand]
     async Task Detail(object data)
     {
-        var parameter = new Dictionary<string, object>
+        var query = new Dictionary<string, object>
         {
             { "Data", data }
         };
 
         try
         {
-            await Shell.Current.GoToAsync($"DetailsPage", parameter);
-            Assessments = null;
+            await Shell.Current.GoToAsync($"DetailsPage", query);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
         }
     }
+    public async Task Load(int skip = 0)
+    {
+        try
+        {
+            if (Assessments.Count == 34) return;
 
-    [RelayCommand]
-    async Task PLay(string name)
-    {
-        try
-        {
-            await Shell.Current.GoToAsync($"PlayPage?Data={name}");
-            Assessments = null;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
-        }
-    }
-    [RelayCommand]
-    async Task Delete(int id)
-    {
-        var result = await App.Current.MainPage.DisplayAlert("Remove", "Remover essa avaliação?", "Sim", "Não");
-        if (result)
-        {
-            await _assessmentService.DeleteAssessment(id);
-            Load();
-        }
-    }
-    public async Task Load()
-    {
-        ShowPrevie = false;
-        PriveiTitle = "👁️";
-        Assessments = null;
-        try
-        {
-            if (AssessmentsAll is null)
-                AssessmentsAll = (List<Assessments>)await _assessmentService.GetAssessments();
+            ShowPrevie = false;
+            PriveiTitle = "👁️";
+
+            var list = await _assessmentService.GetAssessments($"assessments/recent?skip={skip}");
+
+            if (list.Any())
+            {
+                foreach (var item in list)
+                {
+                    Assessments.Add(item);
+                }
+            }
         }
         catch (Exception ex)
         {
             ex.Message.ToString();
         }
-
-        FilterAssessments();
     }
-    void FilterAssessments()
-    {
-        var main = Shell.Current.CurrentItem.Title;
 
-        Dictionary<string, string> categories = new()
-        {
-            { "Livros", "Book" },
-            { "Séries", "Série" },
-            { "Filmes", "Movie" },
-            { "Músicas", "Music" },
-        };
-
-        if (main.Equals("Inicio"))
-        {
-            var queryGoup = AssessmentsAll
-                      .GroupBy(a => a.Category)
-                      .SelectMany(group => group
-                      .OrderByDescending(a => a.Name)
-                      .ToList());
-            Assessments = new ObservableCollection<Assessments>(queryGoup);
-            return;
-        }
-
-        var query = AssessmentsAll
-                .Where(book => book.Category == categories[main])
-                .OrderByDescending(x => x.Created)
-                .ToList();
-        Assessments = new ObservableCollection<Assessments>(query);
-    }
     [RelayCommand]
     void Filter(string filter)
     {
@@ -162,7 +142,7 @@ public partial class HomeViewModel : ObservableObject
 
         if (title.Equals("Inicio"))
         {
-            var queryGoup = AssessmentsAll
+            var queryGoup = Assessments
                        .GroupBy(a => a.Category)
                       .SelectMany(group => group
                       .OrderByDescending(a => a.Created)
@@ -186,7 +166,7 @@ public partial class HomeViewModel : ObservableObject
             { "False", false }
         };
 
-        var query = AssessmentsAll.Where(x => x.Category == categories[title]);
+        var query = Assessments.Where(x => x.Category == categories[title]);
 
         if (filter.Equals("Mais"))
         {
@@ -249,5 +229,10 @@ public partial class HomeViewModel : ObservableObject
                      .Take(8)
                      .ToList());
         Assessments = new ObservableCollection<Assessments>(queryGoup);
+    }
+    public void Clean()
+    {
+        ShowPrevie = false;
+        PriveiTitle = "👁️";
     }
 }

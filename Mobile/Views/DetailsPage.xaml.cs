@@ -7,6 +7,14 @@ public partial class DetailsPage : ContentPage
 	public DetailsPage(DetailsViewModel vm)
 	{
 		InitializeComponent();
-		BindingContext = vm;
+
+		try
+		{
+			BindingContext = vm;
+		}
+		catch (Exception ex)
+		{
+			ex.Message.ToString();
+		}
 	}
 }

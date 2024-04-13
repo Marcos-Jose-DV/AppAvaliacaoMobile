@@ -1,24 +1,49 @@
+using DocumentFormat.OpenXml.Drawing;
 using Mobile.ViewModels;
 
 namespace Mobile.Views;
 
 public partial class HomePage : ContentPage
 {
-    HomeViewModel _viewModel;
-    DetailsViewModel _details;
-    public HomePage(HomeViewModel vm, DetailsViewModel details)
+    HomeViewModel _vm;
+    int skip = 15;
+    public HomePage(HomeViewModel vm)
     {
         InitializeComponent();
 
         BindingContext = vm;
-        _viewModel = vm;
-        _details = details;
+        _vm = vm;
     }
-    protected async override void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.Load();
+        _vm.Clean();
+    }
 
-        _details.DisposeAsyncMemory();
+    private async void CollectionView_Scrolled2(object sender, ItemsViewScrolledEventArgs e)
+    {
+        if (((IEnumerable<object>)CollectionViewControl.ItemsSource).Count() == 34)
+        {
+            skip = 0;
+            return;
+        }
+
+        if (DeviceInfo.Platform != DevicePlatform.WinUI)
+        {
+            return;
+        }
+
+        if (sender is CollectionView cv)
+        {
+            var last = e.LastVisibleItemIndex;
+            var remainig = cv.RemainingItemsThreshold;
+            var total = ((IEnumerable<object>)cv.ItemsSource).Count();
+
+            if (last > (total - remainig))
+            {
+                await _vm.Load(skip);
+                skip += skip;
+            }
+        }
     }
 }

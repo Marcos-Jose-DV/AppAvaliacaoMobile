@@ -26,6 +26,9 @@ namespace Mobile
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<HomeViewModel>();
 
+            builder.Services.AddSingleton<MoviePage>();
+            builder.Services.AddSingleton<MovieViewModel>();
+
             builder.Services.AddTransient<AddCardPage>();
             builder.Services.AddSingleton<AddCardViewModel>();
 

@@ -12,7 +12,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     private readonly IAssessmentService _service;
 
     [ObservableProperty]
-    Assessments _assessment;
+    Assessments _assessment = new();
 
     [ObservableProperty]
     bool _detailsIsVisible, _editIsVisible;
@@ -31,31 +31,41 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         Categories = ["Book", "Série", "Movie", "Music"];
         _service = service;
     }
+
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
+
+        try
+        {
+            var data = (Assessments)query["Data"];
+
+            DisposeAsyncMemory();
+            DetailsIsVisible = true;
+            EditIsVisible = false;
+            Assessment = data;
+            if (Assessment.Image is null)
+            {
+                Image.Source = ImageSource.FromResource("dotnet_bot.png");
+                return;
+            }
+
+            Image.Source = ImageSource.FromUri(new Uri(Assessment.Image));
+        }
+        catch (Exception ex)
+        {
+            ex.Message.ToString();
+        }
         if (query.Count == 0)
             return;
-        var data = (Assessments)query["Data"];
-
-        DisposeAsyncMemory();
-        DetailsIsVisible = true;
-        EditIsVisible = false;
-        Assessment = data;
-        if (string.IsNullOrEmpty(Assessment.Image))
-        {
-            Image.Source = ImageSource.FromResource("dotnet_bot.png");
-            return;
-        }
-
-        Image.Source = ImageSource.FromUri(new Uri(Assessment.Image));
-
     }
+
     [RelayCommand]
     void Edit()
     {
         DetailsIsVisible = !DetailsIsVisible;
         EditIsVisible = !EditIsVisible;
     }
+
     [RelayCommand]
     async Task Save()
     {
@@ -72,6 +82,23 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
             WeakReferenceMessenger.Default.Send<Assessments>(assessment);
             await Shell.Current.GoToAsync("..");
             DisposeAsyncMemory();
+        }
+    }
+
+    [RelayCommand]
+    async Task Play(string name)
+    {
+        await Shell.Current.GoToAsync($"PlayPage?Data={name}");
+    }
+
+    [RelayCommand]
+    async Task Delete(int id)
+    {
+        var result = await App.Current.MainPage.DisplayAlert("Remove", "Remover essa avaliação?", "Sim", "Não");
+        if (result)
+        {
+            await _service.DeleteAssessment(id);
+            await Shell.Current.GoToAsync("..");
         }
     }
 
@@ -108,9 +135,4 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         }
     }
 
-    [RelayCommand]
-    async Task Play(string name)
-    {
-        await Shell.Current.GoToAsync($"PlayPage?Data={name}");
-    }
 }

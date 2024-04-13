@@ -29,7 +29,7 @@ public partial class DownloadViewModel : ObservableObject
         var cancellationToken = new CancellationToken();
         try
         {
-            var assessments = await _assessmentService.GetAssessments();
+            var assessments = await _assessmentService.GetAssessments(null);
             Stream stream = null;
 
             if (fileName.Equals("assessments.txt"))
@@ -69,7 +69,7 @@ public partial class DownloadViewModel : ObservableObject
         foreach (var assessment in assessments)
         {
 
-            paragraph.Append($"Id: {assessment.Id}, Title: {assessment.Name}, Assessment: {assessment.Assessment}, Director: {assessment.Director}, Image: {assessment.Image}, Gender: {assessment.Gender}, Duration: {assessment.Duration}, Concluded: {assessment.Concluded}, Comments: {assessment.Comments}, Category: {assessment.Category}, Created: {assessment.Created}");
+            paragraph.Append($"Id: {assessment.Id}, Name: {assessment.Name}, Assessment: {assessment.Assessment}, Director: {assessment.Director}, Image: {assessment.Image}, Gender: {assessment.Gender}, Duration: {assessment.Duration}, Concluded: {assessment.Concluded}, Comments: {assessment.Comments}, Category: {assessment.Category}, Created: {assessment.Created}");
 
             paragraph.AppendLine();
         }
@@ -84,7 +84,7 @@ public partial class DownloadViewModel : ObservableObject
         using StreamWriter writer = new(stream);
         foreach (var assessment in assessments)
         {
-            writer.WriteLine($"Id: {assessment.Id}, Title: {assessment.Name}, Assessment: {assessment.Assessment}, Director: {assessment.Director}, Image: {assessment.Image}, Gender: {assessment.Gender}, Duration: {assessment.Duration}, Concluded: {assessment.Concluded}, Comments: {assessment.Comments}, Category: {assessment.Category}, Created: {assessment.Created}");
+            writer.WriteLine($"Id: {assessment.Id}, Name: {assessment.Name}, Assessment: {assessment.Assessment}, Director: {assessment.Director}, Image: {assessment.Image}, Gender: {assessment.Gender}, Duration: {assessment.Duration}, Concluded: {assessment.Concluded}, Comments: {assessment.Comments}, Category: {assessment.Category}, Created: {assessment.Created}");
         }
 
         var array = new MemoryStream(stream.ToArray());
@@ -102,7 +102,7 @@ public partial class DownloadViewModel : ObservableObject
 
         foreach (var assessment in assessments)
         {
-            iTextSharp.text.Paragraph paragraph = new($"Id: {assessment.Id}, Title: {assessment.Name}, Assessment: {assessment.Assessment}, Director: {assessment.Director}, Image: {assessment.Image}, Gender: {assessment.Gender}, Duration: {assessment.Duration}, Concluded: {assessment.Concluded}, Comments: {assessment.Comments}, Category: {assessment.Category}, Created: {assessment.Created}");
+            iTextSharp.text.Paragraph paragraph = new($"Id: {assessment.Id}, Name: {assessment.Name}, Assessment: {assessment.Assessment}, Director: {assessment.Director}, Image: {assessment.Image}, Gender: {assessment.Gender}, Duration: {assessment.Duration}, Concluded: {assessment.Concluded}, Comments: {assessment.Comments}, Category: {assessment.Category}, Created: {assessment.Created}");
 
             doc.Add(paragraph);
         }
@@ -119,7 +119,7 @@ public partial class DownloadViewModel : ObservableObject
 
         worksheet.Cell(1, 1).Value = "Id";
         worksheet.Cell(1, 2).Value = "Category";
-        worksheet.Cell(1, 3).Value = "Title";
+        worksheet.Cell(1, 3).Value = "Name";
         worksheet.Cell(1, 4).Value = "Director";
         worksheet.Cell(1, 5).Value = "ImageUrl";
         worksheet.Cell(1, 6).Value = "Gender";

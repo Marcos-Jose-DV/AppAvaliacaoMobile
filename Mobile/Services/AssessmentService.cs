@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office2010.Excel;
-using Mobile.Constans;
+﻿using Mobile.Constans;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
 using System.Text;
@@ -21,18 +20,42 @@ public class AssessmentService : IAssessmentService
         };
     }
  
-    public async Task<IEnumerable<Assessments>> GetAssessments()
+    public async Task<IEnumerable<Assessments>> GetAssessments(string parameter)
     {
+
+        if(parameter is null)
+        {
+            parameter = "assessments";
+        }
+
         IEnumerable<Assessments>? assessments = null;
         try
         {
-            var response = await _client.GetAsync($"{Configurations.Url}/assessments");
+            var response = await _client.GetAsync($"{Configurations.Url}/{parameter}");
             if (response.IsSuccessStatusCode)
             {
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 assessments = await JsonSerializer.DeserializeAsync<IEnumerable<Assessments>>(responseStream, _jsonOptions);
             }
+        }
+        catch (Exception ex)
+        {
+            ex.ToString();
+        }
 
+        return assessments;
+    }
+    public async Task<Assessments> GetAssessmentByName(string query)
+    {
+        Assessments? assessments = null;
+        try
+        {
+            var response = await _client.GetAsync($"{Configurations.Url}/{query}");
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                assessments = await JsonSerializer.DeserializeAsync<Assessments>(responseStream, _jsonOptions);
+            }
         }
         catch (Exception ex)
         {
@@ -53,7 +76,6 @@ public class AssessmentService : IAssessmentService
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 assessments = await JsonSerializer.DeserializeAsync<Assessments>(responseStream, _jsonOptions);
             }
-
         }
         catch (Exception ex)
         {
@@ -62,13 +84,11 @@ public class AssessmentService : IAssessmentService
 
         return assessments;
     }
-
     public async Task<Assessments> PostAssessment(Assessments assessment)
     {
         Assessments? assessmentUpdate = null;
         try
         {
-
             string jsonRespponse = JsonSerializer.Serialize<object>(assessment, _jsonOptions);
 
             StringContent content = new StringContent(jsonRespponse, Encoding.UTF8, "application/json");
@@ -87,13 +107,11 @@ public class AssessmentService : IAssessmentService
 
         return assessmentUpdate;
     }
-
     public async Task<Assessments> PutAssessment(int id, Assessments assessment)
     {
         Assessments? assessmentUpdate = null;
         try
         {
-
             string jsonRespponse = JsonSerializer.Serialize<object>(assessment, _jsonOptions);
 
             StringContent content = new StringContent(jsonRespponse, Encoding.UTF8, "application/json");
@@ -112,7 +130,6 @@ public class AssessmentService : IAssessmentService
 
         return assessmentUpdate;
     }
-
     public async Task<Assessments> DeleteAssessment(int id)
     {
         Assessments? assessment = null;
@@ -124,7 +141,6 @@ public class AssessmentService : IAssessmentService
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 assessment = await JsonSerializer.DeserializeAsync<Assessments>(responseStream, _jsonOptions);
             }
-
         }
         catch (Exception ex)
         {

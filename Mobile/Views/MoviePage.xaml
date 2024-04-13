@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mobile.Views.MoviePage"
+             xmlns:converters="clr-namespace:Mobile.Converters"
+             x:Name="PaiPage"
+             Title="MoviePage">
+    <ContentPage.Resources>
+        <converters:ConcludedIsTrueOrFalseConverter x:Key="ConcludedIsTrueOrFalseConverter"/>
+        <converters:TitleCardValueConverter x:Key="TitleCardValueConverter"/>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid ColumnDefinitions="Auto" Margin="0,20,0,20">
+
+            <HorizontalStackLayout Spacing="20" 
+                                 HorizontalOptions="StartAndExpand"
+                                 VerticalOptions="StartAndExpand">
+
+                <Button Text="Filtrar Por" 
+                      BackgroundColor="Black"
+                      FontAttributes="Bold"
+                      FontSize="16"
+                      Margin="30,0,0,0"
+                      HeightRequest="60">
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Mais recente" Command="{Binding FilterCommand}" CommandParameter="Mais"/>
+                            <MenuFlyoutItem Text="Menos recente" Command="{Binding FilterCommand}" CommandParameter="Menos"/>
+                            <MenuFlyoutItem Text="Concluido" Command="{Binding FilterCommand}" CommandParameter="True"/>
+                            <MenuFlyoutItem Text="Não concluido" Command="{Binding FilterCommand}" CommandParameter="False"/>
+                            <MenuFlyoutItem Text="Maior nota" Command="{Binding FilterCommand}" CommandParameter="Maior"/>
+                            <MenuFlyoutItem Text="Menor nota" Command="{Binding FilterCommand}" CommandParameter="Menor"/>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+                </Button>
+                <Border BackgroundColor="#D9D9ED" 
+                      Stroke="Transparent">
+                    <Button Command="{Binding PrevieCommand}"
+                          CommandParameter="Movie"
+                          Text="{Binding PriveiTitle}"
+                          TextColor="Black"
+                          FontSize="23"
+                          FontAttributes="Bold"
+                          BackgroundColor="Black"
+                          WidthRequest="60"
+                          HeightRequest="60"/>
+                </Border>
+                <Border BackgroundColor="#ECECF6"
+                      Stroke="Transparent"
+                      WidthRequest="60"
+                      HeightRequest="60">
+                    <Button Command="{Binding AddCardCommand}"
+                          Text="+"
+                          TextColor="White"
+                          FontSize="30"
+                          FontAttributes="Bold"
+                          BackgroundColor="Black"/>
+                </Border>
+
+                <SearchBar Placeholder="Pesquisar..."
+                         HorizontalOptions="StartAndExpand" 
+                         WidthRequest="300"/>
+            </HorizontalStackLayout>
+
+            <CollectionView Grid.Row="1"
+                          ZIndex="1"
+                          ItemsSource="{Binding Assessments}" 
+                          HorizontalOptions="CenterAndExpand"
+                          Margin="0,80,0,0" >
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="5" VerticalItemSpacing="20" HorizontalItemSpacing="20" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid RowDefinitions="300,*" ColumnDefinitions="*,*" RowSpacing="0" HorizontalOptions="Center">
+                            <Border ZIndex="0"
+                                  Grid.Row="0"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="2" 
+                                  Style="{StaticResource BorderCard}">
+
+                                <Image Source="{Binding Image}"
+                                     
+                                     Style="{StaticResource ImageCard}">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.ShowDisplay,Source={x:Reference PaiPage}}" 
+                                                            CommandParameter="{Binding Id}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Border>
+
+                            <Grid IsVisible="{Binding BindingContext.ShowPrevie,Source={x:Reference PaiPage}}"
+                                ZIndex="1"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                ColumnDefinitions="*"
+                                HorizontalOptions="CenterAndExpand">
+
+                                <Border BackgroundColor="Black"
+                                      Opacity="0.8"
+                                      Style="{StaticResource BorderCard}">
+                                </Border>
+                                <VerticalStackLayout ZIndex="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
+                                    <Label Text="{Binding Name}" LineBreakMode="TailTruncation" Style="{StaticResource TItleCard}"  HorizontalOptions="Center"/>
+                                    <Label Text="{Binding Assessment,StringFormat='Nota: {0}'}" Style="{StaticResource TItleCard}" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding .,Converter={converters:TitleCardValueConverter}}" Style="{StaticResource TItleCard}" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter},StringFormat='Cocluido: {0}'}" HorizontalOptions="Center" Style="{StaticResource TItleCard}"/>
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                <Border 
+                                      Style="{StaticResource BorderDeleteCard}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                                  Command="{Binding BindingContext.DeleteCommand,Source={x:Reference PaiPage}}" 
+                                                  CommandParameter="{Binding Id}"/>
+                                    </Border.GestureRecognizers>
+                                    <Image
+                                          Source="icon_delete.png"
+                                          Style="{StaticResource ImageIconDeleteCard}">
+                                    </Image>
+                                </Border>
+
+                                <Border Style="{StaticResource BorderPlayCard}"
+                                      HorizontalOptions="EndAndExpand"
+                                      VerticalOptions="EndAndExpand">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                  Command="{Binding BindingContext.PLayCommand,Source={x:Reference PaiPage}}" 
+                  CommandParameter="{Binding Name}"/>
+                                    </Border.GestureRecognizers>
+                                    <Image
+          Source="icon_delete.png"
+          Style="{StaticResource ImageIconPlayCard}">
+                                    </Image>
+                                </Border>
+
+                                <Border
+                                      Style="{StaticResource BorderDetalhesCard}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.DetailCommand,Source={x:Reference PaiPage}}" 
+                                                            CommandParameter="{Binding .}"/>
+                                    </Border.GestureRecognizers>
+                                    <Image Source="icon_detalhes.png"
+                                         Style="{StaticResource ImageIconDetalhesCard}">
+                                    </Image>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ScrollView>
+</ContentPage>
