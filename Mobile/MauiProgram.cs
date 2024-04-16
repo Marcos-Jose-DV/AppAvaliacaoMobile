@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Storage;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
 using Mobile.Services;
 using Mobile.Services.Interfaces;
 using Mobile.ViewModels;
@@ -46,6 +47,33 @@ namespace Mobile
             Routing.RegisterRoute(nameof(DetailsPage), typeof(DetailsPage));
             Routing.RegisterRoute(nameof(AddCardPage), typeof(AddCardPage));
             Routing.RegisterRoute(nameof(PlayPage), typeof(PlayPage));
+
+
+
+#if WINDOWS
+            builder.ConfigureLifecycleEvents(events =>
+            {
+                events.AddWindows(windowsLifecycleBuilder =>
+                {
+                    windowsLifecycleBuilder.OnWindowCreated(window =>
+                    {
+                        window.ExtendsContentIntoTitleBar = false;
+                        var handle = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                        var id = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(handle);
+                        var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(id);
+                        switch (appWindow.Presenter)
+                        {
+                            case Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter:
+                                overlappedPresenter.SetBorderAndTitleBar(true,true);
+                                overlappedPresenter.Maximize();
+                                overlappedPresenter.IsMaximizable = false;
+                                break;
+                        }
+                    });
+                });
+            });
+#endif
+
 
 #if DEBUG
             builder.Logging.AddDebug();

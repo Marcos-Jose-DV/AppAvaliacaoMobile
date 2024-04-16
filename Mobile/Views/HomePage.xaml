@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Mobile.Views.HomePage"
              xmlns:converters="clr-namespace:Mobile.Converters"
-             BackgroundColor="#ECECF6"
              Shell.NavBarIsVisible="False"
              x:Name="PaiPage"
              Title="HomePage">
@@ -13,18 +12,69 @@
         <converters:TitleCardValueConverter x:Key="TitleCardValueConverter"/>
     </ContentPage.Resources>
 
-    <Grid ColumnDefinitions="Auto" Margin="0,20,0,20">
+    <Grid RowDefinitions="*"  Margin="0,0,0,0">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#1534BC"
+                              Offset="0.1" />
+                <GradientStop Color="#000"
+                             Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <BoxView Grid.ColumnSpan="5" BackgroundColor="Black" Opacity="0.3"/>
 
-        <HorizontalStackLayout Spacing="20" 
-                                   HorizontalOptions="StartAndExpand"
-                                   VerticalOptions="StartAndExpand">
+        <Grid ZIndex="1"
+              VerticalOptions="StartAndExpand" 
+              BackgroundColor="Transparent" 
+              ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*"
+              RowDefinitions="70" 
+              ColumnSpacing="0">
 
-            <Button Text="Filtrar Por" 
-                        BackgroundColor="Black"
-                        FontAttributes="Bold"
-                        FontSize="16"
-                        Margin="30,0,0,0"
-                        HeightRequest="60">
+            <BoxView Grid.ColumnSpan="9"  BackgroundColor="Black" Opacity="0.7"/>
+
+            <Button Grid.Column="0"
+                    Text="Inicio"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    Margin="0,0,0,0"
+                    BackgroundColor="Transparent"/>
+
+            <Button Grid.Column="1"
+                    Text="Livros"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    Margin="0,0,0,0"
+                    BackgroundColor="Transparent"/>
+
+            <Button Grid.Column="2"
+                    Text="Filmes"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    Margin="0,0,0,0"
+                    BackgroundColor="Transparent"/> 
+
+            <Button Grid.Column="3"
+                    Text="Séries"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    Margin="0,0,0,0"
+                    BackgroundColor="Transparent"/> 
+
+            <Button Grid.Column="4"
+                    Text="Musicas"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    Margin="0,0,0,0"
+                    BackgroundColor="Transparent"/>
+
+
+            <Button Grid.Column="5"
+                    Text="Filtrar Por" 
+                    BackgroundColor="Transparent"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Margin="30,0,0,0"
+                    HeightRequest="60">
                 <FlyoutBase.ContextFlyout>
                     <MenuFlyout>
                         <MenuFlyoutItem Text="Mais recente" Command="{Binding FilterCommand}" CommandParameter="Mais"/>
@@ -36,58 +86,73 @@
                     </MenuFlyout>
                 </FlyoutBase.ContextFlyout>
             </Button>
-            <Border BackgroundColor="#D9D9ED" 
-                        Stroke="Transparent">
-                <Button Command="{Binding PrevieCommand}"
-                            CommandParameter="Movie"
-                            Text="{Binding PriveiTitle}"
-                            TextColor="Black"
-                            FontSize="23"
-                            FontAttributes="Bold"
-                            BackgroundColor="Black"
-                            WidthRequest="60"
-                            HeightRequest="60"/>
-            </Border>
-            <Border BackgroundColor="#ECECF6"
-                        Stroke="Transparent"
+            <Border Grid.Column="6"
+                    BackgroundColor="Transparent" 
+                    Stroke="Transparent">
+                <Button Grid.Column="2"
+                        Command="{Binding PrevieCommand}"
+                        CommandParameter="Movie"
+                        Text="{Binding PriveiTitle}"
+                        TextColor="Black"
+                        FontSize="23"
+                        FontAttributes="Bold"
+                        BackgroundColor="Transparent"
                         WidthRequest="60"
-                        HeightRequest="60">
+                        HeightRequest="60"/>
+            </Border>
+            <Border Grid.Column="7"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent"
+                    WidthRequest="60"
+                    HeightRequest="60">
                 <Button Command="{Binding AddCardCommand}"
-                            Text="+"
-                            TextColor="White"
-                            FontSize="30"
-                            FontAttributes="Bold"
-                            BackgroundColor="Black"/>
+                        Text="+"
+                        TextColor="White"
+                        FontSize="30"
+                        FontAttributes="Bold"
+                        BackgroundColor="Transparent"/>
             </Border>
 
-            <SearchBar x:Name="searchBar"
+            <SearchBar Grid.Column="8"
+                       HorizontalOptions="EndAndExpand"
+                       x:Name="searchBar"
                        SearchCommand="{Binding PerformSearchCommand}"
                        SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
                        Placeholder="Pesquisar..."
-                       HorizontalOptions="StartAndExpand" 
-                       WidthRequest="300"/>
-        </HorizontalStackLayout>
-
-        <CollectionView Grid.Row="1"
-                            ZIndex="1"
-                            ItemsSource="{Binding Assessments}" 
-                            HorizontalOptions="CenterAndExpand"
-                            Margin="0,80,0,0" 
-                            Scrolled="CollectionView_Scrolled2"
-                            RemainingItemsThreshold="2"
-                            x:Name="CollectionViewControl">
+                       PlaceholderColor="White"
+                       MinimumWidthRequest="300"
+                       MaximumWidthRequest="500"/>
+        </Grid>
+        <CollectionView Grid.Row="0"
+                        ItemsSource="{Binding Assessments}" 
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        VerticalScrollBarVisibility="Never"
+                        Margin="0,0,0,0" 
+                        Scrolled="CollectionView_Scrolled2"
+                        RemainingItemsThreshold="2"
+                        x:Name="CollectionViewControl">
+            <CollectionView.Header>
+                <Label Text="Tste" Margin="0,80,0,0" IsVisible="Hidden"/>
+            </CollectionView.Header>
             <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="5"  HorizontalItemSpacing="10" VerticalItemSpacing="10"/>
+                <GridItemsLayout Orientation="Vertical" 
+                                 Span="5"
+                                 HorizontalItemSpacing="10" 
+                                 VerticalItemSpacing="10"/>
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid RowDefinitions="300,*" ColumnDefinitions="*,*" RowSpacing="0" HorizontalOptions="Center">
+                    <Grid RowDefinitions="Auto,*" 
+                          ColumnDefinitions="*,*" 
+                          RowSpacing="0" 
+                          HorizontalOptions="Center">
                         <Border ZIndex="0"
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="2" 
-                                    Style="{StaticResource BorderCard}">
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2" 
+                                Style="{StaticResource BorderCard}">
 
                             <Image Source="{Binding Image}"
                                    Style="{StaticResource ImageCard}">
@@ -99,12 +164,11 @@
                         </Border>
 
                         <Grid IsVisible="{Binding BindingContext.ShowPrevie,Source={x:Reference PaiPage}}"
-                                  ZIndex="1"
-                                  Grid.Row="0"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="2"
-                                  ColumnDefinitions="*"
-                                  HorizontalOptions="CenterAndExpand">
+                              ZIndex="1"
+                              Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              ColumnDefinitions="*">
 
                             <Border BackgroundColor="Black"
                                         Opacity="0.8"

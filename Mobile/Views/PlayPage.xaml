@@ -11,7 +11,9 @@
             <toolkit:MediaElement x:Name="mediaElement"
                                   Source="{Binding Video.Source}" 
                                   ShouldAutoPlay="True"
-                                      Aspect="AspectFill"/>
+                                  Aspect="AspectFill"
+                                  ShouldKeepScreenOn="False"
+                                  ShouldShowPlaybackControls="False"/>
 
         </Grid>
 </ContentPage>

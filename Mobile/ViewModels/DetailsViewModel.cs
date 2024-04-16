@@ -34,9 +34,10 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-
         try
         {
+
+            if (query.Count == 0) return;
             var data = (Assessments)query["Data"];
 
             DisposeAsyncMemory();
@@ -55,8 +56,6 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         {
             ex.Message.ToString();
         }
-        if (query.Count == 0)
-            return;
     }
 
     [RelayCommand]

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Mobile.Views.DetailsPage"
-             Shell.NavBarIsVisible="True"
+             Shell.NavBarIsVisible="False"
              Shell.FlyoutBehavior="Disabled"
              xmlns:converters="clr-namespace:Mobile.Converters"
              BackgroundColor="#ECECF6"
@@ -15,20 +15,29 @@
         <converters:AuthorValueConverter x:Key="AuthorValueConverter"/>
     </ContentPage.Resources>
     <ScrollView>
-        <Grid 
-              Margin="50">
+        <Grid >
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#1534BC"
+                      Offset="0.1" />
+                    <GradientStop Color="#000"
+                     Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <BoxView Opacity="0.3" BackgroundColor="Black"/>
             <Grid IsVisible="{Binding DetailsIsVisible}"
                   ColumnDefinitions="200,Auto,*" 
                   RowDefinitions="300,*"
                   ColumnSpacing="20"
-                  RowSpacing="20">
+                  RowSpacing="20"
+                  Margin="50">
 
                 <Frame Grid.Row="{OnPlatform Android=0}"
                        Grid.Column="0"
                        VerticalOptions="Start"
                        Padding="0"
                        HasShadow="True"
-                       BorderColor="LightGray"
+                       BorderColor="Transparent"
                        CornerRadius="0"
                        WidthRequest="200"
                        HeightRequest="300">
@@ -46,32 +55,32 @@
 
                     <HorizontalStackLayout Spacing="5">
                         <Label Text="{Binding Assessment.Duration}"
-                               TextColor="#666"
+                               TextColor="#fff"
                                FontAttributes="None"/>
                         <Label Text="{Binding Assessment.Category,
                                Converter={converters:TitleValueConverter}}"                 
-                               TextColor="#666"
+                               TextColor="#fff"
                                FontAttributes="None"
                                Style="{StaticResource TitleDetalhes}"/>
                         <Label Text="-"/>
                         <Label Text="{Binding Assessment.Gender}"
                                FontAttributes="None"
-                               TextColor="#666"
+                               TextColor="#fff"
                                Style="{StaticResource TitleDetalhes}"/>
                     </HorizontalStackLayout>
 
                     <Label Text="{Binding Assessment.Assessment, StringFormat='Nota:  {0}'}"
                            FontAttributes="None"
-                           TextColor="#666"
+                           TextColor="#fff"
                            Style="{StaticResource TitleDetalhes}"/>
 
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="Terminado:"
-                               TextColor="#666"
+                               TextColor="#fff"
                                FontAttributes="None"
                                Style="{StaticResource TitleDetalhes}"/>
                         <Label Text="{Binding Assessment.Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter}}"
-                               TextColor="#666"
+                               TextColor="#fff"
                                FontAttributes="None"
                                Style="{StaticResource TitleDetalhes}"/>
                     </HorizontalStackLayout>
@@ -79,7 +88,7 @@
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="{Binding Assessment.Category, 
                         Converter={converters:AuthorValueConverter}}"
-                               TextColor="#666"
+                               TextColor="#fff"
                                FontSize="14" 
                                FontAttributes="None"/>
 
@@ -122,10 +131,12 @@
                             WidthRequest="132"
                             HeightRequest="44"/>
                 </HorizontalStackLayout>
-                <Label Grid.Row="1"
+                <Editor Grid.Row="1"
                        Grid.ColumnSpan="3"
                        Text="{Binding Assessment.Comments}"
-                       TextColor="#333333"
+                       TextColor="#fff"
+                       Placeholder="Nenhum comentario..."
+                       PlaceholderColor="#fff"
                        FontFamily="OpenSansRegular"
                        FontAttributes="None"
                        Style="{StaticResource TitleDetalhes}"/>
@@ -136,7 +147,8 @@
                   ColumnDefinitions="250,*" 
                   RowDefinitions="350,*"
                   ColumnSpacing="20"
-                  RowSpacing="20">
+                  RowSpacing="20"
+                  Margin="50">
 
                 <Border ZIndex="2"
                         HorizontalOptions="StartAndExpand"
@@ -157,7 +169,7 @@
                        VerticalOptions="Start"
                        Padding="0"
                        HasShadow="True"
-                       BorderColor="LightGray"
+                       BorderColor="Transparent"
                        CornerRadius="0"
                        WidthRequest="250"
                        HeightRequest="350">
@@ -183,21 +195,21 @@
                     <Entry Grid.Column="0"
                            Grid.Row="1"
                            Text="{Binding Assessment.Duration}"
-                           TextColor="#666"
+                           TextColor="#fff"
                            FontAttributes="None"/>
 
                     <Entry Grid.Column="1"
                            Grid.Row="1"
                            Text="{Binding Assessment.Gender}"
                            FontAttributes="None"
-                           TextColor="#666"
+                           TextColor="#fff"
                            Style="{StaticResource TitleDetalhes}"/>
 
                     <Entry Grid.Row="2"
                            Grid.ColumnSpan="2"
                            Text="{Binding Assessment.Assessment}"
                            FontAttributes="None"
-                           TextColor="#666"
+                           TextColor="#fff"
                            Style="{StaticResource TitleDetalhes}"/>
 
                     <HorizontalStackLayout Grid.Row="3" Spacing="5">
@@ -205,7 +217,7 @@
                                HorizontalTextAlignment="Center" 
                                VerticalTextAlignment="Center"
                                FontAttributes="None"
-                               TextColor="#666"
+                               TextColor="#fff"
                                FontSize="16"
                                Opacity=".6"/>
                         <CheckBox IsChecked="{Binding  Assessment.Concluded}"  Color="#136CB2"/>
@@ -223,12 +235,13 @@
                         <Label Text="Categoria"
                                VerticalTextAlignment="Center"
                                HorizontalOptions="Center"
-                               TextColor="#666"
+                               TextColor="#fff"
                                FontAttributes="None"
                                FontSize="16"
                                Opacity=".6"/>
                         <Picker ItemsSource="{Binding Categories}"
-                                SelectedItem="{Binding Assessment.Category}"/>
+                                SelectedItem="{Binding Assessment.Category}"
+                                TextColor="#fff"/>
                     </HorizontalStackLayout>
                 </Grid>
 
@@ -241,25 +254,29 @@
                             Command="{Binding SaveCommand}"
                             Text="Salvar"
                             BackgroundColor="#3068F8"
+                            FontAttributes="Bold"
                             WidthRequest="100"
                             HeightRequest="44"/>
                     <Button Grid.Column="1"
                             Command="{Binding EditCommand}"
                             Text="Cancelar"
                             BackgroundColor="#F83030"
+                            FontAttributes="Bold"
                             WidthRequest="132"
                             HeightRequest="44"/>
                     <Button Grid.Column="1"
                             Command="{Binding CleanCommand}"
                             Text="Limpar"
-                            BackgroundColor="LightGray"
+                            BackgroundColor="MediumBlue"
+                            FontAttributes="Bold"
                             WidthRequest="132"
                             HeightRequest="44"/>
                 </HorizontalStackLayout>
                 <Editor Grid.Row="1"
                         Grid.ColumnSpan="2"
                         Text="{Binding Assessment.Comments}"
-                        TextColor="#333333"
+                        TextColor="#fff"
+                        Placeholder="Comentarios..."
                         FontFamily="OpenSansRegular"
                         FontAttributes="None"
                         Style="{StaticResource TitleDetalhes}"/>

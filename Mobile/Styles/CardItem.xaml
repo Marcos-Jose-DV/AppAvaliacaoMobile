@@ -18,19 +18,17 @@
 
 
     <Style TargetType="Border" x:Key="BorderCard">
-        <Setter Property="StrokeShape" Value="RoundRectangle 20"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 0"/>
         <Setter Property="Stroke" Value="Transparent"/>
         <Setter Property="StrokeThickness" Value="0"/>
-        <Setter Property="WidthRequest" Value="200"/>
-        <Setter Property="HeightRequest" Value="300"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
     </Style>
 
     <Style TargetType="Image" x:Key="ImageCard">
         <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
         <Setter Property="Aspect" Value="AspectFill"/>
-        <Setter Property="WidthRequest" Value="200"/>
-        <Setter Property="HeightRequest" Value="300"/>
+        <Setter Property="WidthRequest" Value="300"/>
+        <Setter Property="HeightRequest" Value="400"/>
     </Style>
 
     <Style TargetType="Border" x:Key="BorderDeleteCard">

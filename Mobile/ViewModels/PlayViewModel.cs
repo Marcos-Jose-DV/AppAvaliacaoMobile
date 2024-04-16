@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Mobile.Constans;
 using Mobile.Models;
 using System.Web;
 
@@ -24,7 +25,7 @@ public partial class PlayViewModel : ObservableObject, IQueryAttributable
         string decodedName = HttpUtility.UrlDecode(name);
 
 
-        string[] fileEntries = Directory.GetFiles("D:\\00_Servidor\\Movies");
+        string[] fileEntries = Directory.GetFiles(Configurations.ServePath);
         foreach (string fileName in fileEntries)
         {
             string file = Path.GetFileNameWithoutExtension(fileName);
@@ -46,9 +47,5 @@ public partial class PlayViewModel : ObservableObject, IQueryAttributable
         });
 
         if (result is null) return;
-
-
-
-        
     }
 }

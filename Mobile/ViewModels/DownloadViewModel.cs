@@ -68,7 +68,6 @@ public partial class DownloadViewModel : ObservableObject
 
         foreach (var assessment in assessments)
         {
-
             paragraph.Append($"Id: {assessment.Id}, Name: {assessment.Name}, Assessment: {assessment.Assessment}, Director: {assessment.Director}, Image: {assessment.Image}, Gender: {assessment.Gender}, Duration: {assessment.Duration}, Concluded: {assessment.Concluded}, Comments: {assessment.Comments}, Category: {assessment.Category}, Created: {assessment.Created}");
 
             paragraph.AppendLine();
@@ -96,7 +95,6 @@ public partial class DownloadViewModel : ObservableObject
         using MemoryStream stream = new();
         Document doc = new();
         PdfWriter.GetInstance(doc, stream);
-
 
         doc.Open();
 
