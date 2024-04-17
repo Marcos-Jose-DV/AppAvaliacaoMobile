@@ -17,5 +17,5 @@ Como gosto de criar apps para uso próprio, decidi desenvolver algo que sempre d
 
 Veja uma demonstração do aplicativo em ação!
 
-![Logo do Aplicativo](https://raw.githubusercontent.com/Marcos-Jose-DV/AppAvaliacaoMobile/main/wwwroot/capa.png?token=GHSAT0AAAAAACNVAD576JT3H3UVAFS77XW6ZQ7JOBQ)
+![Logo do Aplicativo](https://raw.githubusercontent.com/Marcos-Jose-DV/AppAvaliacaoMobile/main/wwwroot/capa2.png?token=GHSAT0AAAAAACNVAD576JT3H3UVAFS77XW6ZQ7JOBQ)
 ---
