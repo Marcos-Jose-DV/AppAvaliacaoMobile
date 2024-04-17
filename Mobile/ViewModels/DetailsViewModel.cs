@@ -4,12 +4,13 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Herpels;
 using Mobile.Models;
+using Mobile.Services;
 using Mobile.Services.Interfaces;
 namespace Mobile.ViewModels;
 
 public partial class DetailsViewModel : ObservableObject, IQueryAttributable
 {
-    private readonly IAssessmentService _service;
+    private readonly AssessmentService _service;
 
     [ObservableProperty]
     Assessments _assessment = new();
@@ -26,7 +27,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     [ObservableProperty]
     string[] _categories;
 
-    public DetailsViewModel(IAssessmentService service)
+    public DetailsViewModel(AssessmentService service)
     {
         Categories = ["Book", "Série", "Movie", "Music"];
         _service = service;
@@ -77,8 +78,8 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
                 Assessment.Image = await ConverterImage.ConvertImageToBase64String(StringBase64);
             }
 
-            var assessment = await _service.PutAssessment(Assessment.Id, Assessment);
-            WeakReferenceMessenger.Default.Send<Assessments>(assessment);
+           // var assessment = await _service.PutAssessment(Assessment.Id, Assessment);
+           // WeakReferenceMessenger.Default.Send<Assessments>(assessment);
             await Shell.Current.GoToAsync("..");
             DisposeAsyncMemory();
         }
@@ -96,7 +97,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         var result = await App.Current.MainPage.DisplayAlert("Remove", "Remover essa avaliação?", "Sim", "Não");
         if (result)
         {
-            await _service.DeleteAssessment(id);
+           // await _service.DeleteAssessment(id);
             await Shell.Current.GoToAsync("..");
         }
     }

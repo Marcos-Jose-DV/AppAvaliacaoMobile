@@ -1,25 +1,38 @@
 ﻿using Microsoft.Maui.Devices;
+using Mobile.Constans;
 using Mobile.Views;
+using System.Diagnostics;
 
 namespace Mobile
 {
     public partial class App : Application
     {
-        private double _width;
-        private double _height;
         public App()
         {
             InitializeComponent();
 
+            string path = Configurations.ApiPath;
+
+            if (!System.IO.File.Exists(path))
+            {
+                Console.WriteLine("O arquivo executável não foi encontrado.");
+            }
+            else
+            {
+                Process process = new Process();
+                process.StartInfo.FileName = path;
+
+                try
+                {
+                    process.Start();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ocorreu um erro ao tentar executar o executável: {ex.Message}");
+                }
+            }
+
             MainPage = new AppShell();
         }
-
-        //protected override Window CreateWindow(IActivationState? activationState)
-        //{
-        //    var window = base.CreateWindow(activationState);
-        //    window.Width = DeviceDisplay.Current.MainDisplayInfo.Width;
-        //    window.Height = DeviceDisplay.Current.MainDisplayInfo.Height;
-        //    return window;
-        //}
     }
 }

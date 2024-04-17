@@ -27,6 +27,7 @@
     <Style TargetType="Image" x:Key="ImageCard">
         <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
         <Setter Property="Aspect" Value="AspectFill"/>
+        <Setter Property="BackgroundColor" Value="White"/>
         <Setter Property="WidthRequest" Value="300"/>
         <Setter Property="HeightRequest" Value="400"/>
     </Style>

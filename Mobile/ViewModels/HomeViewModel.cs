@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DocumentFormat.OpenXml.Drawing;
 using Mobile.Models;
+using Mobile.Services;
 using Mobile.Services.Interfaces;
 using System.Collections.ObjectModel;
 
@@ -9,7 +11,7 @@ namespace Mobile.ViewModels;
 
 public partial class HomeViewModel : ObservableObject
 {
-    private readonly IAssessmentService _assessmentService;
+    private readonly AssessmentService _assessmentService;
 
     [ObservableProperty]
     ObservableCollection<Assessments> _assessments = new();
@@ -25,7 +27,9 @@ public partial class HomeViewModel : ObservableObject
 
     [ObservableProperty]
     string _priveiTitle;
-    public HomeViewModel(IAssessmentService assessmentService)
+
+    public int _pageIndex;
+    public HomeViewModel(AssessmentService assessmentService)
     {
         _assessmentService = assessmentService;
 
@@ -51,21 +55,21 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     async Task PerformSearch(string query)
     {
-        var data = await _assessmentService.GetAssessmentByName($"assessment/category?category=Movie&name={query}");
+        //var data = await _assessmentService.GetAssessmentByName($"assessment/category?category=Movie&name={query}");
 
-        var parameter = new Dictionary<string, object>
-        {
-            { "Data", data }
-        };
+        //var parameter = new Dictionary<string, object>
+        //{
+        //    { "Data", data }
+        //};
 
-        try
-        {
-            await Shell.Current.GoToAsync($"DetailsPage", parameter);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
-        }
+        //try
+        //{
+        //    await Shell.Current.GoToAsync($"DetailsPage", parameter);
+        //}
+        //catch (Exception ex)
+        //{
+        //    Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
+        //}
     }
 
     [RelayCommand]
@@ -109,19 +113,21 @@ public partial class HomeViewModel : ObservableObject
     {
         try
         {
-            if (Assessments.Count == 34) return;
-
             ShowPrevie = false;
             PriveiTitle = "👁️";
 
-            var list = await _assessmentService.GetAssessments($"assessments/recent?skip={skip}");
+            (_pageIndex, var list) = await _assessmentService.GetAssessments($"assessments/recent?skip={skip}");
 
-            if (list.Any())
+            if (Assessments.Count == _pageIndex) return;
+            if (!list.Any()) return;
+            foreach (var item in list)
             {
-                foreach (var item in list)
+                if (Assessments.Any(x => x.Id == item.Id))
                 {
-                    Assessments.Add(item);
+                    return;
                 }
+
+                Assessments.Add(item);
             }
         }
         catch (Exception ex)

@@ -10,11 +10,12 @@ public partial class PlayPage : ContentPage
         InitializeComponent();
 
         BindingContext = vm;
-        OnToggleFullscreenClicked();
+        //OnToggleFullscreenClicked();
     }
+
+#if WINDOWS
     private void OnToggleFullscreenClicked()
     {
-#if WINDOWS
 
         var window = App.Current.MainPage.GetParentWindow().Handler.PlatformView as MauiWinUIWindow;
 

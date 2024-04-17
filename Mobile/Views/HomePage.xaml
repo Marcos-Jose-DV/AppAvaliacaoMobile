@@ -130,7 +130,7 @@
                         VerticalScrollBarVisibility="Never"
                         Margin="0,0,0,0" 
                         Scrolled="CollectionView_Scrolled2"
-                        RemainingItemsThreshold="2"
+                        RemainingItemsThreshold="3"
                         x:Name="CollectionViewControl">
             <CollectionView.Header>
                 <Label Text="Tste" Margin="0,80,0,0" IsVisible="Hidden"/>
