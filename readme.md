@@ -1,6 +1,6 @@
 
 ---
-<iframe width="560" height="315" src="https://github.com/Marcos-Jose-DV/AppAvaliacaoMobile\wwwroot\video.mp4" frameborder="0" allowfullscreen></iframe>
+
 
 # App de Avaliação e Stream de Filmes, Séries, Músicas e Livros
 
