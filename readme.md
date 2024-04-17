@@ -4,7 +4,7 @@
 
 # App de Avaliação e Stream de Filmes, Séries, Músicas e Livros
 
-![Logo do Aplicativo]([https://raw.githubusercontent.com/Marcos-Jose-DV/AppAvaliacaoMobile/main/wwwroot/capa.png?token=GHSAT0AAAAAACNVAD576JT3H3UVAFS77XW6ZQ7JOBQ](https://raw.githubusercontent.com/Marcos-Jose-DV/AppAvaliacaoMobile/main/wwwroot/capa.png?token=GHSAT0AAAAAACNVAD56KHIQIDB4YS3NBX76ZQ7JWBA))
+![Logo do Aplicativo](https://raw.githubusercontent.com/Marcos-Jose-DV/AppAvaliacaoMobile/main/wwwroot/capa.png?token=GHSAT0AAAAAACNVAD56KHIQIDB4YS3NBX76ZQ7JWBA)
 
 Como gosto de criar apps para uso próprio, decidi desenvolver algo que sempre desejei: um lugar para armazenar minhas avaliações de Filmes, Séries, Músicas e Livros. Com algum conhecimento em C# usando o framework .NET MAUI e ASP.NET, estou construindo a conexão com o banco de dados do meu servidor pessoal.
 
