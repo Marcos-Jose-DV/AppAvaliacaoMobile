@@ -116,9 +116,10 @@ public partial class HomeViewModel : ObservableObject
             ShowPrevie = false;
             PriveiTitle = "👁️";
 
+            if (Assessments.Count != 0 && Assessments.Count == _pageIndex) return;
+
             (_pageIndex, var list) = await _assessmentService.GetAssessments($"assessments/recent?skip={skip}");
 
-            if (Assessments.Count == _pageIndex) return;
             if (!list.Any()) return;
             foreach (var item in list)
             {
@@ -134,6 +135,12 @@ public partial class HomeViewModel : ObservableObject
         {
             ex.Message.ToString();
         }
+    }
+
+    [RelayCommand]
+    async Task Home()
+    {
+
     }
 
     [RelayCommand]

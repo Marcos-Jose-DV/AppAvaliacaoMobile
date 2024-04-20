@@ -12,7 +12,7 @@
         <converters:TitleCardValueConverter x:Key="TitleCardValueConverter"/>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*"  Margin="0,0,0,0">
+    <Grid RowDefinitions="*">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0,1">
                 <GradientStop Color="#1534BC"
@@ -28,7 +28,7 @@
               BackgroundColor="Transparent" 
               ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*"
               RowDefinitions="70" 
-              ColumnSpacing="0">
+              ColumnSpacing="5">
 
             <BoxView Grid.ColumnSpan="9"  BackgroundColor="Black" Opacity="0.7"/>
 
@@ -40,7 +40,6 @@
                     BackgroundColor="Transparent"/>
 
             <Button Grid.Column="1"
-                    ZIndex="2"
                     Command="{Binding CategoryCommand}"
                     CommandParameter="Book"
                     Text="Livros"
@@ -50,7 +49,6 @@
                     BackgroundColor="Transparent"/>
 
             <Button Grid.Column="2"
-                    
                     Command="{Binding CategoryCommand}"
                     CommandParameter="Movie"
                     Text="Filmes"
@@ -135,35 +133,27 @@
         </Grid>
         <CollectionView Grid.Row="0"
                         ItemsSource="{Binding Assessments}" 
-                        HorizontalOptions="CenterAndExpand"
-                        VerticalOptions="CenterAndExpand"
                         VerticalScrollBarVisibility="Never"
-                        Margin="0,0,0,0" 
                         Scrolled="CollectionView_Scrolled2"
                         RemainingItemsThreshold="3"
                         x:Name="CollectionViewControl">
             <CollectionView.Header>
                 <Label Text="Tste" Margin="0,80,0,0" IsVisible="Hidden"/>
             </CollectionView.Header>
-            <CollectionView.ItemsLayout>
+            <CollectionView.ItemsLayout> 
                 <GridItemsLayout Orientation="Vertical" 
-                                 Span="5"
-                                 HorizontalItemSpacing="10" 
-                                 VerticalItemSpacing="10"/>
+                                 SnapPointsAlignment="Start" 
+                                 SnapPointsType="Mandatory"
+                                 VerticalItemSpacing="15"
+                                 Span="6"/>
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid RowDefinitions="Auto,*" 
-                          ColumnDefinitions="*,*" 
-                          RowSpacing="0" 
-                          HorizontalOptions="Center">
-                        <Border ZIndex="0"
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2" 
-                                Style="{StaticResource BorderCard}">
-
+                    <Grid RowDefinitions="*" 
+                          ColumnDefinitions="*" 
+                          HorizontalOptions="Start">
+                        <Border Style="{StaticResource BorderCard}">
                             <Image Source="{Binding Image}"
                                    Style="{StaticResource ImageCard}">
                                 <Image.GestureRecognizers>
@@ -175,17 +165,14 @@
 
                         <Grid IsVisible="{Binding BindingContext.ShowPrevie,Source={x:Reference PaiPage}}"
                               ZIndex="1"
-                              Grid.Row="0"
-                              Grid.Column="0"
-                              Grid.ColumnSpan="2"
                               ColumnDefinitions="*">
 
                             <Border BackgroundColor="Black"
-                                        Opacity="0.8"
-                                        Style="{StaticResource BorderCard}">
+                                    Opacity="0.8"
+                                    Style="{StaticResource BorderCard}">
                             </Border>
-                            <VerticalStackLayout ZIndex="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
-                                <Label Text="{Binding Name}" LineBreakMode="TailTruncation" Style="{StaticResource TItleCard}"  HorizontalOptions="Center"/>
+                            <VerticalStackLayout ZIndex="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="5" Margin="0,0">
+                                <Label Text="{Binding Name}" LineBreakMode="TailTruncation" Margin="10,0" MaximumWidthRequest="200" Style="{StaticResource TItleCard}"  HorizontalOptions="Center"/>
                                 <Label Text="{Binding Assessment,StringFormat='Nota: {0}'}" Style="{StaticResource TItleCard}" HorizontalOptions="Center"/>
                                 <Label Text="{Binding .,Converter={converters:TitleCardValueConverter}}" Style="{StaticResource TItleCard}" HorizontalOptions="Center"/>
                                 <Label Text="{Binding Concluded, Converter={converters:ConcludedIsTrueOrFalseConverter},StringFormat='Cocluido: {0}'}" HorizontalOptions="Center" Style="{StaticResource TItleCard}"/>
