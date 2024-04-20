@@ -21,6 +21,26 @@
                              Offset="1.0" />
             </LinearGradientBrush>
         </Grid.Background>
+
+
+        <Border ZIndex="1"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="EndAndExpand"
+                Margin="20"
+                Stroke="LightGray"
+                StrokeShape="RoundRectangle  30"
+                BackgroundColor="White"
+                WidthRequest="60"
+                HeightRequest="60">
+
+            <Button Command="{Binding AddCardCommand}"
+                    Text="+"
+                    TextColor="Black"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    BackgroundColor="Transparent"/>
+        </Border>
+
         <BoxView Grid.ColumnSpan="5" BackgroundColor="Black" Opacity="0.3"/>
 
         <Grid ZIndex="1"
@@ -33,6 +53,7 @@
             <BoxView Grid.ColumnSpan="9"  BackgroundColor="Black" Opacity="0.7"/>
 
             <Button Grid.Column="0"
+                    Command="{Binding HomeCommand}"
                     Text="Inicio"
                     FontAttributes="Bold"
                     TextColor="White"
@@ -40,40 +61,24 @@
                     BackgroundColor="Transparent"/>
 
             <Button Grid.Column="1"
-                    Command="{Binding CategoryCommand}"
                     CommandParameter="Book"
-                    Text="Livros"
-                    FontAttributes="Bold"
-                    TextColor="White"
-                    Margin="0,0,0,0"
-                    BackgroundColor="Transparent"/>
+                    Text="Livros" 
+                    Style="{StaticResource ButtonBar}"/>
 
             <Button Grid.Column="2"
-                    Command="{Binding CategoryCommand}"
                     CommandParameter="Movie"
                     Text="Filmes"
-                    FontAttributes="Bold"
-                    TextColor="White"
-                    Margin="0,0,0,0"
-                    BackgroundColor="Transparent"/> 
+                    Style="{StaticResource ButtonBar}"/>
 
             <Button Grid.Column="3"
-                    Command="{Binding CategoryCommand}"
                     CommandParameter="Série"
                     Text="Séries"
-                    FontAttributes="Bold"
-                    TextColor="White"
-                    Margin="0,0,0,0"
-                    BackgroundColor="Transparent"/> 
+                    Style="{StaticResource ButtonBar}"/>
 
             <Button Grid.Column="4"
-                    Command="{Binding CategoryCommand}"
                     CommandParameter="Music"
                     Text="Musicas"
-                    FontAttributes="Bold"
-                    TextColor="White"
-                    Margin="0,0,0,0"
-                    BackgroundColor="Transparent"/>
+                    Style="{StaticResource ButtonBar}"/>
 
 
             <Button Grid.Column="5"
@@ -96,10 +101,10 @@
             </Button>
             <Border Grid.Column="6"
                     BackgroundColor="Transparent" 
-                    Stroke="Transparent">
+                    Stroke="Transparent"
+                    HorizontalOptions="EndAndExpand">
                 <Button Grid.Column="2"
                         Command="{Binding PrevieCommand}"
-                        CommandParameter="Movie"
                         Text="{Binding PriveiTitle}"
                         TextColor="Black"
                         FontSize="23"
@@ -107,18 +112,6 @@
                         BackgroundColor="Transparent"
                         WidthRequest="60"
                         HeightRequest="60"/>
-            </Border>
-            <Border Grid.Column="7"
-                    BackgroundColor="Transparent"
-                    Stroke="Transparent"
-                    WidthRequest="60"
-                    HeightRequest="60">
-                <Button Command="{Binding AddCardCommand}"
-                        Text="+"
-                        TextColor="White"
-                        FontSize="30"
-                        FontAttributes="Bold"
-                        BackgroundColor="Transparent"/>
             </Border>
 
             <SearchBar Grid.Column="8"
@@ -140,7 +133,7 @@
             <CollectionView.Header>
                 <Label Text="Tste" Margin="0,80,0,0" IsVisible="Hidden"/>
             </CollectionView.Header>
-            <CollectionView.ItemsLayout> 
+            <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" 
                                  SnapPointsAlignment="Start" 
                                  SnapPointsType="Mandatory"

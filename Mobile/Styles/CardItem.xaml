@@ -12,7 +12,7 @@
     <Style TargetType="Label" x:Key="TItleCard">
         <Setter Property="TextColor" Value="White"/>
         <Setter Property="FontAttributes" Value="Bold"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
     </Style>
 
@@ -118,5 +118,10 @@
         <Setter Property="TextColor" Value="White"/>
     </Style>
 
-
+    <Style TargetType="Button" x:Key="ButtonBar">
+        <Setter Property="Command" Value="{Binding CategoryCommand}"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
 </ResourceDictionary>

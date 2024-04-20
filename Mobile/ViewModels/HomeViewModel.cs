@@ -109,6 +109,19 @@ public partial class HomeViewModel : ObservableObject
             Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
         }
     }
+
+    [RelayCommand]
+    async Task Download()
+    {
+        try
+        {
+            await Shell.Current.GoToAsync("DownloadPage");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message} - {ex.StackTrace}");
+        }
+    }
     public async Task Load(int skip = 0)
     {
         try
@@ -140,7 +153,9 @@ public partial class HomeViewModel : ObservableObject
     [RelayCommand]
     async Task Home()
     {
-
+        _pageIndex = 0;
+        Assessments.Clear();
+        await Load();
     }
 
     [RelayCommand]
