@@ -15,7 +15,5 @@ Como gosto de criar apps para uso próprio, decidi desenvolver algo que sempre d
 - O aplicativo está funcionando perfeitamente para Windows, e agora estou ajustando-o para Smart TVs Android.
 - Uma API simples está sendo utilizada localmente para se comunicar com o servidor interno. A conexão com o banco de dados está operando com sucesso.
 
-Veja uma demonstração do aplicativo em ação!
-
 ![Logo do Aplicativo](https://raw.githubusercontent.com/Marcos-Jose-DV/AppAvaliacaoMobile/main/wwwroot/capa2.png?token=GHSAT0AAAAAACNVAD576JT3H3UVAFS77XW6ZQ7JOBQ)
 ---
