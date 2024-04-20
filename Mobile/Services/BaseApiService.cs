@@ -20,25 +20,19 @@ public class BaseApiService
     protected TData DeserializeApiResponse<TData>(string jsondata)
         => JsonSerializer.Deserialize<TData>(jsondata, JsonSerializerOptions);
 
-    protected async Task<(int Total, TData Data)> HandlerApiResponseAsync<TData>(HttpResponseMessage response, TData defaultValue)
+    protected async Task<ApiResponse> HandlerApiResponseAsync<TData>(HttpResponseMessage response, ApiResponse defaultValue)
     {
         if (response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
             if (!string.IsNullOrEmpty(content))
             {
-                ApiResponse<TData> assessments = DeserializeApiResponse<ApiResponse<TData>>(content);
-
-                return (assessments.Total, assessments.Data);
+                var apiResponse = DeserializeApiResponse<ApiResponse>(content);
+                return apiResponse;
             }
         }
 
-        return (0, defaultValue);
+        return defaultValue;
     }
 
-    public class ApiResponse<TData>
-    {
-        public int Total { get; set; }
-        public TData Data { get; set; }
-    }
 }

@@ -78,8 +78,8 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
                 Assessment.Image = await ConverterImage.ConvertImageToBase64String(StringBase64);
             }
 
-           // var assessment = await _service.PutAssessment(Assessment.Id, Assessment);
-           // WeakReferenceMessenger.Default.Send<Assessments>(assessment);
+            var assessment = await _service.PutAssessment(Assessment.Id, Assessment);
+            WeakReferenceMessenger.Default.Send<Assessments>(assessment);
             await Shell.Current.GoToAsync("..");
             DisposeAsyncMemory();
         }

@@ -40,6 +40,9 @@
                     BackgroundColor="Transparent"/>
 
             <Button Grid.Column="1"
+                    ZIndex="2"
+                    Command="{Binding CategoryCommand}"
+                    CommandParameter="Book"
                     Text="Livros"
                     FontAttributes="Bold"
                     TextColor="White"
@@ -47,6 +50,9 @@
                     BackgroundColor="Transparent"/>
 
             <Button Grid.Column="2"
+                    
+                    Command="{Binding CategoryCommand}"
+                    CommandParameter="Movie"
                     Text="Filmes"
                     FontAttributes="Bold"
                     TextColor="White"
@@ -54,6 +60,8 @@
                     BackgroundColor="Transparent"/> 
 
             <Button Grid.Column="3"
+                    Command="{Binding CategoryCommand}"
+                    CommandParameter="Série"
                     Text="Séries"
                     FontAttributes="Bold"
                     TextColor="White"
@@ -61,6 +69,8 @@
                     BackgroundColor="Transparent"/> 
 
             <Button Grid.Column="4"
+                    Command="{Binding CategoryCommand}"
+                    CommandParameter="Music"
                     Text="Musicas"
                     FontAttributes="Bold"
                     TextColor="White"

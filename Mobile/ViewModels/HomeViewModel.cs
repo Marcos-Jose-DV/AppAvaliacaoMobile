@@ -137,6 +137,23 @@ public partial class HomeViewModel : ObservableObject
     }
 
     [RelayCommand]
+    async Task Category(string category)
+    {
+        (int total, var query) = await _assessmentService.GetLoadCategoryAsync($"assessments/category/{category}/skip/0");
+
+        if (query.Any())
+        {
+            Assessments.Clear();
+
+            foreach (var item in query)
+            {
+                Assessments.Add(item);
+            }
+        }
+    }
+
+
+    [RelayCommand]
     void Filter(string filter)
     {
         string title = Shell.Current.CurrentItem.Title;

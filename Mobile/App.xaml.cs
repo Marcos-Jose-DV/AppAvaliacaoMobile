@@ -11,26 +11,26 @@ namespace Mobile
         {
             InitializeComponent();
 
-            string path = Configurations.ApiPath;
+            //string path = Configurations.ApiPath;
 
-            if (!System.IO.File.Exists(path))
-            {
-                Console.WriteLine("O arquivo executável não foi encontrado.");
-            }
-            else
-            {
-                Process process = new Process();
-                process.StartInfo.FileName = path;
+            //if (!System.IO.File.Exists(path))
+            //{
+            //    Console.WriteLine("O arquivo executável não foi encontrado.");
+            //}
+            //else
+            //{
+            //    Process process = new Process();
+            //    process.StartInfo.FileName = path;
 
-                try
-                {
-                    process.Start();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Ocorreu um erro ao tentar executar o executável: {ex.Message}");
-                }
-            }
+            //    try
+            //    {
+            //        process.Start();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.WriteLine($"Ocorreu um erro ao tentar executar o executável: {ex.Message}");
+            //    }
+            //}
 
             MainPage = new AppShell();
         }

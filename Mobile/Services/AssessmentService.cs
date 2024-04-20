@@ -1,4 +1,5 @@
-﻿using Mobile.Constans;
+﻿using DocumentFormat.OpenXml.VariantTypes;
+using Mobile.Constans;
 using Mobile.Models;
 using Mobile.Services.Interfaces;
 using System.Text;
@@ -14,18 +15,37 @@ public class AssessmentService : BaseApiService
 
     public async Task<(int total, IEnumerable<Assessments>)> GetAssessments(string parameter)
     {
+        ApiResponse apiResponse = null;
+        if (parameter is null)
+        {
+            parameter = "assessments";
+        }
+
+        try
+        {
+            var response = await HttpClient.GetAsync($"/v1/{parameter}");
+            apiResponse = await HandlerApiResponseAsync<ApiResponse>(response, null);
+        }
+        catch (Exception ex)
+        {
+            ex.ToString();
+        }
+
+        return (apiResponse.Total, apiResponse.Datas);
+    }
+    public async Task<(int total, IEnumerable<Assessments>)> GetLoadCategoryAsync(string parameter)
+    {
+        ApiResponse apiResponse = null;
 
         if (parameter is null)
         {
             parameter = "assessments";
         }
 
-        IEnumerable<Assessments>? assessments = null;
-        int total = 0;
         try
         {
             var response = await HttpClient.GetAsync($"/v1/{parameter}");
-            (total, assessments) = await HandlerApiResponseAsync<IEnumerable<Assessments>>(response, null);
+            apiResponse = await HandlerApiResponseAsync<ApiResponse>(response, null);
 
         }
         catch (Exception ex)
@@ -33,18 +53,18 @@ public class AssessmentService : BaseApiService
             ex.ToString();
         }
 
-        return (total, assessments);
+        return (apiResponse.Total, apiResponse.Datas);
     }
     public async Task<Assessments> GetAssessmentByName(string query)
     {
-        Assessments? assessments = null;
-        int total = 0;
+        ApiResponse apiResponse = null;
+
         try
         {
-            var response = await HttpClient.GetAsync($"/{query}");
+            var response = await HttpClient.GetAsync($"/v1/{query}");
 
             using var responseStream = await response.Content.ReadAsStreamAsync();
-            (total, assessments) = await HandlerApiResponseAsync<Assessments>(response, null);
+            apiResponse = await HandlerApiResponseAsync<ApiResponse>(response, null);
 
         }
         catch (Exception ex)
@@ -52,67 +72,62 @@ public class AssessmentService : BaseApiService
             ex.ToString();
         }
 
-        return assessments;
+        return apiResponse.Data;
     }
 
     public async Task<Assessments> GetAssessmentById(int id)
     {
-        Assessments? assessments = null;
-        int total = 0;
+        ApiResponse apiResponse = null;
+
         try
         {
-            var response = await HttpClient.GetAsync($"/assessments/{id}");
-            (total, assessments) = await HandlerApiResponseAsync<Assessments>(response, null);
+            var response = await HttpClient.GetAsync($"/v1/assessments/{id}");
+            apiResponse = await HandlerApiResponseAsync<ApiResponse>(response, null);
         }
         catch (Exception ex)
         {
             ex.ToString();
         }
 
-        return assessments;
+       return apiResponse.Data;
     }
-    public async Task<Assessments> PostAssessment(Assessments assessment)
+    public async Task<Assessments> PostAssessment(Assessments assessmentPost)
     {
-        Assessments? assessmentUpdate = null;
-        int total = 0;
+        ApiResponse apiResponse = null;
+        try
+        {
+            string jsonRespponse = JsonSerializer.Serialize<object>(assessmentPost, JsonSerializerOptions);
+            StringContent content = new(jsonRespponse, Encoding.UTF8, "application/json");
+
+            var response = await HttpClient.PostAsync("/v1/assessment", content);
+            apiResponse = await HandlerApiResponseAsync<ApiResponse>(response, null);
+        }
+        catch (Exception ex)
+        {
+            ex.ToString();
+        }
+
+        return apiResponse.Data;
+    }
+    public async Task<Assessments> PutAssessment(int id, Assessments assessment)
+    {
+        ApiResponse apiResponse = null;
         try
         {
             string jsonRespponse = JsonSerializer.Serialize<object>(assessment, JsonSerializerOptions);
             StringContent content = new(jsonRespponse, Encoding.UTF8, "application/json");
 
-            var response = await HttpClient.PostAsync("/assessment", content);
-            (total, assessmentUpdate) = await HandlerApiResponseAsync<Assessments>(response, null);
+            var response = await HttpClient.PutAsync($"/v1/assessment/{id}", content);
+            apiResponse = await HandlerApiResponseAsync<ApiResponse>(response, null);
+
         }
         catch (Exception ex)
         {
             ex.ToString();
         }
 
-        return assessmentUpdate;
+        return apiResponse.Data;
     }
-    //public async Task<Assessments> PutAssessment(int id, Assessments assessment)
-    //{
-    //    Assessments? assessmentUpdate = null;
-    //    try
-    //    {
-    //        string jsonRespponse = JsonSerializer.Serialize<object>(assessment, _jsonOptions);
-
-    //        StringContent content = new StringContent(jsonRespponse, Encoding.UTF8, "application/json");
-
-    //        var response = await _client.PutAsync($"{Configurations.Url}/assessment/{id}", content);
-    //        if (response.IsSuccessStatusCode)
-    //        {
-    //            using var responseStream = await response.Content.ReadAsStreamAsync();
-    //            assessmentUpdate = await JsonSerializer.DeserializeAsync<Assessments>(responseStream, _jsonOptions);
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        ex.ToString();
-    //    }
-
-    //    return assessmentUpdate;
-    //}
     //public async Task<Assessments> DeleteAssessment(int id)
     //{
     //    Assessments? assessment = null;

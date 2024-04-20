@@ -5,13 +5,14 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Herpels;
 using Mobile.Models;
+using Mobile.Services;
 using Mobile.Services.Interfaces;
 
 namespace Mobile.ViewModels;
 
 public partial class AddCardViewModel : ObservableObject
 {
-    private readonly IAssessmentService _service;
+    private readonly AssessmentService _service;
 
     [ObservableProperty]
     Assessments _assessment;
@@ -25,7 +26,7 @@ public partial class AddCardViewModel : ObservableObject
     [ObservableProperty]
     Stream _stringBase64;
 
-    public AddCardViewModel(IAssessmentService service)
+    public AddCardViewModel(AssessmentService service)
     {
         _service = service;
         CleanData();
