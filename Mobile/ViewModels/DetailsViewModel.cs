@@ -10,7 +10,7 @@ namespace Mobile.ViewModels;
 
 public partial class DetailsViewModel : ObservableObject, IQueryAttributable
 {
-    private readonly AssessmentService _service;
+    private readonly Services.AssessmentService _service;
 
     [ObservableProperty]
     Assessments _assessment = new();
@@ -27,7 +27,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     [ObservableProperty]
     string[] _categories;
 
-    public DetailsViewModel(AssessmentService service)
+    public DetailsViewModel(Services.AssessmentService service)
     {
         Categories = ["Book", "Série", "Movie", "Music"];
         _service = service;

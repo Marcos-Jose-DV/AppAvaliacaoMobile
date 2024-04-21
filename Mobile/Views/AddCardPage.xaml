@@ -11,7 +11,16 @@
           RowDefinitions="350,*"
           ColumnSpacing="20"
           RowSpacing="20"
-          Margin="50">
+          Margin="0">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#1534BC"
+          Offset="0.1" />
+                <GradientStop Color="#000"
+         Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <BoxView Opacity="0.3" BackgroundColor="Black"/>
 
         <Border ZIndex="2"
                HorizontalOptions="StartAndExpand"
@@ -59,7 +68,7 @@
                    Grid.Row="1"
                    Text="{Binding Assessment.Duration}"
                    Placeholder="Duração"
-                   TextColor="#666"
+                   TextColor="White"
                    FontSize="16" 
                    FontAttributes="None"/>
 
@@ -69,14 +78,14 @@
                    FontAttributes="None"
                    Placeholder="Genero"
                    FontSize="16" 
-                   TextColor="#666"/>
+                   TextColor="White"/>
 
             <Entry Grid.Row="2"
                    Grid.ColumnSpan="2"
                    Text="{Binding Assessment.Assessment}"
                    Placeholder="Nota"
                    FontAttributes="None"
-                   TextColor="#666"
+                   TextColor="White"
                    FontSize="16" />
 
             <HorizontalStackLayout Grid.Row="3">
@@ -84,9 +93,8 @@
                        HorizontalTextAlignment="Center" 
                        VerticalTextAlignment="Center"
                        FontAttributes="None"
-                       TextColor="#666"
-                       FontSize="16"
-                       Opacity=".6"/>
+                       TextColor="White"
+                       FontSize="16"/>
                 <CheckBox IsChecked="{Binding  Assessment.Concluded}" />
             </HorizontalStackLayout>
 
@@ -94,19 +102,17 @@
                    Grid.ColumnSpan="2"
                    Text="{Binding Assessment.Director}"
                    Placeholder="Diretor/Autor"
-                   PlaceholderColor="#666"
+                   PlaceholderColor="White"
                    FontAttributes="None"
-                   FontSize="16"
-                   Opacity=".4"/>
+                   FontSize="16"/>
 
             <HorizontalStackLayout Grid.Row="5" Spacing="10">
                 <Label Text="Categoria"
                        VerticalTextAlignment="Center"
                        HorizontalOptions="Center"
-                       TextColor="#666"
+                       TextColor="White"
                        FontAttributes="None"
-                       FontSize="16"
-                       Opacity=".6"/>
+                       FontSize="16"/>
                 <Picker ItemsSource="{Binding Categories}"
                         SelectedItem="{Binding Assessment.Category}"/>
             </HorizontalStackLayout>

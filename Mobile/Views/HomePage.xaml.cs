@@ -45,4 +45,15 @@ public partial class HomePage : ContentPage
             }
         }
     }
+
+    private void ShowMenu(object sender, EventArgs e)
+    {
+        var button = (Button)sender;
+        
+        double rotateTo = 45;
+        if (Menu.IsVisible) rotateTo = 0;
+        
+        button.RotateTo(rotateTo, 250, Easing.Linear);
+        Menu.IsVisible = !Menu.IsVisible;
+    }
 }

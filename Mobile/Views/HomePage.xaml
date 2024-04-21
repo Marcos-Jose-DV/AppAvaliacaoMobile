@@ -23,22 +23,56 @@
         </Grid.Background>
 
 
-        <Border ZIndex="1"
+        <Border x:Name="BorderMenu"
+                ZIndex="1"
                 HorizontalOptions="EndAndExpand"
                 VerticalOptions="EndAndExpand"
                 Margin="20"
-                Stroke="LightGray"
-                StrokeShape="RoundRectangle  30"
+                Stroke="Transparent"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle  0"
                 BackgroundColor="White"
                 WidthRequest="60"
                 HeightRequest="60">
-
-            <Button Command="{Binding AddCardCommand}"
+                
+            <Button Clicked="ShowMenu"
                     Text="+"
                     TextColor="Black"
                     FontSize="30"
                     FontAttributes="Bold"
                     BackgroundColor="Transparent"/>
+        </Border>
+
+        <Border x:Name="Menu"
+                IsVisible="False"
+                ZIndex="1"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="EndAndExpand"
+                Margin="0,0,20,78"
+                StrokeShape="RoundRectangle 10 10 10 0"
+                Stroke="Transparent"
+                StrokeThickness="0"
+                BackgroundColor="White"
+                WidthRequest="180"
+                HeightRequest="165">
+            <VerticalStackLayout Spacing="5" Margin="10">
+                <Button Command="{Binding NavegationMenuCommand}"
+                        CommandParameter="AddCardPage"
+                        Text="Adicionar avaliação"
+                        BackgroundColor="SteelBlue"
+                        FontAttributes="Bold"/>
+                <Button Command="{Binding NavegationMenuCommand}"
+                        CommandParameter="DownloadPage"
+                        Text="Exportar/Importar"
+                        FontAttributes="Bold"
+                        BackgroundColor="ForestGreen"/>
+                <Button Command="{Binding NavegationMenuCommand}"
+                        CommandParameter="SettingPage"
+                        Text="Configurações"
+                        FontAttributes="Bold"
+                        BackgroundColor="Black"/>
+            </VerticalStackLayout>
+            
         </Border>
 
         <BoxView Grid.ColumnSpan="5" BackgroundColor="Black" Opacity="0.3"/>

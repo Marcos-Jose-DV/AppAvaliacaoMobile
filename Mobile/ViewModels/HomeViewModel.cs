@@ -87,9 +87,9 @@ public partial class HomeViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async Task AddCard()
+    async Task NavegationMenu(string page)
     {
-        await Shell.Current.GoToAsync("AddCardPage");
+        await Shell.Current.GoToAsync(page);
     }
 
     [RelayCommand]

@@ -104,12 +104,13 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<DownloadPage>();
         builder.Services.AddSingleton<DownloadViewModel>();
-        builder.Services.AddScoped<AssessmentService>();
+        builder.Services.AddScoped<Services.AssessmentService>();
         builder.Services.AddSingleton<IFileSaver>(FileSaver.Default);
 
 
         Routing.RegisterRoute(nameof(DetailsPage), typeof(DetailsPage));
         Routing.RegisterRoute(nameof(AddCardPage), typeof(AddCardPage));
+        Routing.RegisterRoute(nameof(DownloadPage), typeof(DownloadPage));
         Routing.RegisterRoute(nameof(PlayPage), typeof(PlayPage));
 
         return builder;

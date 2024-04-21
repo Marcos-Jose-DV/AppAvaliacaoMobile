@@ -15,7 +15,7 @@
         <converters:AuthorValueConverter x:Key="AuthorValueConverter"/>
     </ContentPage.Resources>
     <ScrollView>
-        <Grid >
+        <Grid ColumnDefinitions="*,*">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#1534BC"
@@ -24,7 +24,7 @@
                      Offset="1.0" />
                 </LinearGradientBrush>
             </Grid.Background>
-            <BoxView Opacity="0.3" BackgroundColor="Black"/>
+            <BoxView Grid.ColumnSpan="2" Opacity="0.3" BackgroundColor="Black"/>
             <Grid IsVisible="{Binding DetailsIsVisible}"
                   ColumnDefinitions="200,Auto,*" 
                   RowDefinitions="300,*"
@@ -281,6 +281,10 @@
                         FontAttributes="None"
                         Style="{StaticResource TitleDetalhes}"/>
             </Grid>
+
+            <Border VerticalOptions="EndAndExpand" HeightRequest="100">
+                
+            </Border>
         </Grid>
     </ScrollView>
 </ContentPage>

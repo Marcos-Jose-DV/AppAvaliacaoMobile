@@ -16,10 +16,6 @@ public class AssessmentService : BaseApiService
     public async Task<(int total, IEnumerable<Assessments>)> GetAssessments(string parameter)
     {
         ApiResponse apiResponse = null;
-        if (parameter is null)
-        {
-            parameter = "assessments";
-        }
 
         try
         {
@@ -31,7 +27,9 @@ public class AssessmentService : BaseApiService
             ex.ToString();
         }
 
+
         return (apiResponse.Total, apiResponse.Datas);
+
     }
     public async Task<(int total, IEnumerable<Assessments>)> GetLoadCategoryAsync(string parameter)
     {
@@ -89,7 +87,7 @@ public class AssessmentService : BaseApiService
             ex.ToString();
         }
 
-       return apiResponse.Data;
+        return apiResponse.Data;
     }
     public async Task<Assessments> PostAssessment(Assessments assessmentPost)
     {

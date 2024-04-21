@@ -12,7 +12,7 @@ namespace Mobile.ViewModels;
 
 public partial class AddCardViewModel : ObservableObject
 {
-    private readonly AssessmentService _service;
+    private readonly Services.AssessmentService _service;
 
     [ObservableProperty]
     Assessments _assessment;
@@ -26,7 +26,7 @@ public partial class AddCardViewModel : ObservableObject
     [ObservableProperty]
     Stream _stringBase64;
 
-    public AddCardViewModel(AssessmentService service)
+    public AddCardViewModel(Services.AssessmentService service)
     {
         _service = service;
         CleanData();

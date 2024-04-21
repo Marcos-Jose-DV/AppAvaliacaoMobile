@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using iTextSharp.text.pdf;
 using Mobile.Models;
-using Mobile.Services.Interfaces;
+using Mobile.Services;
 using Xceed.Words.NET;
 using Document = iTextSharp.text.Document;
 
@@ -15,9 +15,9 @@ public partial class DownloadViewModel : ObservableObject
 {
 
     private readonly IFileSaver _fileSaver;
-    private readonly IAssessmentService _assessmentService;
+    private readonly AssessmentService _assessmentService;
 
-    public DownloadViewModel(IFileSaver fileSaver, IAssessmentService assessmentService)
+    public DownloadViewModel(IFileSaver fileSaver, AssessmentService assessmentService)
     {
         _fileSaver = fileSaver;
         _assessmentService = assessmentService;
@@ -29,24 +29,24 @@ public partial class DownloadViewModel : ObservableObject
         var cancellationToken = new CancellationToken();
         try
         {
-            var assessments = await _assessmentService.GetAssessments(null);
+            var assessments = await _assessmentService.GetAssessments("");
             Stream stream = null;
 
             if (fileName.Equals("assessments.txt"))
             {
-                stream = WriteTxt(assessments);
+                stream = WriteTxt(assessments.Item2);
             }
             else if (fileName.Equals("assessments.pdf"))
             {
-                stream = WritePDF(assessments);
+                stream = WritePDF(assessments.Item2);
             }
             else if (fileName.Equals("assessments.xlsx"))
             {
-                stream = WriteExcel(assessments);
+                stream = WriteExcel(assessments.Item2);
             }
             else
             {
-                stream = WriteDoxc(assessments);
+                stream = WriteDoxc(assessments.Item2);
             }
 
             var fileLocationResult = await _fileSaver.SaveAsync(fileName, stream, cancellationToken);
