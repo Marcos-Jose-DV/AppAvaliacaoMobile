@@ -142,9 +142,9 @@ public partial class DownloadViewModel : ObservableObject
         int row = 2;
         foreach (var assessment in assessments)
         {
-            worksheet.Cell(row, 1).Value = assessment.Id;
-            worksheet.Cell(row, 2).Value = assessment.Category;
-            worksheet.Cell(row, 3).Value = assessment.Name;
+            worksheet.Cell(row, 1).Value = assessment.Name;
+            worksheet.Cell(row, 2).Value = assessment.Assessment;
+            worksheet.Cell(row, 3).Value = assessment.Category;
             worksheet.Cell(row, 4).Value = assessment.Director;
             worksheet.Cell(row, 5).Value = assessment.Image;
             worksheet.Cell(row, 6).Value = assessment.Gender;

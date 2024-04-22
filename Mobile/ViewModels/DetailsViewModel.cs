@@ -5,15 +5,17 @@ using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Herpels;
 using Mobile.Models;
 using Mobile.Services;
-using Mobile.Services.Interfaces;
 namespace Mobile.ViewModels;
 
 public partial class DetailsViewModel : ObservableObject, IQueryAttributable
 {
-    private readonly Services.AssessmentService _service;
+    private readonly AssessmentService _service;
 
     [ObservableProperty]
     Assessments _assessment = new();
+
+    [ObservableProperty]
+    IEnumerable<Assessments> _assessments;
 
     [ObservableProperty]
     bool _detailsIsVisible, _editIsVisible;
@@ -27,32 +29,43 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     [ObservableProperty]
     string[] _categories;
 
-    public DetailsViewModel(Services.AssessmentService service)
+    public DetailsViewModel(AssessmentService service)
     {
         Categories = ["Book", "Série", "Movie", "Music"];
         _service = service;
     }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         try
         {
-
             if (query.Count == 0) return;
             var data = (Assessments)query["Data"];
 
-            DisposeAsyncMemory();
-            DetailsIsVisible = true;
-            EditIsVisible = false;
-            Assessment = data;
-            if (Assessment.Image != "default.png")
-            {
-                Image.Source = ImageSource.FromUri(new Uri(Assessment.Image));
-            }
+            await ConfiguretionData(data);
         }
         catch (Exception ex)
         {
             ex.Message.ToString();
+        }
+    }
+
+    private async Task ConfiguretionData(Assessments data)
+    {
+        var f = await _service.GetAssessmentByName($"assessment/category/{data.Category}/name/{data.Director}");
+
+        List<Assessments> filter = [.. f];
+        filter.RemoveAll(x => x.Id == data.Id);
+        Assessments = filter;
+
+        DisposeAsyncMemory();
+        DetailsIsVisible = true;
+        EditIsVisible = false;
+        Assessment = data;
+
+        if (Assessment.Image != "default.png")
+        {
+            Image = new() { Source = ImageSource.FromUri(new Uri(Assessment.Image)) };
         }
     }
 
@@ -117,7 +130,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
             else
             {
                 StringBase64 = await result.OpenReadAsync();
-                Image = new() { Source = ImageSource.FromFile(result.FullPath)};
+                Image = new() { Source = ImageSource.FromFile(result.FullPath) };
             };
 
         }

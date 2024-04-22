@@ -15,7 +15,7 @@
         <converters:AuthorValueConverter x:Key="AuthorValueConverter"/>
     </ContentPage.Resources>
     <ScrollView>
-        <Grid ColumnDefinitions="*">
+        <Grid ColumnDefinitions="*,*">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#1534BC"
@@ -155,6 +155,36 @@
                        Style="{StaticResource TitleDetalhes}"/>
             </Grid>
 
+            <Grid Grid.Column="1">
+                <CollectionView ItemsSource="{Binding Assessments}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.Header>
+                        <Label Text="Livros relacionados ao autor"
+                               HorizontalOptions="Center"
+                               Margin="20"
+                               TextColor="White"
+                               FontAttributes="Bold"
+                               FontSize="20"/>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout>
+                                
+                            <Frame WidthRequest="270"
+                                   HeightRequest="400"
+                                   Padding="0"
+                                   BackgroundColor="Transparent"
+                                   BorderColor="Transparent">
+                                <Image Source="{Binding Image}" />
+                            </Frame>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+
             <Grid IsVisible="{Binding EditIsVisible}"
                   Grid.Column="0" 
                   ColumnDefinitions="250,*" 
@@ -171,8 +201,8 @@
                         VerticalOptions="StartAndExpand"
                         BackgroundColor="Red"
                         >
-       
-                
+
+
                 </Button>
 
                 <Frame Grid.Row="0"

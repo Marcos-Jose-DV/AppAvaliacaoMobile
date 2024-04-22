@@ -53,7 +53,7 @@ public class AssessmentService : BaseApiService
 
         return (apiResponse.Total, apiResponse.Datas);
     }
-    public async Task<Assessments> GetAssessmentByName(string query)
+    public async Task<IEnumerable<Assessments>> GetAssessmentByName(string query)
     {
         ApiResponse apiResponse = null;
 
@@ -70,7 +70,7 @@ public class AssessmentService : BaseApiService
             ex.ToString();
         }
 
-        return apiResponse.Data;
+        return apiResponse.Datas;
     }
 
     public async Task<Assessments> GetAssessmentById(int id)
