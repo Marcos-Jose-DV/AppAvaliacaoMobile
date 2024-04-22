@@ -107,6 +107,25 @@ public class AssessmentService : BaseApiService
 
         return apiResponse.Data;
     }
+    public async Task<string> PostAssessments(List<Assessments> assessmentPost)
+    {
+        ApiResponse apiResponse = null;
+        try
+        {
+            string jsonRespponse = JsonSerializer.Serialize<object>(assessmentPost, JsonSerializerOptions);
+            StringContent content = new(jsonRespponse, Encoding.UTF8, "application/json");
+
+            var response = await HttpClient.PostAsync("/v1/assessments", content);
+            apiResponse = await HandlerApiResponseAsync<ApiResponse>(response, null);
+        }
+        catch (Exception ex)
+        {
+            ex.ToString();
+            return "No";
+        }
+
+        return "OK";
+    }
     public async Task<Assessments> PutAssessment(int id, Assessments assessment)
     {
         ApiResponse apiResponse = null;

@@ -15,7 +15,7 @@
         <converters:AuthorValueConverter x:Key="AuthorValueConverter"/>
     </ContentPage.Resources>
     <ScrollView>
-        <Grid ColumnDefinitions="*,*">
+        <Grid ColumnDefinitions="*">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#1534BC"
@@ -98,6 +98,19 @@
                                FontSize="14" 
                                Style="{StaticResource TitleDetalhes}"/>
                     </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Categoria: "
+                               TextColor="#fff"
+                               FontSize="14" 
+                               FontAttributes="None"/>
+
+                        <Label Text="{Binding Assessment.Category}"
+                               TextColor="#136CB2"
+                               FontAttributes="None"
+                               FontSize="14" 
+                               Style="{StaticResource TitleDetalhes}"/>
+                    </HorizontalStackLayout>
                 </VerticalStackLayout>
 
                 <HorizontalStackLayout Grid.Column="1"
@@ -150,21 +163,19 @@
                   RowSpacing="20"
                   Margin="50">
 
-                <Border ZIndex="2"
+                <Button ZIndex="1"
+                        Text="🔄️"
+                        
+                        Command="{Binding FileUploadCommand}"
                         HorizontalOptions="StartAndExpand"
                         VerticalOptions="StartAndExpand"
-                        BackgroundColor="Transparent"
-                        WidthRequest="66" 
-                        HeightRequest="66"
-                        StrokeThickness="0">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding FileUploadCommand}"/>
-                    </Border.GestureRecognizers>
-                    <Label Text="🔄️"
-                          FontSize="26"/>
-                </Border>
+                        BackgroundColor="Red"
+                        >
+       
+                
+                </Button>
 
-                <Frame Grid.Row="{OnPlatform Android=0}"
+                <Frame Grid.Row="0"
                        Grid.Column="0"
                        VerticalOptions="Start"
                        Padding="0"
@@ -281,10 +292,6 @@
                         FontAttributes="None"
                         Style="{StaticResource TitleDetalhes}"/>
             </Grid>
-
-            <Border VerticalOptions="EndAndExpand" HeightRequest="100">
-                
-            </Border>
         </Grid>
     </ScrollView>
 </ContentPage>

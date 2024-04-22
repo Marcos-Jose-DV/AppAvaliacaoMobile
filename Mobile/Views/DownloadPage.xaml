@@ -17,7 +17,8 @@
                Padding="0"
                HasShadow="True"          
                HeightRequest="500">
-            <Button Text="Carregar arquivos" 
+            <Button Command="{Binding InportCommand}"
+                    Text="Carregar arquivos" 
                     WidthRequest="300"
                     HeightRequest="100"/>
 

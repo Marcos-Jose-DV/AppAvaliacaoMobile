@@ -140,7 +140,6 @@ public partial class HomeViewModel : ObservableObject
                 {
                     return;
                 }
-
                 Assessments.Add(item);
             }
         }

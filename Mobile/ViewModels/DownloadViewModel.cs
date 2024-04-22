@@ -3,7 +3,9 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DocumentFormat.OpenXml.Spreadsheet;
 using iTextSharp.text.pdf;
+using Mobile.Herpels;
 using Mobile.Models;
 using Mobile.Services;
 using Xceed.Words.NET;
@@ -23,6 +25,17 @@ public partial class DownloadViewModel : ObservableObject
         _assessmentService = assessmentService;
     }
 
+    [RelayCommand]
+    async Task Inport()
+    {
+        var result = await FileManupulation.FileUplod();
+
+        var assessments = ReadFile.ReadExcel(result.FullPath);
+
+        var ok = await _assessmentService.PostAssessments(assessments);
+
+        Console.WriteLine(ok);
+    }
     [RelayCommand]
     async Task SaveFile(string fileName)
     {
@@ -115,16 +128,16 @@ public partial class DownloadViewModel : ObservableObject
         using var workbook = new XLWorkbook();
         var worksheet = workbook.Worksheets.Add("Assessments");
 
-        worksheet.Cell(1, 1).Value = "Id";
-        worksheet.Cell(1, 2).Value = "Category";
-        worksheet.Cell(1, 3).Value = "Name";
-        worksheet.Cell(1, 4).Value = "Director";
-        worksheet.Cell(1, 5).Value = "ImageUrl";
-        worksheet.Cell(1, 6).Value = "Gender";
-        worksheet.Cell(1, 7).Value = "Duration";
-        worksheet.Cell(1, 8).Value = "Concluded";
-        worksheet.Cell(1, 9).Value = "Comments";
-        worksheet.Cell(1, 10).Value = "Created";
+        worksheet.Cell(1, 1).Value = "Name";
+        worksheet.Cell(1, 2).Value = "Nota";
+        worksheet.Cell(1, 3).Value = "Categoria";
+        worksheet.Cell(1, 4).Value = "Diretor";
+        worksheet.Cell(1, 5).Value = "Image";
+        worksheet.Cell(1, 6).Value = "Genero";
+        worksheet.Cell(1, 7).Value = "Duração";
+        worksheet.Cell(1, 8).Value = "Concluido";
+        worksheet.Cell(1, 9).Value = "Comentarios";
+        worksheet.Cell(1, 10).Value = "Criado";
 
         int row = 2;
         foreach (var assessment in assessments)

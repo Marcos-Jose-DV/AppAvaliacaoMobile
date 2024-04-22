@@ -19,7 +19,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     bool _detailsIsVisible, _editIsVisible;
 
     [ObservableProperty]
-    Image _image = new();
+    Image _image;
 
     [ObservableProperty]
     Stream _stringBase64;
@@ -45,13 +45,10 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
             DetailsIsVisible = true;
             EditIsVisible = false;
             Assessment = data;
-            if (Assessment.Image is null)
+            if (Assessment.Image != "default.png")
             {
-                Image.Source = ImageSource.FromResource("dotnet_bot.png");
-                return;
+                Image.Source = ImageSource.FromUri(new Uri(Assessment.Image));
             }
-
-            Image.Source = ImageSource.FromUri(new Uri(Assessment.Image));
         }
         catch (Exception ex)
         {
@@ -97,7 +94,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         var result = await App.Current.MainPage.DisplayAlert("Remove", "Remover essa avaliação?", "Sim", "Não");
         if (result)
         {
-           // await _service.DeleteAssessment(id);
+            // await _service.DeleteAssessment(id);
             await Shell.Current.GoToAsync("..");
         }
     }
@@ -107,17 +104,22 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     {
         try
         {
-            DisposeAsyncMemory();
             var result = await FilePicker.PickAsync(new PickOptions
             {
                 PickerTitle = "Selecione o imagem",
                 FileTypes = FilePickerFileType.Images
             });
 
-            if (result is null) return;
+            if (result is null)
+            {
+                await Toast.Make($"Nenhum arquivo selecionado.").Show(cancellationToken);
+            }
+            else
+            {
+                StringBase64 = await result.OpenReadAsync();
+                Image = new() { Source = ImageSource.FromFile(result.FullPath)};
+            };
 
-            StringBase64 = await result.OpenReadAsync();
-            Image.Source = ImageSource.FromFile(result.FullPath);
         }
         catch (Exception ex)
         {
@@ -130,7 +132,6 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         if (StringBase64 is not null)
         {
             await StringBase64.DisposeAsync();
-            Image = null;
             Assessment = null;
         }
     }
