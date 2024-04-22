@@ -32,6 +32,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     public DetailsViewModel(AssessmentService service)
     {
         Categories = ["Book", "Série", "Movie", "Music"];
+        
         _service = service;
     }
 

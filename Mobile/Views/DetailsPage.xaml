@@ -13,6 +13,7 @@
         <converters:ConcludedIsTrueOrFalseConverter x:Key="ConcludedIsTrueOrFalseConverter"/>
         <converters:TitleValueConverter x:Key="TitleValueConverter"/>
         <converters:AuthorValueConverter x:Key="AuthorValueConverter"/>
+        <converters:TitleDirectorConverter x:Key="TitleDirectorConverter"/>
     </ContentPage.Resources>
     <ScrollView>
         <Grid ColumnDefinitions="*,*">
@@ -161,7 +162,7 @@
                         <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="10"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.Header>
-                        <Label Text="Livros relacionados ao autor"
+                        <Label Text="{Binding Assessments[0].Category, Converter={converters:TitleDirectorConverter}}"
                                HorizontalOptions="Center"
                                Margin="20"
                                TextColor="White"
