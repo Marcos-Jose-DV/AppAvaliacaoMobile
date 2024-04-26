@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using DocumentFormat.OpenXml.Drawing;
-using Mobile.Models;
 using Mobile.Services;
-using Mobile.Services.Interfaces;
+using Models.Models;
 using System.Collections.ObjectModel;
 
 namespace Mobile.ViewModels;

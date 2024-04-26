@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace Models.Models.ViewModels;
 
-namespace Mobile.Models;
-
-public class Assessments
+public class AssessmentsVieModel
 {
-    [Key]
-    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Assessment { get; set; } = string.Empty;
     public string Director { get; set; } = string.Empty;
@@ -13,7 +9,5 @@ public class Assessments
     public string Gender { get; set; } = string.Empty;
     public int Duration { get; set; }
     public bool Concluded { get; set; }
-    public string Comments { get; set; } = string.Empty;
     public string Category { get; set; } = string.Empty;
-    public DateTime Created { get; set; }
 }

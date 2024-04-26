@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Mobile.Models;
+using Models.Models;
 using Mobile.Services.Interfaces;
 using System.Collections.ObjectModel;
 namespace Mobile.ViewModels;
@@ -28,7 +28,7 @@ public partial class MovieViewModel : ObservableObject
     {
         ShowPrevie = false;
         PriveiTitle = "👁️";
-        var values = await _assessmentService.GetAssessments("assessments/categories?category=Movie&skip=0");
+        IEnumerable<Assessments> values = await _assessmentService.GetAssessments("assessments/categories?category=Movie&skip=0");
         Assessments = new ObservableCollection<Assessments>(values.Take(15));
     }
     [RelayCommand]

@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mobile.Constans;
-using Mobile.Models;
+using Models.Models;
 using System.Web;
 
 namespace Mobile.ViewModels;

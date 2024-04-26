@@ -1,6 +1,6 @@
 ﻿using ClosedXML.Excel;
-using Mobile.Models;
-using Mobile.Models.ViewModels;
+using Models.Models;
+using Models.Models.ViewModels;
 
 namespace Mobile.Herpels;
 

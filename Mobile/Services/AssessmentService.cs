@@ -1,7 +1,4 @@
-﻿using DocumentFormat.OpenXml.VariantTypes;
-using Mobile.Constans;
-using Mobile.Models;
-using Mobile.Services.Interfaces;
+﻿using Models.Models;
 using System.Text;
 using System.Text.Json;
 

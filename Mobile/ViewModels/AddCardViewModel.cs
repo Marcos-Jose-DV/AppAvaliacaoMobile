@@ -4,15 +4,14 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Mobile.Herpels;
-using Mobile.Models;
 using Mobile.Services;
-using Mobile.Services.Interfaces;
+using Models.Models;
 
 namespace Mobile.ViewModels;
 
 public partial class AddCardViewModel : ObservableObject
 {
-    private readonly Services.AssessmentService _service;
+    private readonly AssessmentService _service;
 
     [ObservableProperty]
     Assessments _assessment;

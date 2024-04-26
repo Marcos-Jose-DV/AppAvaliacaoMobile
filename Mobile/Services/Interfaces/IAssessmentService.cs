@@ -1,5 +1,5 @@
 ﻿
-using Mobile.Models;
+using Models.Models;
 
 namespace Mobile.Services.Interfaces;
 

@@ -1,4 +1,4 @@
-﻿namespace Mobile.Models;
+﻿namespace Models.Models;
 public class Category
 {
     public Category(string name)

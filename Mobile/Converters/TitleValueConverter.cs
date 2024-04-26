@@ -1,5 +1,4 @@
-﻿using Mobile.Models;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Mobile.Converters;
 
