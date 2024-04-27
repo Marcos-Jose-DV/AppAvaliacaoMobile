@@ -15,12 +15,20 @@ public partial class PlayViewModel : ObservableObject, IQueryAttributable
     [ObservableProperty]
     Assessments _assessment;
 
+    [ObservableProperty]
+    string  _isBook;
+
+
+
     public PlayViewModel()
     {
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
+
+        IsBook = "assessments.pdf";
+        return;
         string name = (string)query["Data"];
         string decodedName = HttpUtility.UrlDecode(name);
 

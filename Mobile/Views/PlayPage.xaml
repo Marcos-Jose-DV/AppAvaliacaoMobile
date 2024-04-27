@@ -9,11 +9,17 @@
              Title="PlayPage">
         <Grid ColumnDefinitions="*" RowDefinitions="*">
             <toolkit:MediaElement x:Name="mediaElement"
+                                  IsVisible="False"
                                   Source="{Binding Video.Source}" 
                                   ShouldAutoPlay="True"
                                   Aspect="AspectFill"
                                   ShouldKeepScreenOn="False"
                                   ShouldShowPlaybackControls="False"/>
+
+
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="10">
+            <WebView Source="{Binding IsBook}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+        </Grid>
 
         </Grid>
 </ContentPage>
