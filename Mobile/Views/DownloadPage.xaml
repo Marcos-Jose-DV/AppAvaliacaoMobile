@@ -21,10 +21,10 @@
                 <DragGestureRecognizer DragStarting="DragGestureRecognizer_DragStarting" DropCompleted="DragGestureRecognizer_DropCompleted" CanDrag="True"/>
                 <DropGestureRecognizer DragOver="OnDragOver" Drop="DropGestureRecognizer_Drop" DragLeave="DropGestureRecognizer_DragLeave" AllowDrop="True"/>
             </Frame.GestureRecognizers>
-            <!--<Button Command="{Binding InportCommand}"
+            <Button Command="{Binding InportCommand}"
                     Text="Carregar arquivos" 
                     WidthRequest="300"
-                    HeightRequest="100"/>-->
+                    HeightRequest="100"/>
 
         </Frame>
 

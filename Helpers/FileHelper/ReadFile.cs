@@ -1,20 +1,22 @@
 ﻿using ClosedXML.Excel;
 using Models.Models;
-using Models.Models.ViewModels;
 
-namespace Mobile.Herpels;
+namespace Herpels.FileHelpers;
 
 public static class ReadFile
 {
-    public static List<Assessments> ReadExcel(string path)
+    public async static Task<IEnumerable<Assessments>> ReadExcel()
     {
-        using var workbook = new XLWorkbook(path);
+        var result = await PickerFile.PickerFileAsync();
+        using var fileStream = new FileStream(result.FullPath, FileMode.Open);
+
+        using var workbook = new XLWorkbook(fileStream);        
         var worksheet = workbook.Worksheet(1);
         var colMax = worksheet.ColumnsUsed().Count();
         var rowMax = worksheet.RowsUsed().Count();
 
         var assessments = new List<Assessments>();
-        
+
         for (int row = 2; row <= rowMax; row++)
         {
             var assessment = new Assessments
@@ -30,7 +32,8 @@ public static class ReadFile
             };
             assessments.Add(assessment);
         }
-
+        if (assessments.Count == 0)
+            throw new Exception("O arquivo carregado estar vazio.");
         return assessments;
     }
 }

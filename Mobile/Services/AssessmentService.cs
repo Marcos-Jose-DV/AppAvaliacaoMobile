@@ -104,7 +104,7 @@ public class AssessmentService : BaseApiService
 
         return apiResponse.Data;
     }
-    public async Task<string> PostAssessments(List<Assessments> assessmentPost)
+    public async Task<string> PostAssessments(IEnumerable<Assessments> assessmentPost)
     {
         ApiResponse apiResponse = null;
         try

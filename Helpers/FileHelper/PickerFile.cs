@@ -1,8 +1,7 @@
-﻿namespace Mobile.Herpels;
-
-public static class FileManupulation
+﻿namespace Herpels.FileHelpers;
+public static class PickerFile
 {
-    public static async Task<FileResult> FileUplod()
+    public static async Task<FileResult> PickerFileAsync()
     {
 
         var customFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
@@ -17,7 +16,6 @@ public static class FileManupulation
 
         });
 
-
-        return result;
+        return result is null ? throw new Exception("Nenhum arquivo foi selecionado.") : result;
     }
 }

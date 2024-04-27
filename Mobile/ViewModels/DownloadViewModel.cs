@@ -2,8 +2,7 @@
 using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Helpers.FileHelper;
-using Mobile.Herpels;
+using Herpels.FileHelpers;
 using Mobile.Services;
 using Models.Models;
 
@@ -22,15 +21,18 @@ public partial class DownloadViewModel : ObservableObject
     }
 
     [RelayCommand]
-    async Task Inport()
+    async Task Inport(CancellationToken cancellationToken)
     {
-        var result = await FileManupulation.FileUplod();
-
-        List<Assessments> assessments = ReadFile.ReadExcel(result.FullPath);
-
-        var ok = await _assessmentService.PostAssessments(assessments);
-
-        Console.WriteLine(ok);
+        try
+        {
+            IEnumerable<Assessments> assessments = await ReadFile.ReadExcel();
+            await _assessmentService.PostAssessments(assessments);
+            await Toast.Make($"Arquivo foi carregado com sucesso.").Show(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            await Toast.Make($"Erro ao carregar arquivo: {ex.Message}").Show(cancellationToken);
+        }
     }
     [RelayCommand]
     async Task SaveFile(string fileName)
@@ -39,24 +41,7 @@ public partial class DownloadViewModel : ObservableObject
         try
         {
             var assessments = await _assessmentService.GetAssessments("");
-            Stream stream = null;
-
-            if (fileName.Equals("assessments.txt"))
-            {
-                stream = WriteFile.WriteTxt(assessments.Item2);
-            }
-            else if (fileName.Equals("assessments.pdf"))
-            {
-                stream = WriteFile.WritePDF(assessments.Item2);
-            }
-            else if (fileName.Equals("assessments.xlsx"))
-            {
-                stream = WriteFile.WriteExcel(assessments.Item2);
-            }
-            else
-            {
-                stream = WriteFile.WriteDoxc(assessments.Item2);
-            }
+            var stream = Helpers.FileHelper.SaveFile.Save(fileName, assessments.Item2);
 
             var fileLocationResult = await _fileSaver.SaveAsync(fileName, stream, cancellationToken);
             fileLocationResult.EnsureSuccess();
@@ -67,26 +52,5 @@ public partial class DownloadViewModel : ObservableObject
         {
             await Toast.Make($"O arquivo não foi salvo: {ex.Message}").Show(cancellationToken);
         }
-    }
-
- 
-
-    [RelayCommand]
-    private void Drag()
-    {
-      
-    }
-    [RelayCommand]
-    private async void Drop()
-    {
-    }
-
-    [RelayCommand]
-    private async void Leave()
-    {
-    }
-    [RelayCommand]
-    private async void Completed()
-    {
     }
 }

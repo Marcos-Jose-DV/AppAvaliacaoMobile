@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Mobile.Herpels;
 using Models.Models;
 using Mobile.Services;
+using Herpels.FileHelpers;
 namespace Mobile.ViewModels;
 
 public partial class DetailsViewModel : ObservableObject, IQueryAttributable

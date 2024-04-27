@@ -2,8 +2,6 @@
 using CommunityToolkit.Maui.Storage;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
-using Mobile.Services;
-using Mobile.Services.Interfaces;
 using Mobile.ViewModels;
 using Mobile.Views;
 using Mobile.Interfaces;
