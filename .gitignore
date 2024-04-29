@@ -5,7 +5,7 @@
 
 
 Constants/
-Resources/Raw/
+Resources/
 
 # dotenv files
 .env
