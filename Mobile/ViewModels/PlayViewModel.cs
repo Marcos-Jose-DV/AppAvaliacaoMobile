@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DocumentFormat.OpenXml.Presentation;
 using Microsoft.Maui.Controls.PlatformConfiguration;
+using Microsoft.Maui.Storage;
 using Mobile.Constans;
 using Models.Models;
 using System.Net;
@@ -27,52 +28,36 @@ public partial class PlayViewModel : ObservableObject, IQueryAttributable
     {
     }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         IsBook = null;
         Video.Source = null;
-        var teste = FileSystem.Current.AppDataDirectory;
+
         Assessments assessment = (Assessments)query["Data"];
         if (assessment.Category != "Book")
         {
-            string fileName = Load(assessment, Configurations.ServePathMovie);
-
-           Video.Source = MediaSource.FromFile(Configurations.ServePathMovie + "//" + fileName);
+            string pathFile = Load(assessment.Name, Configurations.ServePathMovie);
+            Video.Source = MediaSource.FromFile(pathFile);
         }
         else
         {
-            string fileName = Load(assessment, Configurations.ServePathBook);
-            IsBook = "file:///" + Configurations.ServePathBook + "//" + WebUtility.UrlEncode(fileName);
+            string pathFile = Load(assessment.Id.ToString(), Configurations.ServePathBook);
+            IsBook = "file:///" + pathFile; ;
         }
-
     }
 
-    private string Load(Assessments assessment, string path)
+    private string Load(string filter, string path)
     {
-        string decodedName = HttpUtility.UrlDecode(assessment.Name);
-
-
+        string decodedName = HttpUtility.UrlDecode(filter);
         string[] fileEntries = Directory.GetFiles(path);
         foreach (string pathFile in fileEntries)
         {
             string fileName = Path.GetFileNameWithoutExtension(pathFile);
             if (fileName.Contains(decodedName, StringComparison.OrdinalIgnoreCase))
             {
-                return fileName;
+                return pathFile;
             }
         }
         return null;
-    }
-
-    [RelayCommand]
-    async Task Load()
-    {
-        var result = await FilePicker.PickAsync(new PickOptions
-        {
-            PickerTitle = "Selecione o imagem",
-            FileTypes = FilePickerFileType.Videos
-        });
-
-        if (result is null) return;
     }
 }

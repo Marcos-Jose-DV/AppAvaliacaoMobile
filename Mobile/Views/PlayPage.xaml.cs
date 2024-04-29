@@ -1,5 +1,8 @@
 using CommunityToolkit.Maui.Views;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Maui.Storage;
 using Mobile.ViewModels;
+using System.Net;
 
 namespace Mobile.Views;
 
@@ -10,6 +13,7 @@ public partial class PlayPage : ContentPage
         InitializeComponent();
 
         BindingContext = vm;
+
         //OnToggleFullscreenClicked();
     }
 
@@ -46,5 +50,10 @@ public partial class PlayPage : ContentPage
     {
         // Stop and cleanup MediaElement when we navigate away
         mediaElement.Handler?.DisconnectHandler();
+    }
+
+    private void WebView_Loaded(object sender, EventArgs e)
+    {
+
     }
 }

@@ -73,6 +73,7 @@ public static class WriteFile
         worksheet.Cell(1, 8).Value = "Concluido";
         worksheet.Cell(1, 9).Value = "Comentarios";
         worksheet.Cell(1, 10).Value = "Criado";
+        worksheet.Cell(1, 11).Value = "ID";
 
         int row = 2;
         foreach (var assessment in assessments)
@@ -87,6 +88,7 @@ public static class WriteFile
             worksheet.Cell(row, 8).Value = assessment.Concluded;
             worksheet.Cell(row, 9).Value = assessment.Comments;
             worksheet.Cell(row, 10).Value = assessment.Created;
+            worksheet.Cell(row, 11).Value = assessment.Id;
             row++;
         }
 

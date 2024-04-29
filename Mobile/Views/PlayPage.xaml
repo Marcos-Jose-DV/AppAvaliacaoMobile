@@ -17,7 +17,7 @@
 
 
         <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="10">
-            <WebView Source="{Binding IsBook}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <WebView Source="{Binding IsBook}" Loaded="WebView_Loaded" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
         </Grid>
 
         </Grid>
