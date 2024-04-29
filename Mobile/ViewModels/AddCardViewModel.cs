@@ -45,8 +45,7 @@ public partial class AddCardViewModel : ObservableObject
                 Assessment.Image = await ConverterImage.ConvertImageToBase64String(StringBase64);
             }
 
-            var assessment = await _service.PostAssessment(Assessment);
-            WeakReferenceMessenger.Default.Send<Assessments>(assessment);
+            await _service.PostAssessment(Assessment);
             StringBase64.Dispose();
             await Shell.Current.GoToAsync("..");
         }
