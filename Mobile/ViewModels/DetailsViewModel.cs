@@ -32,7 +32,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     public DetailsViewModel(AssessmentService service)
     {
         Categories = ["Book", "Série", "Movie", "Music"];
-        
+
         _service = service;
     }
 
@@ -90,16 +90,20 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
             }
 
             var assessment = await _service.PutAssessment(Assessment.Id, Assessment);
-            WeakReferenceMessenger.Default.Send<Assessments>(assessment);
+            //WeakReferenceMessenger.Default.Send<Assessments>(assessment);
             await Shell.Current.GoToAsync("..");
             DisposeAsyncMemory();
         }
     }
 
     [RelayCommand]
-    async Task Play(string name)
+    async Task Play(Assessments assessments)
     {
-        await Shell.Current.GoToAsync($"PlayPage?Data={name}");
+        var data = new Dictionary<string, object>()
+        {
+            {"Data", assessments},
+        };
+        await Shell.Current.GoToAsync($"PlayPage", data);
     }
 
     [RelayCommand]

@@ -75,7 +75,6 @@
 	  <None Remove="Resources\Images\icon_movie.png" />
 	  <None Remove="Resources\Images\icon_music.png" />
 	  <None Remove="Resources\Images\icon_serie.png" />
-	  <None Remove="Resources\Raw\assessments.pdf" />
 	</ItemGroup>
 
 

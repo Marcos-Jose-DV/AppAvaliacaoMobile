@@ -27,9 +27,12 @@ public partial class PlayViewModel : ObservableObject, IQueryAttributable
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
 
-        IsBook = "assessments.pdf";
-        return;
         string name = (string)query["Data"];
+        Load(name);
+    }
+
+    private void Load(string name)
+    {
         string decodedName = HttpUtility.UrlDecode(name);
 
 
