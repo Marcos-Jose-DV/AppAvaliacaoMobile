@@ -5,6 +5,7 @@
 
 
 Constants/
+Resources/Raw/
 
 # dotenv files
 .env
@@ -486,3 +487,4 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 Constans 
+Resources/Raw/

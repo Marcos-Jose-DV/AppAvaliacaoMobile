@@ -9,7 +9,6 @@
              Title="PlayPage">
         <Grid ColumnDefinitions="*" RowDefinitions="*">
             <toolkit:MediaElement x:Name="mediaElement"
-                                  IsVisible="False"
                                   Source="{Binding Video.Source}" 
                                   ShouldAutoPlay="True"
                                   Aspect="AspectFill"
