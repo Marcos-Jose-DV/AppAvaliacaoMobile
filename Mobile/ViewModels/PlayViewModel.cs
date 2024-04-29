@@ -6,7 +6,6 @@ using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Storage;
 using Mobile.Constans;
 using Models.Models;
-using System.Net;
 using System.Web;
 
 namespace Mobile.ViewModels;
@@ -21,12 +20,6 @@ public partial class PlayViewModel : ObservableObject, IQueryAttributable
 
     [ObservableProperty]
     string _isBook;
-
-
-
-    public PlayViewModel()
-    {
-    }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
