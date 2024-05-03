@@ -1,6 +1,4 @@
-﻿using Mobile.Views;
-
-namespace Mobile
+﻿namespace Mobile
 {
     public partial class AppShell : Shell
     {
