@@ -1,10 +1,7 @@
-
 ---
-
-
 # App de Avaliação e Stream de Filmes, Séries, Músicas e Livros
 
-![Logo do Aplicativo](https://raw.githubusercontent.com/Marcos-Jose-DV/AppAvaliacaoMobile/main/wwwroot/capa.png?token=GHSAT0AAAAAACNVAD56KHIQIDB4YS3NBX76ZQ7JWBA)
+https://github.com/Marcos-Jose-DV/AppAvaliacaoMobile/assets/122377502/8ba86a69-eb38-402a-96bb-423366e56cb9
 
 Como gosto de criar apps para uso próprio, decidi desenvolver algo que sempre desejei: um lugar para armazenar minhas avaliações de Filmes, Séries, Músicas e Livros. Com algum conhecimento em C# usando o framework .NET MAUI e ASP.NET, estou construindo a conexão com o banco de dados do meu servidor pessoal.
 
@@ -15,5 +12,5 @@ Como gosto de criar apps para uso próprio, decidi desenvolver algo que sempre d
 - O aplicativo está funcionando perfeitamente para Windows, e agora estou ajustando-o para Smart TVs Android.
 - Uma API simples está sendo utilizada localmente para se comunicar com o servidor interno. A conexão com o banco de dados está operando com sucesso.
 
-![Logo do Aplicativo](https://raw.githubusercontent.com/Marcos-Jose-DV/AppAvaliacaoMobile/main/wwwroot/capa2.png?token=GHSAT0AAAAAACNVAD576JT3H3UVAFS77XW6ZQ7JOBQ)
+https://github.com/Marcos-Jose-DV/AppAvaliacaoMobile/assets/122377502/1003550e-bbbc-42b9-a24f-d9b796f4b9bf
 ---
