@@ -1,4 +1,3 @@
----
 # App de Avaliação e Stream de Filmes, Séries, Músicas e Livros
 
 https://github.com/Marcos-Jose-DV/AppAvaliacaoMobile/assets/122377502/8ba86a69-eb38-402a-96bb-423366e56cb9
@@ -13,4 +12,3 @@ Como gosto de criar apps para uso próprio, decidi desenvolver algo que sempre d
 - Uma API simples está sendo utilizada localmente para se comunicar com o servidor interno. A conexão com o banco de dados está operando com sucesso.
 
 https://github.com/Marcos-Jose-DV/AppAvaliacaoMobile/assets/122377502/1003550e-bbbc-42b9-a24f-d9b796f4b9bf
----
