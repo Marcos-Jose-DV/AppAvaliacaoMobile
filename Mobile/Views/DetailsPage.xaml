@@ -7,16 +7,18 @@
              xmlns:converters="clr-namespace:Mobile.Converters"
              BackgroundColor="#ECECF6"
              Shell.BackgroundColor="#ECECF6"
-             Title="{Binding Assessment.Category}">
+             Title="{Binding Assessment.Category}"
+             x:Name="PaiPage">
 
     <ContentPage.Resources>
         <converters:ConcludedIsTrueOrFalseConverter x:Key="ConcludedIsTrueOrFalseConverter"/>
         <converters:TitleValueConverter x:Key="TitleValueConverter"/>
         <converters:AuthorValueConverter x:Key="AuthorValueConverter"/>
         <converters:TitleDirectorConverter x:Key="TitleDirectorConverter"/>
+        <converters:TextButtonPlayValueConverter x:Key="TextButtonPlayValueConverter"/>
     </ContentPage.Resources>
     <ScrollView>
-        <Grid ColumnDefinitions="*,*">
+        <Grid ColumnDefinitions="*,*" RowDefinitions="*">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#1534BC"
@@ -112,6 +114,8 @@
                                FontSize="14" 
                                Style="{StaticResource TitleDetalhes}"/>
                     </HorizontalStackLayout>
+
+                    <Label Text="{Binding Assessment.Id}" TextColor="White" FontSize="14"/>
                 </VerticalStackLayout>
 
                 <HorizontalStackLayout Grid.Column="1"
@@ -129,7 +133,7 @@
                     <Button Margin="0,0,0,0"
                             Command="{Binding  PlayCommand}"
                             CommandParameter="{Binding Assessment}"
-                            Text="Play"
+                            Text="{Binding Assessment.Category,Converter={converters:TextButtonPlayValueConverter}}"
                             FontAttributes="Bold"
                             BackgroundColor="Black"
                             WidthRequest="132"
@@ -146,14 +150,15 @@
                             HeightRequest="44"/>
                 </HorizontalStackLayout>
                 <Editor Grid.Row="1"
-                       Grid.ColumnSpan="3"
-                       Text="{Binding Assessment.Comments}"
-                       TextColor="#fff"
-                       Placeholder="Nenhum comentario..."
-                       PlaceholderColor="#fff"
-                       FontFamily="OpenSansRegular"
-                       FontAttributes="None"
-                       Style="{StaticResource TitleDetalhes}"/>
+                        Grid.ColumnSpan="3"
+                        Text="{Binding Assessment.Comments}"
+                        TextColor="#fff"
+                        Placeholder="Nenhum comentario..."
+                        PlaceholderColor="#fff"
+                        FontFamily="OpenSansRegular"
+                        FontAttributes="None"
+                        Style="{StaticResource TitleDetalhes}"
+                        MinimumHeightRequest="600"/>
             </Grid>
 
             <Grid Grid.Column="1">
@@ -172,14 +177,17 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <VerticalStackLayout>
-                                
-                            <Frame WidthRequest="270"
+
+                                <Frame WidthRequest="270"
                                    HeightRequest="400"
                                    Padding="0"
                                    BackgroundColor="Transparent"
                                    BorderColor="Transparent">
-                                <Image Source="{Binding Image}" />
-                            </Frame>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.SelectItemCommand, Source={x:Reference PaiPage}}" CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
+                                    <Image Source="{Binding Image}" />
+                                </Frame>
                             </VerticalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -196,13 +204,13 @@
 
                 <Button ZIndex="1"
                         Text="🔄️"
-                        
+                        FontSize="26"
+                        Margin="0"
+                        Padding="0"
                         Command="{Binding FileUploadCommand}"
                         HorizontalOptions="StartAndExpand"
                         VerticalOptions="StartAndExpand"
-                        BackgroundColor="Red"
-                        >
-
+                        BackgroundColor="White">
 
                 </Button>
 

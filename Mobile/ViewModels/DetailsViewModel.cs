@@ -64,9 +64,13 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         EditIsVisible = false;
         Assessment = data;
 
-        if (Assessment.Image != "default.png")
+        if (Assessment.Image != "default.png" || Assessment.Image.Length > 0)
         {
             Image = new() { Source = ImageSource.FromUri(new Uri(Assessment.Image)) };
+        }
+        else
+        {
+            Image.Source = "default.png";
         }
     }
 
@@ -154,4 +158,9 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         }
     }
 
+    [RelayCommand]
+    async Task SelectItem(Assessments assessments)
+    {
+        await ConfiguretionData(assessments);
+    }
 }
