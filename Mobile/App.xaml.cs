@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Devices;
-using Mobile.Constans;
-using Mobile.Views;
+﻿using Mobile.Constans;
 using System.Diagnostics;
 
 namespace Mobile
