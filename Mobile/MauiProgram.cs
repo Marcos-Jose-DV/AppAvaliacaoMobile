@@ -41,8 +41,9 @@ public static class MauiProgram
         builder.Services.AddHttpClient(Configurations.HttpClientName, httpClient =>
         {
             var baseAddress = DeviceInfo.Platform == DevicePlatform.Android
-                ? "https://10.0.2.2:7193"
+                 ? "https://10.0.2.2:7193"
                 : "https://localhost:7193";
+
 
             httpClient.BaseAddress = new Uri(baseAddress);
 

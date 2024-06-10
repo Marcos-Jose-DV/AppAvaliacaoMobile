@@ -1,4 +1,4 @@
-# App de Avaliação e Stream de Filmes, Séries, Músicas e Livros
+# App de Avaliação e Streaming de Filmes, Séries, Músicas e Livros
 
 https://github.com/Marcos-Jose-DV/AppAvaliacaoMobile/assets/122377502/8ba86a69-eb38-402a-96bb-423366e56cb9
 

@@ -17,6 +17,8 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
     [ObservableProperty]
     IEnumerable<Assessments> _assessments;
 
+    List<Assessments> filter = new();
+
     [ObservableProperty]
     bool _detailsIsVisible, _editIsVisible;
 
@@ -42,8 +44,9 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         {
             if (query.Count == 0) return;
             var data = (Assessments)query["Data"];
+            filter = [.. await _service.GetAssessmentByName($"assessment/category/{data.Category}/name/{data.Director}")];
 
-            await ConfiguretionData(data);
+            ConfiguretionData(data);
         }
         catch (Exception ex)
         {
@@ -51,26 +54,23 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         }
     }
 
-    private async Task ConfiguretionData(Assessments data)
+    private void ConfiguretionData(Assessments data)
     {
-        var f = await _service.GetAssessmentByName($"assessment/category/{data.Category}/name/{data.Director}");
-
-        List<Assessments> filter = [.. f];
-        filter.RemoveAll(x => x.Id == data.Id);
-        Assessments = filter;
+        Assessments = filter.Where(x => x.Id != data.Id).ToList();
 
         DisposeAsyncMemory();
         DetailsIsVisible = true;
         EditIsVisible = false;
         Assessment = data;
 
-        if (Assessment.Image != "default.png" || Assessment.Image.Length > 0)
+        if (Assessment.Image != "default.png" && Assessment.Image != "Falha interna no servidor" && Assessment.Image.Length > 0)
         {
             Image = new() { Source = ImageSource.FromUri(new Uri(Assessment.Image)) };
         }
         else
         {
-            Image.Source = "default.png";
+            Assessment.Image = "default.png";
+            Image = new() { Source = ImageSource.FromFile("default.png") };
         }
     }
 
@@ -93,7 +93,7 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
                 Assessment.Image = await ConverterImage.ConvertImageToBase64String(StringBase64);
             }
 
-            var assessment = await _service.PutAssessment(Assessment.Id, Assessment);
+            await _service.PutAssessment(Assessment.Id, Assessment);
             //WeakReferenceMessenger.Default.Send<Assessments>(assessment);
             await Shell.Current.GoToAsync("..");
             DisposeAsyncMemory();
@@ -155,12 +155,13 @@ public partial class DetailsViewModel : ObservableObject, IQueryAttributable
         {
             await StringBase64.DisposeAsync();
             Assessment = null;
+            filter = null;
         }
     }
 
     [RelayCommand]
-    async Task SelectItem(Assessments assessments)
+    void SelectItem(Assessments assessments)
     {
-        await ConfiguretionData(assessments);
+        ConfiguretionData(assessments);
     }
 }

@@ -125,7 +125,7 @@ public class AssessmentService : BaseApiService
     }
     public async Task<Assessments> PutAssessment(int id, Assessments assessment)
     {
-        ApiResponse apiResponse = null;
+        ApiResponse apiResponse = new();
         try
         {
             string jsonRespponse = JsonSerializer.Serialize<object>(assessment, JsonSerializerOptions);
@@ -140,7 +140,7 @@ public class AssessmentService : BaseApiService
             ex.ToString();
         }
 
-        return apiResponse.Data;
+        return apiResponse?.Data;
     }
     //public async Task<Assessments> DeleteAssessment(int id)
     //{
